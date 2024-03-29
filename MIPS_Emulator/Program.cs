@@ -17,6 +17,7 @@ namespace MIPS_Emulator
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
         }
     }
 }
