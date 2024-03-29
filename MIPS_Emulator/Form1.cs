@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MIPS_Emulator
 {
-    public partial class Hello : Form
+    public partial class Form1 : Form
     {
-        public Hello()
+        public Form1()
         {
             InitializeComponent();
         }

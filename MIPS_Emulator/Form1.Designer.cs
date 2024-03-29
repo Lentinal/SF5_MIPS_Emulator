@@ -1,6 +1,6 @@
 ﻿namespace MIPS_Emulator
 {
-    partial class Hello
+    partial class Form1
     {
         /// <summary>
         /// Required designer variable.
