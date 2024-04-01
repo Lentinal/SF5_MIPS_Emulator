@@ -1,4 +1,4 @@
-namespace MIPS_Emulator_SF
+namespace MIPS_Emulator
 {
     internal static class Program
     {
