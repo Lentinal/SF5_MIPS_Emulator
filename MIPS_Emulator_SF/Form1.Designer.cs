@@ -76,7 +76,9 @@
             textBox4 = new TextBox();
             textBox3 = new TextBox();
             textBox2 = new TextBox();
-            r1TextBox = new TextBox();
+
+            textBox1 = new TextBox();
+
             label13 = new Label();
             label12 = new Label();
             label11 = new Label();
@@ -584,6 +586,9 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(240, 23);
             textBox3.TabIndex = 4;
+
+            textBox3.TextChanged += textBox3_TextChanged;
+
             // 
             // textBox2
             // 
@@ -591,13 +596,16 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(240, 23);
             textBox2.TabIndex = 3;
+
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
-            // r1TextBox
+            // textBox1
             // 
-            r1TextBox.Location = new Point(33, 37);
-            r1TextBox.Name = "r1TextBox";
-            r1TextBox.Size = new Size(240, 23);
-            r1TextBox.TabIndex = 2;
+            textBox1.Location = new Point(33, 37);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(240, 23);
+            textBox1.TabIndex = 2;
+
             // 
             // label13
             // 
@@ -968,6 +976,7 @@
             button1.TabIndex = 10;
             button1.Text = "Select File";
             button1.UseVisualStyleBackColor = true;
+
             button1.Click += button1_Click_1;
             // 
             // Form1
@@ -998,92 +1007,99 @@
         }
 
         #endregion
-
+        //Buttons
         private Button stepButton;
         private Button microButton;
         private Button runButton;
         private Button saveButton;
         private Button pcButton;
-        private TextBox setPCTextBox;
+        private Button button1;
+        private Button clearButton;
+        private Button saveStateButton;
+      
+        //RadioButtons
         private Panel radioPanel;
+        private Label dataLabel;
         private RadioButton radioDecimal;
         private RadioButton radioHex;
         private RadioButton radioBinary;
-        private Label dataLabel;
-        private Button clearButton;
-        private Button saveStateButton;
+      
+        //TextBoxes
+        private TextBox setPCTextBox;
+        public static TextBox PC;
+        public static TextBox HI;
+        public static TextBox LO;
+        public static TextBox textBox1;
+        public static TextBox textBox2;
+        public static TextBox textBox3;
+        public static TextBox textBox4;
+        public static TextBox textBox5;
+        public static TextBox textBox6;
+        public static TextBox textBox7;
+        public static TextBox textBox8;
+        public static TextBox textBox9;
+        public static TextBox textBox10;
+        public static TextBox textBox11;
+        public static TextBox textBox12;
+        public static TextBox textBox13;
+        public static TextBox textBox14;
+        public static TextBox textBox15;
+        public static TextBox textBox16;  
+        public static TextBox textBox17;
+        public static TextBox textBox18;
+        public static TextBox textBox19;
+        public static TextBox textBox20;
+        public static TextBox textBox21;
+        public static TextBox textBox22;
+        public static TextBox textBox23;
+        public static TextBox textBox24;
+        public static TextBox textBox25;
+        public static TextBox textBox26;
+        public static TextBox textBox27;
+        public static TextBox textBox28;
+        public static TextBox textBox29;
+        public static TextBox textBox30;
+        public static TextBox textBox31;
+        public static TextBox textBox32;
+        
+        //Register Panel
         private Panel registerPanel;
         private Label registerLabel;
-        private Label label2;
-        private Button button1;
-        private TextBox textBox13;
-        private TextBox textBox12;
-        private TextBox textBox11;
-        private TextBox textBox10;
-        private TextBox textBox9;
-        private TextBox textBox8;
-        private TextBox textBox7;
-        private TextBox textBox6;
-        private TextBox textBox5;
-        private TextBox textBox4;
-        private TextBox textBox3;
-        private TextBox textBox2;
-        private TextBox r1TextBox;
-        private Label label13;
-        private Label label12;
-        private Label label11;
-        private Label label10;
-        private Label label9;
-        private Label label8;
-        private Label label7;
-        private Label label6;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private TextBox textBox24;
-        private TextBox LO;
-        private TextBox textBox23;
-        private TextBox HI;
-        private TextBox textBox22;
-        private TextBox PC;
-        private TextBox textBox21;
-        private TextBox textBox32;
-        private TextBox textBox20;
-        private TextBox textBox31;
-        private TextBox textBox19;
-        private TextBox textBox30;
-        private TextBox textBox18;
-        private TextBox textBox29;
-        private TextBox textBox17;
-        private TextBox textBox28;
-        private TextBox textBox27;
-        private TextBox textBox16;
-        private TextBox textBox26;
-        private TextBox textBox15;
-        private TextBox textBox25;
-        private TextBox textBox14;
-        private Label label35;
-        private Label label24;
-        private Label label34;
-        private Label label23;
-        private Label label33;
-        private Label label22;
-        private Label label32;
-        private Label label21;
-        private Label label31;
-        private Label label20;
-        private Label label30;
-        private Label label19;
-        private Label label29;
-        private Label label18;
-        private Label label28;
-        private Label label17;
-        private Label label27;
-        private Label label16;
-        private Label label26;
-        private Label label15;
-        private Label label25;
-        private Label label14;
         private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private Label label5;
+        private Label label6;
+        private Label label7;
+        private Label label8;
+        private Label label9;
+        private Label label10;
+        private Label label11;
+        private Label label12;
+        private Label label13;
+        private Label label14;
+        private Label label15;
+        private Label label16;
+        private Label label17;
+        private Label label18;
+        private Label label19;
+        private Label label20;
+        private Label label21;
+        private Label label22;
+        private Label label23;
+        private Label label24;
+        private Label label25;
+        private Label label26;
+        private Label label27;
+        private Label label28;
+        private Label label29;
+        private Label label30;
+        private Label label31;
+        private Label label32;
+        private Label label33;
+        private Label label34;
+        private Label label35;
+        
     }
 }
