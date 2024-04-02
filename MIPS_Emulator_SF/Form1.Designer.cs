@@ -76,7 +76,9 @@
             textBox4 = new TextBox();
             textBox3 = new TextBox();
             textBox2 = new TextBox();
+
             textBox1 = new TextBox();
+
             label13 = new Label();
             label12 = new Label();
             label11 = new Label();
@@ -166,6 +168,7 @@
             pcButton.TabIndex = 4;
             pcButton.Text = "Set PC Value";
             pcButton.UseVisualStyleBackColor = true;
+            pcButton.Click += pcButton_Click;
             // 
             // setPCTextBox
             // 
@@ -288,7 +291,7 @@
             registerPanel.Controls.Add(textBox4);
             registerPanel.Controls.Add(textBox3);
             registerPanel.Controls.Add(textBox2);
-            registerPanel.Controls.Add(textBox1);
+            registerPanel.Controls.Add(r1TextBox);
             registerPanel.Controls.Add(label13);
             registerPanel.Controls.Add(label12);
             registerPanel.Controls.Add(label11);
@@ -583,7 +586,9 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(240, 23);
             textBox3.TabIndex = 4;
+
             textBox3.TextChanged += textBox3_TextChanged;
+
             // 
             // textBox2
             // 
@@ -591,6 +596,7 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(240, 23);
             textBox2.TabIndex = 3;
+
             textBox2.TextChanged += textBox2_TextChanged;
             // 
             // textBox1
@@ -599,6 +605,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(240, 23);
             textBox1.TabIndex = 2;
+
             // 
             // label13
             // 
@@ -969,6 +976,8 @@
             button1.TabIndex = 10;
             button1.Text = "Select File";
             button1.UseVisualStyleBackColor = true;
+
+            button1.Click += button1_Click_1;
             // 
             // Form1
             // 
@@ -998,93 +1007,99 @@
         }
 
         #endregion
-
+        //Buttons
         private Button stepButton;
         private Button microButton;
         private Button runButton;
         private Button saveButton;
         private Button pcButton;
-        private TextBox setPCTextBox;
+        private Button button1;
+        private Button clearButton;
+        private Button saveStateButton;
+      
+        //RadioButtons
         private Panel radioPanel;
+        private Label dataLabel;
         private RadioButton radioDecimal;
         private RadioButton radioHex;
         private RadioButton radioBinary;
-        private Label dataLabel;
-        private Button clearButton;
-        private Button saveStateButton;
+      
+        //TextBoxes
+        private TextBox setPCTextBox;
+        public static TextBox PC;
+        public static TextBox HI;
+        public static TextBox LO;
+        public static TextBox textBox1;
+        public static TextBox textBox2;
+        public static TextBox textBox3;
+        public static TextBox textBox4;
+        public static TextBox textBox5;
+        public static TextBox textBox6;
+        public static TextBox textBox7;
+        public static TextBox textBox8;
+        public static TextBox textBox9;
+        public static TextBox textBox10;
+        public static TextBox textBox11;
+        public static TextBox textBox12;
+        public static TextBox textBox13;
+        public static TextBox textBox14;
+        public static TextBox textBox15;
+        public static TextBox textBox16;  
+        public static TextBox textBox17;
+        public static TextBox textBox18;
+        public static TextBox textBox19;
+        public static TextBox textBox20;
+        public static TextBox textBox21;
+        public static TextBox textBox22;
+        public static TextBox textBox23;
+        public static TextBox textBox24;
+        public static TextBox textBox25;
+        public static TextBox textBox26;
+        public static TextBox textBox27;
+        public static TextBox textBox28;
+        public static TextBox textBox29;
+        public static TextBox textBox30;
+        public static TextBox textBox31;
+        public static TextBox textBox32;
+        
+        //Register Panel
         private Panel registerPanel;
         private Label registerLabel;
-        private Label label2;
-        private Button button1;
-        public static TextBox textBox13;
-        public static TextBox textBox12;
-        public static TextBox textBox11;
-        public static TextBox textBox10;
-        public static TextBox textBox9;
-        public static TextBox textBox8;
-        public static TextBox textBox7;
-        private TextBox textBox6;
-        private TextBox textBox5;
-        private TextBox textBox4;
-        public static TextBox textBox3;
-        private TextBox textBox1;
-        private Label label13;
-        private Label label12;
-        private Label label11;
-        private Label label10;
-        private Label label9;
-        private Label label8;
-        private Label label7;
-        private Label label6;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        public static TextBox textBox24;
-        public static TextBox LO;
-        public static TextBox textBox23;
-        public static TextBox HI;
-        public static TextBox textBox22;
-        
-        public static TextBox textBox21;
-        public static TextBox textBox32;
-        public static TextBox textBox20;
-        public static TextBox textBox31;
-        public static TextBox textBox19;
-        public static TextBox textBox30;
-        public static TextBox textBox18;
-        public static TextBox textBox29;
-        public static TextBox textBox17;
-        public static TextBox textBox28;
-        public static TextBox textBox27;
-        public static TextBox textBox16;
-        public static TextBox textBox26;
-        public static TextBox textBox15;
-        public static TextBox textBox25;
-        public static TextBox textBox14;
-        private Label label35;
-        private Label label24;
-        private Label label34;
-        private Label label23;
-        private Label label33;
-        private Label label22;
-        private Label label32;
-        private Label label21;
-        private Label label31;
-        private Label label20;
-        private Label label30;
-        private Label label19;
-        private Label label29;
-        private Label label18;
-        private Label label28;
-        private Label label17;
-        private Label label27;
-        private Label label16;
-        private Label label26;
-        private Label label15;
-        private Label label25;
-        private Label label14;
         private Label label1;
-        public static TextBox textBox2;
-        public static TextBox PC;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private Label label5;
+        private Label label6;
+        private Label label7;
+        private Label label8;
+        private Label label9;
+        private Label label10;
+        private Label label11;
+        private Label label12;
+        private Label label13;
+        private Label label14;
+        private Label label15;
+        private Label label16;
+        private Label label17;
+        private Label label18;
+        private Label label19;
+        private Label label20;
+        private Label label21;
+        private Label label22;
+        private Label label23;
+        private Label label24;
+        private Label label25;
+        private Label label26;
+        private Label label27;
+        private Label label28;
+        private Label label29;
+        private Label label30;
+        private Label label31;
+        private Label label32;
+        private Label label33;
+        private Label label34;
+        private Label label35;
+        
     }
 }
