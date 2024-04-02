@@ -102,7 +102,7 @@ namespace MIPS_Emulator_SF
                         string fileContents = File.ReadAllText(filePath);
 
                         // Display the file contents in the r1TextBox
-                        r1TextBox.Text = fileContents;
+                        textBox4.Text = fileContents;
                     }
                     catch (Exception ex)
                     {

@@ -291,7 +291,7 @@
             registerPanel.Controls.Add(textBox4);
             registerPanel.Controls.Add(textBox3);
             registerPanel.Controls.Add(textBox2);
-            registerPanel.Controls.Add(r1TextBox);
+            registerPanel.Controls.Add(textBox1);
             registerPanel.Controls.Add(label13);
             registerPanel.Controls.Add(label12);
             registerPanel.Controls.Add(label11);
@@ -586,9 +586,6 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(240, 23);
             textBox3.TabIndex = 4;
-
-            textBox3.TextChanged += textBox3_TextChanged;
-
             // 
             // textBox2
             // 
@@ -596,8 +593,6 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(240, 23);
             textBox2.TabIndex = 3;
-
-            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // textBox1
             // 
