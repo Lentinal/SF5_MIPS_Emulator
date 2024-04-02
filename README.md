@@ -24,6 +24,31 @@ The object file will be a simple text file of address: bytecode that will load i
 8.	Button – Clear Cache
 9.	Save/Load Machine “state”
 
+## Final Deliverables
+1. One load operation implemented in microcode and visible on user interface
+2. One store operation implements in microcode and visible on user interface
+3. add, subtract and multiply implemented in microcode and visible on user interface. (integer only). 
+4. AND, OR, NOT, and XOR implemented in microcode and visible on user interface
+5. One caching technique implemented
+
+Extra credit:
+Floating point operations implemented and visible
+Associative caching with TLB implemented
+
+## Planner
+1. ~~Make GUI Layout~~ 
+2. Read file
+3. Separate and read opcode
+4. Write to register/memory
+5. Create Add/Subtract fuction
+6. Create Multiply/Divide function
+7. Create Compare function
+8. Create Jump function
+9. Create Step/microstep function
+10. Implement GUI Button calls
+11. Implement GUI textbox calls
+
+
 ## Phase 1 Febuary 23, 2024
 1.	Teams formed and submitted to Scott – so he can create in Canvas
 2.	GitHUB Repo for source control created by team, or Scott. Scott is a member of each team’s repo
