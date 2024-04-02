@@ -583,6 +583,7 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(240, 23);
             textBox3.TabIndex = 4;
+            textBox3.TextChanged += textBox3_TextChanged;
             // 
             // textBox2
             // 
@@ -1015,18 +1016,17 @@
         private Label registerLabel;
         private Label label2;
         private Button button1;
-        private TextBox textBox13;
-        private TextBox textBox12;
-        private TextBox textBox11;
-        private TextBox textBox10;
-        private TextBox textBox9;
-        private TextBox textBox8;
-        private TextBox textBox7;
+        public static TextBox textBox13;
+        public static TextBox textBox12;
+        public static TextBox textBox11;
+        public static TextBox textBox10;
+        public static TextBox textBox9;
+        public static TextBox textBox8;
+        public static TextBox textBox7;
         private TextBox textBox6;
         private TextBox textBox5;
         private TextBox textBox4;
-        private TextBox textBox3;
-        public static TextBox textBox2;
+        public static TextBox textBox3;
         private TextBox textBox1;
         private Label label13;
         private Label label12;
@@ -1039,28 +1039,28 @@
         private Label label5;
         private Label label4;
         private Label label3;
-        private TextBox textBox24;
-        private TextBox LO;
-        private TextBox textBox23;
-        private TextBox HI;
-        private TextBox textBox22;
-        private TextBox PC;
-        private TextBox textBox21;
-        private TextBox textBox32;
-        private TextBox textBox20;
-        private TextBox textBox31;
-        private TextBox textBox19;
-        private TextBox textBox30;
-        private TextBox textBox18;
-        private TextBox textBox29;
-        private TextBox textBox17;
-        private TextBox textBox28;
-        private TextBox textBox27;
-        private TextBox textBox16;
-        private TextBox textBox26;
-        private TextBox textBox15;
-        private TextBox textBox25;
-        private TextBox textBox14;
+        public static TextBox textBox24;
+        public static TextBox LO;
+        public static TextBox textBox23;
+        public static TextBox HI;
+        public static TextBox textBox22;
+        
+        public static TextBox textBox21;
+        public static TextBox textBox32;
+        public static TextBox textBox20;
+        public static TextBox textBox31;
+        public static TextBox textBox19;
+        public static TextBox textBox30;
+        public static TextBox textBox18;
+        public static TextBox textBox29;
+        public static TextBox textBox17;
+        public static TextBox textBox28;
+        public static TextBox textBox27;
+        public static TextBox textBox16;
+        public static TextBox textBox26;
+        public static TextBox textBox15;
+        public static TextBox textBox25;
+        public static TextBox textBox14;
         private Label label35;
         private Label label24;
         private Label label34;
@@ -1084,5 +1084,7 @@
         private Label label25;
         private Label label14;
         private Label label1;
+        public static TextBox textBox2;
+        public static TextBox PC;
     }
 }

@@ -5,17 +5,22 @@ namespace MIPS_Emulator_SF
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            textBox1.Text = Register.Rzero().ToString();
+            textBox2.Text = Register.Rat().ToString();
+            textBox3.Text = Register.Rv0().ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             String instruction = "00000001000000000100000000100000";
-            Decoder.Decode(instruction);
+            Decoder.EncodeType(instruction);
+
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -64,6 +69,11 @@ namespace MIPS_Emulator_SF
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
         {
 
         }

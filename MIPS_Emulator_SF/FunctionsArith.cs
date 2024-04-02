@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace MIPS_Emulator_SF
 {
-    /**
-     * 
-     */
-    public class Opcode
+    /// <summary>
+    /// Arithmetic Functions
+    /// Currently no functionality
+    /// </summary>
+    public class FunctionsArith
     {
         public void Add(int destination, int source1, int source2)
         {
