@@ -14,7 +14,8 @@ namespace MIPS_Emulator_SF
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            String instruction = "00000001000000000100000000100000";
+            Decoder.Decode(instruction);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -58,6 +59,11 @@ namespace MIPS_Emulator_SF
         }
 
         private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
