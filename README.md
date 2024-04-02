@@ -13,7 +13,7 @@ For this semester-long project, you and your team will write an emulator/simulat
 The object file will be a simple text file of address: bytecode that will load into your simulator’s “memory”. 
 
 
-## Functionalities:
+## Functionalities (From project proposal sheet):
 1.	Button - Perform one machine step (instruction)
 2.	Button - Perform one microcode step
 3.	Button - Run full speed until halt instruction
@@ -24,7 +24,7 @@ The object file will be a simple text file of address: bytecode that will load i
 8.	Button – Clear Cache
 9.	Save/Load Machine “state”
 
-## Final Deliverables
+## Final Deliverables (From Final Presentation sheet):
 1. One load operation implemented in microcode and visible on user interface
 2. One store operation implements in microcode and visible on user interface
 3. add, subtract and multiply implemented in microcode and visible on user interface. (integer only). 
@@ -35,9 +35,9 @@ Extra credit:
 Floating point operations implemented and visible
 Associative caching with TLB implemented
 
-## Planner
+## Workload Planner
 1. ~~Make GUI Layout~~ 
-2. Read file
+2. ~~Read file~~
 3. Separate and read opcode
 4. Write to register/memory
 5. Create Add/Subtract fuction
@@ -45,8 +45,9 @@ Associative caching with TLB implemented
 7. Create Compare function
 8. Create Jump function
 9. Create Step/microstep function
-10. Implement GUI Button calls
-11. Implement GUI textbox calls
+11. Implement GUI Button calls
+12. Implement GUI textbox calls
+13. Only allow numbers in text box(Might need to redo all text box to be rich text) oops -KA
 
 
 ## Phase 1 Febuary 23, 2024
