@@ -76,9 +76,7 @@
             textBox4 = new TextBox();
             textBox3 = new TextBox();
             textBox2 = new TextBox();
-
             textBox1 = new TextBox();
-
             label13 = new Label();
             label12 = new Label();
             label11 = new Label();
@@ -116,6 +114,8 @@
             label2 = new Label();
             registerLabel = new Label();
             button1 = new Button();
+            memoryTextBox = new TextBox();
+            label36 = new Label();
             radioPanel.SuspendLayout();
             registerPanel.SuspendLayout();
             SuspendLayout();
@@ -159,6 +159,7 @@
             saveButton.TabIndex = 3;
             saveButton.Text = "Save current values";
             saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += saveButton_Click;
             // 
             // pcButton
             // 
@@ -600,7 +601,6 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(240, 23);
             textBox1.TabIndex = 2;
-
             // 
             // label13
             // 
@@ -971,14 +971,32 @@
             button1.TabIndex = 10;
             button1.Text = "Select File";
             button1.UseVisualStyleBackColor = true;
-
             button1.Click += button1_Click_1;
+            // 
+            // memoryTextBox
+            // 
+            memoryTextBox.Location = new Point(431, 443);
+            memoryTextBox.Multiline = true;
+            memoryTextBox.Name = "memoryTextBox";
+            memoryTextBox.Size = new Size(282, 105);
+            memoryTextBox.TabIndex = 11;
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Location = new Point(431, 425);
+            label36.Name = "label36";
+            label36.Size = new Size(55, 15);
+            label36.TabIndex = 12;
+            label36.Text = "Memory:";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(874, 554);
+            Controls.Add(label36);
+            Controls.Add(memoryTextBox);
             Controls.Add(button1);
             Controls.Add(registerPanel);
             Controls.Add(saveStateButton);
@@ -1021,41 +1039,6 @@
       
         //TextBoxes
         private TextBox setPCTextBox;
-        public static TextBox PC;
-        public static TextBox HI;
-        public static TextBox LO;
-        public static TextBox textBox1;
-        public static TextBox textBox2;
-        public static TextBox textBox3;
-        public static TextBox textBox4;
-        public static TextBox textBox5;
-        public static TextBox textBox6;
-        public static TextBox textBox7;
-        public static TextBox textBox8;
-        public static TextBox textBox9;
-        public static TextBox textBox10;
-        public static TextBox textBox11;
-        public static TextBox textBox12;
-        public static TextBox textBox13;
-        public static TextBox textBox14;
-        public static TextBox textBox15;
-        public static TextBox textBox16;  
-        public static TextBox textBox17;
-        public static TextBox textBox18;
-        public static TextBox textBox19;
-        public static TextBox textBox20;
-        public static TextBox textBox21;
-        public static TextBox textBox22;
-        public static TextBox textBox23;
-        public static TextBox textBox24;
-        public static TextBox textBox25;
-        public static TextBox textBox26;
-        public static TextBox textBox27;
-        public static TextBox textBox28;
-        public static TextBox textBox29;
-        public static TextBox textBox30;
-        public static TextBox textBox31;
-        public static TextBox textBox32;
         
         //Register Panel
         private Panel registerPanel;
@@ -1095,6 +1078,42 @@
         private Label label33;
         private Label label34;
         private Label label35;
-        
+        private TextBox memoryTextBox;
+        private Label label36;
+        public TextBox PC;
+        public TextBox HI;
+        public TextBox LO;
+        public TextBox textBox1;
+        public TextBox textBox2;
+        public TextBox textBox3;
+        public TextBox textBox4;
+        public TextBox textBox5;
+        public TextBox textBox6;
+        public TextBox textBox7;
+        public TextBox textBox8;
+        public TextBox textBox9;
+        public TextBox textBox10;
+        public TextBox textBox11;
+        public TextBox textBox12;
+        public TextBox textBox13;
+        public TextBox textBox14;
+        public TextBox textBox15;
+        public TextBox textBox16;
+        public TextBox textBox17;
+        public TextBox textBox18;
+        public TextBox textBox19;
+        public TextBox textBox20;
+        public TextBox textBox21;
+        public TextBox textBox22;
+        public TextBox textBox23;
+        public TextBox textBox24;
+        public TextBox textBox25;
+        public TextBox textBox26;
+        public TextBox textBox27;
+        public TextBox textBox28;
+        public TextBox textBox29;
+        public TextBox textBox30;
+        public TextBox textBox31;
+        public TextBox textBox32;
     }
 }
