@@ -7,14 +7,21 @@ namespace MIPS_Emulator_SF
         public Form1()
         {
             InitializeComponent();
+            foreach (Control control in registerPanel.Controls)
+            {
+                if (control is TextBox text && text.Name.StartsWith("textBox"))
+                {
+                    text.Text = "0000000000000000000000000000000";
+                }
+            }
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            textBox1.Text = Register.Rzero().ToString();
-            textBox2.Text = Register.Rat().ToString();
-            textBox3.Text = Register.Rv0().ToString();
+            //textBox1.Text = Register.Rzero().ToString();
+            //textBox2.Text = Register.Rat().ToString();
+            //textBox3.Text = Register.Rv0().ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
