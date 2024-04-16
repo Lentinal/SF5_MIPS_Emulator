@@ -16,7 +16,7 @@ namespace MIPS_Emulator_SF
         /// * Splits instruction
         /// </summary>
         /// <param name="instruction"></param>
-        public static void EncodeType(string instruction)
+        public static String EncodeType(string instruction)
         {
             /* Proof of concept
              * to be decoded
@@ -28,24 +28,43 @@ namespace MIPS_Emulator_SF
             String opcode = instruction.Substring(0,6);
             //need to check if its register encoding, immediate encoding, or jump
 
+            switch(opcode)
+            {
+                case "000000":
+                    return opcode+ " " + registerDecode(instruction);
+                    //break;
+
+                case "000010":
+                case "000011":
+                case "001001":
+                case "001000":
+                    return opcode + " " + jump(instruction);
+                    //break;
+
+                default:
+                    return opcode + " " + immediateDecode(instruction);
+                    //break;
+
+            }
+
+
             //Testing to display to the textbox forms
-            //Form1.textBox2.Text = opcode;
-            //Form1.textBox3.Text = instruction;
-        }
-
-        public static void RegisterDecode() 
-        { 
-        
-        }
-
-        public static void ImmediateDecode() 
-        { 
 
         }
 
-        public static void Jump()
+        private static String registerDecode(string instruction) 
         {
+            return "this is R-type";
+        }
 
+        private static String immediateDecode(string instruction) 
+        {
+            return "this is I-Type";
+        }
+
+        private static String jump(string instruction)
+        {
+            return "this si j-type";
         }
 
 

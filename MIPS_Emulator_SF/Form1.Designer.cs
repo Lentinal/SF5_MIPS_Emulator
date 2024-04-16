@@ -133,7 +133,7 @@
             stepButton.Text = "Step 1";
             stepButton.TextImageRelation = TextImageRelation.TextBeforeImage;
             stepButton.UseVisualStyleBackColor = true;
-            stepButton.Click += button1_Click;
+            stepButton.Click += stepButtonClick;
             // 
             // microButton
             // 
@@ -152,6 +152,7 @@
             runButton.TabIndex = 2;
             runButton.Text = "Run until stop";
             runButton.UseVisualStyleBackColor = true;
+            runButton.Click += runButton_Click;
             // 
             // saveButton
             // 
@@ -213,7 +214,7 @@
             radioDecimal.TabStop = true;
             radioDecimal.Text = "Decimal";
             radioDecimal.UseVisualStyleBackColor = true;
-            radioDecimal.CheckedChanged += radioButton3_CheckedChanged;
+            radioDecimal.CheckedChanged += radioDecimal_CheckedChanged;
             // 
             // radioHex
             // 
@@ -236,7 +237,7 @@
             radioBinary.TabStop = true;
             radioBinary.Text = "Binary";
             radioBinary.UseVisualStyleBackColor = true;
-            radioBinary.CheckedChanged += radioButton1_CheckedChanged;
+            radioBinary.CheckedChanged += radioBinary_CheckedChanged;
             // 
             // clearButton
             // 
@@ -246,7 +247,7 @@
             clearButton.TabIndex = 7;
             clearButton.Text = "Clear cache";
             clearButton.UseVisualStyleBackColor = true;
-            clearButton.Click += button6_Click;
+            clearButton.Click += clearButton_Click;
             // 
             // saveStateButton
             // 
@@ -941,15 +942,15 @@
             registerLabel.TabIndex = 0;
             registerLabel.Text = "Registers";
             // 
-            // button1
+            // File button
             // 
             button1.Location = new Point(868, 165);
-            button1.Name = "button1";
+            button1.Name = "fileButton";
             button1.Size = new Size(128, 50);
             button1.TabIndex = 10;
             button1.Text = "Select File";
             button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click_1;
+            button1.Click += fileButton_Click;
             // 
             // memoryTextBox
             // 

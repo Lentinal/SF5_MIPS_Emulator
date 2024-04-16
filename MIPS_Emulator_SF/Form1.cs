@@ -18,33 +18,27 @@ namespace MIPS_Emulator_SF
             }
 
         }
+        private void Form1_Load(object sender, EventArgs e) //Delanie was here
+        {
 
+        }
+
+        //Binary Convert
         private static String convertToBinary(int number)
         {
             string binaryString = Convert.ToString(number, 2); // Convert to binary string
             int length = binaryString.Length;
             int neededZeros = 32 - length;
-            if (length != 32)                                                   
+            if (length != 32)
             {
-                    binaryString = binaryString.PadLeft(neededZeros, '0'); // I want to add zeros until the length is 32 bits
+                binaryString = binaryString.PadLeft(neededZeros, '0'); // I want to add zeros until the length is 32 bits
             }
             return binaryString;
         }
 
-        private void Form1_Load(object sender, EventArgs e) //Delanie was here
-        {
-            
-        }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            String instruction = "00000001000000000100000000100000";
-            Decoder.EncodeType(instruction);
-
-
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        //BinaryRadio
+        private void radioBinary_CheckedChanged(object sender, EventArgs e)
         {
             foreach (Control control in registerPanel.Controls)
             {
@@ -58,7 +52,8 @@ namespace MIPS_Emulator_SF
             }
         }
 
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        //DecimalRadio
+        private void radioDecimal_CheckedChanged(object sender, EventArgs e)
         {
             foreach (Control control in registerPanel.Controls)
             {
@@ -71,12 +66,22 @@ namespace MIPS_Emulator_SF
             }
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        //Step button
+        private void stepButtonClick(object sender, EventArgs e)
+        {
+            String getText = setPCTextBox.Text;
+            textBox1.Text= Decoder.EncodeType(getText);
+
+
+        }
+
+        //Clear Button
+        private void clearButton_Click(object sender, EventArgs e)
         {
 
         }
 
-
+        //Set PC button
         private void pcButton_Click(object sender, EventArgs e)
         {
             if (setPCTextBox != null)
@@ -85,13 +90,20 @@ namespace MIPS_Emulator_SF
             }
         }
 
+        //Run button
+        private void runButton_Click(object sender, EventArgs e)
+        {
+            
+        }
 
-        /// <summary>
-        /// Text file opener
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button1_Click_1(object sender, EventArgs e)
+        //Save button
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "10";
+        }
+
+        //File button
+        private void fileButton_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -117,10 +129,6 @@ namespace MIPS_Emulator_SF
                 }
             }
         }
-
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = "10";
-        }
     }
+
 }
