@@ -117,9 +117,13 @@
             memoryTextBox = new TextBox();
             label36 = new Label();
             panel1 = new Panel();
+            textBox33 = new TextBox();
+            label37 = new Label();
+            panel2 = new Panel();
             radioPanel.SuspendLayout();
             registerPanel.SuspendLayout();
             panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // stepButton
@@ -959,6 +963,7 @@
             memoryTextBox.Multiline = true;
             memoryTextBox.Name = "memoryTextBox";
             memoryTextBox.ReadOnly = true;
+            memoryTextBox.ScrollBars = ScrollBars.Vertical;
             memoryTextBox.Size = new Size(813, 227);
             memoryTextBox.TabIndex = 11;
             // 
@@ -978,14 +983,46 @@
             panel1.Controls.Add(label36);
             panel1.Location = new Point(12, 556);
             panel1.Name = "panel1";
-            panel1.Size = new Size(842, 297);
+            panel1.Size = new Size(842, 283);
             panel1.TabIndex = 13;
+            // 
+            // textBox33
+            // 
+            textBox33.AcceptsReturn = true;
+            textBox33.AcceptsTab = true;
+            textBox33.Location = new Point(15, 39);
+            textBox33.Multiline = true;
+            textBox33.Name = "textBox33";
+            textBox33.ReadOnly = true;
+            textBox33.ScrollBars = ScrollBars.Vertical;
+            textBox33.Size = new Size(353, 227);
+            textBox33.TabIndex = 14;
+            // 
+            // label37
+            // 
+            label37.AutoSize = true;
+            label37.Font = new Font("Segoe UI", 12F);
+            label37.Location = new Point(18, 13);
+            label37.Name = "label37";
+            label37.Size = new Size(69, 21);
+            label37.TabIndex = 15;
+            label37.Text = "Console:";
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(label37);
+            panel2.Controls.Add(textBox33);
+            panel2.Location = new Point(875, 556);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(384, 283);
+            panel2.TabIndex = 16;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1271, 863);
+            ClientSize = new Size(1271, 845);
+            Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(button1);
             Controls.Add(registerPanel);
@@ -1007,6 +1044,8 @@
             registerPanel.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1110,5 +1149,10 @@
         //Memory panel
         private Panel panel1;
         private TextBox memoryTextBox;
+
+        //Console
+        private Label label37;
+        private Panel panel2;
+        public static TextBox textBox33;
     }
 }

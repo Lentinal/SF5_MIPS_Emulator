@@ -25,30 +25,37 @@ namespace MIPS_Emulator_SF
              * add $t0, $t0, $zero # sum = 0 
              * 
              */
-            String opcode = instruction.Substring(0,6);
-            //need to check if its register encoding, immediate encoding, or jump
-
-            switch(opcode)
+            try
             {
-                case "000000":
-                    return opcode + " " + registerDecode(instruction);
+                String opcode = instruction.Substring(0, 6);
+                //need to check if its register encoding, immediate encoding, or jump
+
+                switch (opcode)
+                {
+                    case "000000":
+                        return opcode + " " + registerDecode(instruction);
                     //break; //breaks "cant be reached" when we are setting the instruction from text box
 
-                case "000010":
-                case "000011":
-                case "001001":
-                case "001000":
-                    return opcode + " " + jump(instruction);
+                    case "000010":
+                    case "000011":
+                    case "001001":
+                    case "001000":
+                        return opcode + " " + jump(instruction);
                     //break;
 
-                default:
-                    return opcode + " " + immediateDecode(instruction);
-                    //break;
+                    default:
+                        return opcode + " " + immediateDecode(instruction);
+                        //break;
+
+                }
+
+
+            }catch(Exception e)
+            {
+                Form1.textBox33.Text += "Decoder.Encoder instruction too short or bad code: " + e.Message + "\r\n";
+                return "0000000000000000000000000000000";
 
             }
-
-
-            //Testing to display to the textbox forms
 
         }
 
@@ -66,7 +73,8 @@ namespace MIPS_Emulator_SF
             }
             catch(Exception e)
             {
-                return "Text too long" + e;
+                Form1.textBox33.Text += "registerDecoding Instruction too short or bad code: " + e.Message + "\r\n";
+                return "00000000000000000000000000000000";
             }
 
             
