@@ -116,15 +116,17 @@
             button1 = new Button();
             memoryTextBox = new TextBox();
             label36 = new Label();
+            panel1 = new Panel();
             radioPanel.SuspendLayout();
             registerPanel.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // stepButton
             // 
             stepButton.AccessibleDescription = "";
             stepButton.AccessibleName = "";
-            stepButton.Location = new Point(12, 420);
+            stepButton.Location = new Point(868, 26);
             stepButton.Name = "stepButton";
             stepButton.Size = new Size(87, 45);
             stepButton.TabIndex = 0;
@@ -135,7 +137,7 @@
             // 
             // microButton
             // 
-            microButton.Location = new Point(105, 420);
+            microButton.Location = new Point(961, 26);
             microButton.Name = "microButton";
             microButton.Size = new Size(87, 45);
             microButton.TabIndex = 1;
@@ -144,7 +146,7 @@
             // 
             // runButton
             // 
-            runButton.Location = new Point(198, 420);
+            runButton.Location = new Point(1054, 26);
             runButton.Name = "runButton";
             runButton.Size = new Size(87, 45);
             runButton.TabIndex = 2;
@@ -153,7 +155,7 @@
             // 
             // saveButton
             // 
-            saveButton.Location = new Point(12, 471);
+            saveButton.Location = new Point(868, 77);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(87, 45);
             saveButton.TabIndex = 3;
@@ -163,7 +165,7 @@
             // 
             // pcButton
             // 
-            pcButton.Location = new Point(12, 522);
+            pcButton.Location = new Point(868, 128);
             pcButton.Name = "pcButton";
             pcButton.Size = new Size(87, 26);
             pcButton.TabIndex = 4;
@@ -173,7 +175,7 @@
             // 
             // setPCTextBox
             // 
-            setPCTextBox.Location = new Point(105, 525);
+            setPCTextBox.Location = new Point(961, 131);
             setPCTextBox.Name = "setPCTextBox";
             setPCTextBox.Size = new Size(180, 23);
             setPCTextBox.TabIndex = 5;
@@ -186,7 +188,7 @@
             radioPanel.Controls.Add(radioDecimal);
             radioPanel.Controls.Add(radioHex);
             radioPanel.Controls.Add(radioBinary);
-            radioPanel.Location = new Point(291, 420);
+            radioPanel.Location = new Point(1147, 26);
             radioPanel.Name = "radioPanel";
             radioPanel.Size = new Size(116, 128);
             radioPanel.TabIndex = 6;
@@ -239,7 +241,7 @@
             // 
             // clearButton
             // 
-            clearButton.Location = new Point(105, 471);
+            clearButton.Location = new Point(961, 77);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(87, 45);
             clearButton.TabIndex = 7;
@@ -249,7 +251,7 @@
             // 
             // saveStateButton
             // 
-            saveStateButton.Location = new Point(198, 471);
+            saveStateButton.Location = new Point(1054, 77);
             saveStateButton.Name = "saveStateButton";
             saveStateButton.Size = new Size(87, 45);
             saveStateButton.TabIndex = 8;
@@ -331,12 +333,12 @@
             registerPanel.Controls.Add(registerLabel);
             registerPanel.Location = new Point(12, 12);
             registerPanel.Name = "registerPanel";
-            registerPanel.Size = new Size(850, 402);
+            registerPanel.Size = new Size(842, 516);
             registerPanel.TabIndex = 9;
             // 
             // textBox24
             // 
-            textBox24.Location = new Point(312, 356);
+            textBox24.Location = new Point(303, 240);
             textBox24.Name = "textBox24";
             textBox24.Size = new Size(240, 23);
             textBox24.TabIndex = 14;
@@ -344,7 +346,7 @@
             // 
             // LO
             // 
-            LO.Location = new Point(594, 356);
+            LO.Location = new Point(587, 98);
             LO.Name = "LO";
             LO.Size = new Size(240, 23);
             LO.TabIndex = 14;
@@ -352,7 +354,7 @@
             // 
             // textBox23
             // 
-            textBox23.Location = new Point(312, 327);
+            textBox23.Location = new Point(303, 211);
             textBox23.Name = "textBox23";
             textBox23.Size = new Size(240, 23);
             textBox23.TabIndex = 14;
@@ -360,7 +362,7 @@
             // 
             // HI
             // 
-            HI.Location = new Point(594, 327);
+            HI.Location = new Point(587, 69);
             HI.Name = "HI";
             HI.Size = new Size(240, 23);
             HI.TabIndex = 14;
@@ -368,7 +370,7 @@
             // 
             // textBox22
             // 
-            textBox22.Location = new Point(312, 298);
+            textBox22.Location = new Point(303, 182);
             textBox22.Name = "textBox22";
             textBox22.Size = new Size(240, 23);
             textBox22.TabIndex = 14;
@@ -376,7 +378,7 @@
             // 
             // PC
             // 
-            PC.Location = new Point(594, 298);
+            PC.Location = new Point(587, 40);
             PC.Name = "PC";
             PC.Size = new Size(240, 23);
             PC.TabIndex = 14;
@@ -384,7 +386,7 @@
             // 
             // textBox21
             // 
-            textBox21.Location = new Point(312, 269);
+            textBox21.Location = new Point(303, 153);
             textBox21.Name = "textBox21";
             textBox21.Size = new Size(240, 23);
             textBox21.TabIndex = 14;
@@ -392,7 +394,7 @@
             // 
             // textBox32
             // 
-            textBox32.Location = new Point(594, 240);
+            textBox32.Location = new Point(303, 472);
             textBox32.Name = "textBox32";
             textBox32.Size = new Size(240, 23);
             textBox32.TabIndex = 14;
@@ -400,7 +402,7 @@
             // 
             // textBox20
             // 
-            textBox20.Location = new Point(312, 240);
+            textBox20.Location = new Point(303, 124);
             textBox20.Name = "textBox20";
             textBox20.Size = new Size(240, 23);
             textBox20.TabIndex = 14;
@@ -408,7 +410,7 @@
             // 
             // textBox31
             // 
-            textBox31.Location = new Point(594, 211);
+            textBox31.Location = new Point(303, 443);
             textBox31.Name = "textBox31";
             textBox31.Size = new Size(240, 23);
             textBox31.TabIndex = 14;
@@ -416,7 +418,7 @@
             // 
             // textBox19
             // 
-            textBox19.Location = new Point(312, 211);
+            textBox19.Location = new Point(303, 95);
             textBox19.Name = "textBox19";
             textBox19.Size = new Size(240, 23);
             textBox19.TabIndex = 14;
@@ -424,7 +426,7 @@
             // 
             // textBox30
             // 
-            textBox30.Location = new Point(594, 182);
+            textBox30.Location = new Point(303, 414);
             textBox30.Name = "textBox30";
             textBox30.Size = new Size(240, 23);
             textBox30.TabIndex = 14;
@@ -432,7 +434,7 @@
             // 
             // textBox18
             // 
-            textBox18.Location = new Point(312, 182);
+            textBox18.Location = new Point(303, 66);
             textBox18.Name = "textBox18";
             textBox18.Size = new Size(240, 23);
             textBox18.TabIndex = 14;
@@ -440,7 +442,7 @@
             // 
             // textBox29
             // 
-            textBox29.Location = new Point(594, 153);
+            textBox29.Location = new Point(303, 385);
             textBox29.Name = "textBox29";
             textBox29.Size = new Size(240, 23);
             textBox29.TabIndex = 14;
@@ -448,7 +450,7 @@
             // 
             // textBox17
             // 
-            textBox17.Location = new Point(312, 153);
+            textBox17.Location = new Point(303, 37);
             textBox17.Name = "textBox17";
             textBox17.Size = new Size(240, 23);
             textBox17.TabIndex = 14;
@@ -456,7 +458,7 @@
             // 
             // textBox28
             // 
-            textBox28.Location = new Point(594, 124);
+            textBox28.Location = new Point(303, 356);
             textBox28.Name = "textBox28";
             textBox28.Size = new Size(240, 23);
             textBox28.TabIndex = 14;
@@ -464,7 +466,7 @@
             // 
             // textBox27
             // 
-            textBox27.Location = new Point(594, 95);
+            textBox27.Location = new Point(303, 327);
             textBox27.Name = "textBox27";
             textBox27.Size = new Size(240, 23);
             textBox27.TabIndex = 14;
@@ -472,7 +474,7 @@
             // 
             // textBox16
             // 
-            textBox16.Location = new Point(312, 124);
+            textBox16.Location = new Point(33, 472);
             textBox16.Name = "textBox16";
             textBox16.Size = new Size(240, 23);
             textBox16.TabIndex = 14;
@@ -480,7 +482,7 @@
             // 
             // textBox26
             // 
-            textBox26.Location = new Point(594, 66);
+            textBox26.Location = new Point(303, 298);
             textBox26.Name = "textBox26";
             textBox26.Size = new Size(240, 23);
             textBox26.TabIndex = 14;
@@ -488,7 +490,7 @@
             // 
             // textBox15
             // 
-            textBox15.Location = new Point(312, 95);
+            textBox15.Location = new Point(33, 443);
             textBox15.Name = "textBox15";
             textBox15.Size = new Size(240, 23);
             textBox15.TabIndex = 14;
@@ -496,7 +498,7 @@
             // 
             // textBox25
             // 
-            textBox25.Location = new Point(594, 37);
+            textBox25.Location = new Point(303, 269);
             textBox25.Name = "textBox25";
             textBox25.Size = new Size(240, 23);
             textBox25.TabIndex = 14;
@@ -504,7 +506,7 @@
             // 
             // textBox14
             // 
-            textBox14.Location = new Point(312, 66);
+            textBox14.Location = new Point(33, 414);
             textBox14.Name = "textBox14";
             textBox14.Size = new Size(240, 23);
             textBox14.TabIndex = 14;
@@ -512,7 +514,7 @@
             // 
             // textBox13
             // 
-            textBox13.Location = new Point(312, 37);
+            textBox13.Location = new Point(33, 385);
             textBox13.Name = "textBox13";
             textBox13.Size = new Size(240, 23);
             textBox13.TabIndex = 14;
@@ -715,7 +717,7 @@
             // label35
             // 
             label35.AutoSize = true;
-            label35.Location = new Point(575, 359);
+            label35.Location = new Point(568, 101);
             label35.Name = "label35";
             label35.Size = new Size(22, 15);
             label35.TabIndex = 1;
@@ -725,7 +727,7 @@
             // label24
             // 
             label24.AutoSize = true;
-            label24.Location = new Point(293, 359);
+            label24.Location = new Point(284, 243);
             label24.Name = "label24";
             label24.Size = new Size(19, 15);
             label24.TabIndex = 1;
@@ -735,7 +737,7 @@
             // label34
             // 
             label34.AutoSize = true;
-            label34.Location = new Point(575, 330);
+            label34.Location = new Point(568, 72);
             label34.Name = "label34";
             label34.Size = new Size(19, 15);
             label34.TabIndex = 1;
@@ -745,7 +747,7 @@
             // label23
             // 
             label23.AutoSize = true;
-            label23.Location = new Point(293, 330);
+            label23.Location = new Point(284, 214);
             label23.Name = "label23";
             label23.Size = new Size(19, 15);
             label23.TabIndex = 1;
@@ -755,7 +757,7 @@
             // label33
             // 
             label33.AutoSize = true;
-            label33.Location = new Point(575, 301);
+            label33.Location = new Point(568, 43);
             label33.Name = "label33";
             label33.Size = new Size(22, 15);
             label33.TabIndex = 1;
@@ -765,7 +767,7 @@
             // label22
             // 
             label22.AutoSize = true;
-            label22.Location = new Point(293, 301);
+            label22.Location = new Point(284, 185);
             label22.Name = "label22";
             label22.Size = new Size(19, 15);
             label22.TabIndex = 1;
@@ -775,7 +777,7 @@
             // label32
             // 
             label32.AutoSize = true;
-            label32.Location = new Point(575, 243);
+            label32.Location = new Point(284, 475);
             label32.Name = "label32";
             label32.Size = new Size(19, 15);
             label32.TabIndex = 1;
@@ -785,7 +787,7 @@
             // label21
             // 
             label21.AutoSize = true;
-            label21.Location = new Point(293, 272);
+            label21.Location = new Point(284, 156);
             label21.Name = "label21";
             label21.Size = new Size(19, 15);
             label21.TabIndex = 1;
@@ -795,7 +797,7 @@
             // label31
             // 
             label31.AutoSize = true;
-            label31.Location = new Point(575, 214);
+            label31.Location = new Point(284, 446);
             label31.Name = "label31";
             label31.Size = new Size(19, 15);
             label31.TabIndex = 1;
@@ -805,7 +807,7 @@
             // label20
             // 
             label20.AutoSize = true;
-            label20.Location = new Point(293, 243);
+            label20.Location = new Point(284, 127);
             label20.Name = "label20";
             label20.Size = new Size(19, 15);
             label20.TabIndex = 1;
@@ -815,7 +817,7 @@
             // label30
             // 
             label30.AutoSize = true;
-            label30.Location = new Point(575, 185);
+            label30.Location = new Point(284, 417);
             label30.Name = "label30";
             label30.Size = new Size(19, 15);
             label30.TabIndex = 1;
@@ -825,7 +827,7 @@
             // label19
             // 
             label19.AutoSize = true;
-            label19.Location = new Point(293, 214);
+            label19.Location = new Point(284, 98);
             label19.Name = "label19";
             label19.Size = new Size(19, 15);
             label19.TabIndex = 1;
@@ -835,7 +837,7 @@
             // label29
             // 
             label29.AutoSize = true;
-            label29.Location = new Point(575, 156);
+            label29.Location = new Point(284, 388);
             label29.Name = "label29";
             label29.Size = new Size(19, 15);
             label29.TabIndex = 1;
@@ -845,7 +847,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new Point(293, 185);
+            label18.Location = new Point(284, 69);
             label18.Name = "label18";
             label18.Size = new Size(19, 15);
             label18.TabIndex = 1;
@@ -855,7 +857,7 @@
             // label28
             // 
             label28.AutoSize = true;
-            label28.Location = new Point(575, 127);
+            label28.Location = new Point(284, 359);
             label28.Name = "label28";
             label28.Size = new Size(19, 15);
             label28.TabIndex = 1;
@@ -865,7 +867,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new Point(293, 156);
+            label17.Location = new Point(284, 40);
             label17.Name = "label17";
             label17.Size = new Size(19, 15);
             label17.TabIndex = 1;
@@ -875,7 +877,7 @@
             // label27
             // 
             label27.AutoSize = true;
-            label27.Location = new Point(575, 98);
+            label27.Location = new Point(284, 330);
             label27.Name = "label27";
             label27.Size = new Size(19, 15);
             label27.TabIndex = 1;
@@ -885,7 +887,7 @@
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(293, 127);
+            label16.Location = new Point(14, 475);
             label16.Name = "label16";
             label16.Size = new Size(19, 15);
             label16.TabIndex = 1;
@@ -895,7 +897,7 @@
             // label26
             // 
             label26.AutoSize = true;
-            label26.Location = new Point(575, 69);
+            label26.Location = new Point(284, 301);
             label26.Name = "label26";
             label26.Size = new Size(19, 15);
             label26.TabIndex = 1;
@@ -905,7 +907,7 @@
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(293, 98);
+            label15.Location = new Point(14, 446);
             label15.Name = "label15";
             label15.Size = new Size(19, 15);
             label15.TabIndex = 1;
@@ -915,7 +917,7 @@
             // label25
             // 
             label25.AutoSize = true;
-            label25.Location = new Point(575, 40);
+            label25.Location = new Point(284, 272);
             label25.Name = "label25";
             label25.Size = new Size(19, 15);
             label25.TabIndex = 1;
@@ -925,7 +927,7 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(293, 69);
+            label14.Location = new Point(14, 417);
             label14.Name = "label14";
             label14.Size = new Size(19, 15);
             label14.TabIndex = 1;
@@ -935,7 +937,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(293, 40);
+            label1.Location = new Point(14, 388);
             label1.Name = "label1";
             label1.Size = new Size(19, 15);
             label1.TabIndex = 1;
@@ -965,7 +967,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(734, 492);
+            button1.Location = new Point(868, 165);
             button1.Name = "button1";
             button1.Size = new Size(128, 50);
             button1.TabIndex = 10;
@@ -975,28 +977,38 @@
             // 
             // memoryTextBox
             // 
-            memoryTextBox.Location = new Point(431, 443);
+            memoryTextBox.Font = new Font("Segoe UI", 12F);
+            memoryTextBox.Location = new Point(14, 39);
             memoryTextBox.Multiline = true;
             memoryTextBox.Name = "memoryTextBox";
-            memoryTextBox.Size = new Size(282, 105);
+            memoryTextBox.Size = new Size(813, 227);
             memoryTextBox.TabIndex = 11;
             // 
             // label36
             // 
             label36.AutoSize = true;
-            label36.Location = new Point(431, 425);
+            label36.Font = new Font("Segoe UI", 12F);
+            label36.Location = new Point(14, 13);
             label36.Name = "label36";
-            label36.Size = new Size(55, 15);
+            label36.Size = new Size(72, 21);
             label36.TabIndex = 12;
             label36.Text = "Memory:";
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(memoryTextBox);
+            panel1.Controls.Add(label36);
+            panel1.Location = new Point(12, 556);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(842, 297);
+            panel1.TabIndex = 13;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(874, 554);
-            Controls.Add(label36);
-            Controls.Add(memoryTextBox);
+            ClientSize = new Size(1271, 863);
+            Controls.Add(panel1);
             Controls.Add(button1);
             Controls.Add(registerPanel);
             Controls.Add(saveStateButton);
@@ -1015,6 +1027,8 @@
             radioPanel.PerformLayout();
             registerPanel.ResumeLayout(false);
             registerPanel.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1115,5 +1129,6 @@
         public TextBox textBox30;
         public TextBox textBox31;
         public TextBox textBox32;
+        private Panel panel1;
     }
 }
