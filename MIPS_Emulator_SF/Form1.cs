@@ -44,11 +44,6 @@ namespace MIPS_Emulator_SF
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             foreach (Control control in registerPanel.Controls)
@@ -81,31 +76,6 @@ namespace MIPS_Emulator_SF
 
         }
 
-        private void R1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox13_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
 
         private void pcButton_Click(object sender, EventArgs e)
         {
@@ -115,6 +85,12 @@ namespace MIPS_Emulator_SF
             }
         }
 
+
+        /// <summary>
+        /// Text file opener
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click_1(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())

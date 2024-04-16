@@ -179,7 +179,6 @@
             setPCTextBox.Name = "setPCTextBox";
             setPCTextBox.Size = new Size(180, 23);
             setPCTextBox.TabIndex = 5;
-            setPCTextBox.TextChanged += textBox1_TextChanged;
             // 
             // radioPanel
             // 
@@ -340,190 +339,192 @@
             // 
             textBox24.Location = new Point(303, 240);
             textBox24.Name = "textBox24";
+            textBox24.ReadOnly = true;
             textBox24.Size = new Size(240, 23);
             textBox24.TabIndex = 14;
-            textBox24.TextChanged += textBox13_TextChanged;
             // 
             // LO
             // 
             LO.Location = new Point(587, 98);
             LO.Name = "LO";
+            LO.ReadOnly = true;
             LO.Size = new Size(240, 23);
             LO.TabIndex = 14;
-            LO.TextChanged += textBox13_TextChanged;
             // 
             // textBox23
             // 
             textBox23.Location = new Point(303, 211);
             textBox23.Name = "textBox23";
+            textBox23.ReadOnly = true;
             textBox23.Size = new Size(240, 23);
             textBox23.TabIndex = 14;
-            textBox23.TextChanged += textBox13_TextChanged;
             // 
             // HI
             // 
             HI.Location = new Point(587, 69);
             HI.Name = "HI";
+            HI.ReadOnly = true;
             HI.Size = new Size(240, 23);
             HI.TabIndex = 14;
-            HI.TextChanged += textBox13_TextChanged;
             // 
             // textBox22
             // 
             textBox22.Location = new Point(303, 182);
             textBox22.Name = "textBox22";
+            textBox22.ReadOnly = true;
             textBox22.Size = new Size(240, 23);
             textBox22.TabIndex = 14;
-            textBox22.TextChanged += textBox13_TextChanged;
             // 
             // PC
             // 
             PC.Location = new Point(587, 40);
             PC.Name = "PC";
+            PC.ReadOnly = true;
             PC.Size = new Size(240, 23);
             PC.TabIndex = 14;
-            PC.TextChanged += textBox13_TextChanged;
             // 
             // textBox21
             // 
             textBox21.Location = new Point(303, 153);
             textBox21.Name = "textBox21";
+            textBox21.ReadOnly = true;
             textBox21.Size = new Size(240, 23);
             textBox21.TabIndex = 14;
-            textBox21.TextChanged += textBox13_TextChanged;
+
             // 
             // textBox32
             // 
             textBox32.Location = new Point(303, 472);
             textBox32.Name = "textBox32";
+            textBox32.ReadOnly = true;
             textBox32.Size = new Size(240, 23);
             textBox32.TabIndex = 14;
-            textBox32.TextChanged += textBox13_TextChanged;
             // 
             // textBox20
             // 
             textBox20.Location = new Point(303, 124);
             textBox20.Name = "textBox20";
+            textBox20.ReadOnly = true;
             textBox20.Size = new Size(240, 23);
             textBox20.TabIndex = 14;
-            textBox20.TextChanged += textBox13_TextChanged;
             // 
             // textBox31
             // 
             textBox31.Location = new Point(303, 443);
             textBox31.Name = "textBox31";
+            textBox31.ReadOnly = true;
             textBox31.Size = new Size(240, 23);
             textBox31.TabIndex = 14;
-            textBox31.TextChanged += textBox13_TextChanged;
             // 
             // textBox19
             // 
             textBox19.Location = new Point(303, 95);
             textBox19.Name = "textBox19";
+            textBox19.ReadOnly = true;
             textBox19.Size = new Size(240, 23);
             textBox19.TabIndex = 14;
-            textBox19.TextChanged += textBox13_TextChanged;
             // 
             // textBox30
             // 
             textBox30.Location = new Point(303, 414);
             textBox30.Name = "textBox30";
+            textBox30.ReadOnly = true;
             textBox30.Size = new Size(240, 23);
             textBox30.TabIndex = 14;
-            textBox30.TextChanged += textBox13_TextChanged;
             // 
             // textBox18
             // 
             textBox18.Location = new Point(303, 66);
             textBox18.Name = "textBox18";
+            textBox18.ReadOnly = true;
             textBox18.Size = new Size(240, 23);
             textBox18.TabIndex = 14;
-            textBox18.TextChanged += textBox13_TextChanged;
             // 
             // textBox29
             // 
             textBox29.Location = new Point(303, 385);
             textBox29.Name = "textBox29";
+            textBox29.ReadOnly = true;
             textBox29.Size = new Size(240, 23);
             textBox29.TabIndex = 14;
-            textBox29.TextChanged += textBox13_TextChanged;
             // 
             // textBox17
             // 
             textBox17.Location = new Point(303, 37);
             textBox17.Name = "textBox17";
+            textBox17.ReadOnly = true;
             textBox17.Size = new Size(240, 23);
             textBox17.TabIndex = 14;
-            textBox17.TextChanged += textBox13_TextChanged;
             // 
             // textBox28
             // 
             textBox28.Location = new Point(303, 356);
             textBox28.Name = "textBox28";
+            textBox28.ReadOnly = true;
             textBox28.Size = new Size(240, 23);
             textBox28.TabIndex = 14;
-            textBox28.TextChanged += textBox13_TextChanged;
             // 
             // textBox27
             // 
             textBox27.Location = new Point(303, 327);
             textBox27.Name = "textBox27";
+            textBox27.ReadOnly = true;
             textBox27.Size = new Size(240, 23);
             textBox27.TabIndex = 14;
-            textBox27.TextChanged += textBox13_TextChanged;
             // 
             // textBox16
             // 
             textBox16.Location = new Point(33, 472);
             textBox16.Name = "textBox16";
+            textBox16.ReadOnly = true;
             textBox16.Size = new Size(240, 23);
             textBox16.TabIndex = 14;
-            textBox16.TextChanged += textBox13_TextChanged;
             // 
             // textBox26
             // 
             textBox26.Location = new Point(303, 298);
             textBox26.Name = "textBox26";
+            textBox26.ReadOnly = true;
             textBox26.Size = new Size(240, 23);
             textBox26.TabIndex = 14;
-            textBox26.TextChanged += textBox13_TextChanged;
             // 
             // textBox15
             // 
             textBox15.Location = new Point(33, 443);
             textBox15.Name = "textBox15";
+            textBox15.ReadOnly = true;
             textBox15.Size = new Size(240, 23);
             textBox15.TabIndex = 14;
-            textBox15.TextChanged += textBox13_TextChanged;
             // 
             // textBox25
             // 
             textBox25.Location = new Point(303, 269);
             textBox25.Name = "textBox25";
+            textBox25.ReadOnly = true;
             textBox25.Size = new Size(240, 23);
             textBox25.TabIndex = 14;
-            textBox25.TextChanged += textBox13_TextChanged;
             // 
             // textBox14
             // 
             textBox14.Location = new Point(33, 414);
             textBox14.Name = "textBox14";
+            textBox14.ReadOnly = true;
             textBox14.Size = new Size(240, 23);
             textBox14.TabIndex = 14;
-            textBox14.TextChanged += textBox13_TextChanged;
             // 
             // textBox13
             // 
             textBox13.Location = new Point(33, 385);
             textBox13.Name = "textBox13";
+            textBox13.ReadOnly = true;
             textBox13.Size = new Size(240, 23);
             textBox13.TabIndex = 14;
-            textBox13.TextChanged += textBox13_TextChanged;
             // 
             // textBox12
             // 
             textBox12.Location = new Point(33, 356);
             textBox12.Name = "textBox12";
+            textBox12.ReadOnly = true;
             textBox12.Size = new Size(240, 23);
             textBox12.TabIndex = 13;
             // 
@@ -531,6 +532,7 @@
             // 
             textBox11.Location = new Point(33, 327);
             textBox11.Name = "textBox11";
+            textBox11.ReadOnly = true;
             textBox11.Size = new Size(240, 23);
             textBox11.TabIndex = 12;
             // 
@@ -538,6 +540,7 @@
             // 
             textBox10.Location = new Point(33, 298);
             textBox10.Name = "textBox10";
+            textBox10.ReadOnly = true;
             textBox10.Size = new Size(240, 23);
             textBox10.TabIndex = 11;
             // 
@@ -545,6 +548,7 @@
             // 
             textBox9.Location = new Point(33, 269);
             textBox9.Name = "textBox9";
+            textBox9.ReadOnly = true;
             textBox9.Size = new Size(240, 23);
             textBox9.TabIndex = 10;
             // 
@@ -552,6 +556,7 @@
             // 
             textBox8.Location = new Point(33, 240);
             textBox8.Name = "textBox8";
+            textBox8.ReadOnly = true;
             textBox8.Size = new Size(240, 23);
             textBox8.TabIndex = 9;
             // 
@@ -559,6 +564,7 @@
             // 
             textBox7.Location = new Point(33, 211);
             textBox7.Name = "textBox7";
+            textBox7.ReadOnly = true;
             textBox7.Size = new Size(240, 23);
             textBox7.TabIndex = 8;
             // 
@@ -566,6 +572,7 @@
             // 
             textBox6.Location = new Point(33, 182);
             textBox6.Name = "textBox6";
+            textBox6.ReadOnly = true;
             textBox6.Size = new Size(240, 23);
             textBox6.TabIndex = 7;
             // 
@@ -573,6 +580,7 @@
             // 
             textBox5.Location = new Point(33, 153);
             textBox5.Name = "textBox5";
+            textBox5.ReadOnly = true;
             textBox5.Size = new Size(240, 23);
             textBox5.TabIndex = 6;
             // 
@@ -580,6 +588,7 @@
             // 
             textBox4.Location = new Point(33, 124);
             textBox4.Name = "textBox4";
+            textBox4.ReadOnly = true;
             textBox4.Size = new Size(240, 23);
             textBox4.TabIndex = 5;
             // 
@@ -587,6 +596,7 @@
             // 
             textBox3.Location = new Point(33, 95);
             textBox3.Name = "textBox3";
+            textBox3.ReadOnly = true;
             textBox3.Size = new Size(240, 23);
             textBox3.TabIndex = 4;
             // 
@@ -594,6 +604,7 @@
             // 
             textBox2.Location = new Point(33, 66);
             textBox2.Name = "textBox2";
+            textBox2.ReadOnly = true;
             textBox2.Size = new Size(240, 23);
             textBox2.TabIndex = 3;
             // 
@@ -601,6 +612,7 @@
             // 
             textBox1.Location = new Point(33, 37);
             textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
             textBox1.Size = new Size(240, 23);
             textBox1.TabIndex = 2;
             // 
@@ -612,7 +624,6 @@
             label13.Size = new Size(19, 15);
             label13.TabIndex = 1;
             label13.Text = "12";
-            label13.Click += label2_Click;
             // 
             // label12
             // 
@@ -622,7 +633,6 @@
             label12.Size = new Size(19, 15);
             label12.TabIndex = 1;
             label12.Text = "11";
-            label12.Click += label2_Click;
             // 
             // label11
             // 
@@ -632,7 +642,6 @@
             label11.Size = new Size(19, 15);
             label11.TabIndex = 1;
             label11.Text = "10";
-            label11.Click += label2_Click;
             // 
             // label10
             // 
@@ -642,7 +651,6 @@
             label10.Size = new Size(13, 15);
             label10.TabIndex = 1;
             label10.Text = "9";
-            label10.Click += label2_Click;
             // 
             // label9
             // 
@@ -652,7 +660,6 @@
             label9.Size = new Size(13, 15);
             label9.TabIndex = 1;
             label9.Text = "8";
-            label9.Click += label2_Click;
             // 
             // label8
             // 
@@ -662,7 +669,6 @@
             label8.Size = new Size(13, 15);
             label8.TabIndex = 1;
             label8.Text = "7";
-            label8.Click += label2_Click;
             // 
             // label7
             // 
@@ -672,7 +678,6 @@
             label7.Size = new Size(13, 15);
             label7.TabIndex = 1;
             label7.Text = "6";
-            label7.Click += label2_Click;
             // 
             // label6
             // 
@@ -682,7 +687,6 @@
             label6.Size = new Size(13, 15);
             label6.TabIndex = 1;
             label6.Text = "5";
-            label6.Click += label2_Click;
             // 
             // label5
             // 
@@ -692,7 +696,6 @@
             label5.Size = new Size(13, 15);
             label5.TabIndex = 1;
             label5.Text = "4";
-            label5.Click += label2_Click;
             // 
             // label4
             // 
@@ -702,7 +705,6 @@
             label4.Size = new Size(13, 15);
             label4.TabIndex = 1;
             label4.Text = "3";
-            label4.Click += label2_Click;
             // 
             // label3
             // 
@@ -712,7 +714,6 @@
             label3.Size = new Size(13, 15);
             label3.TabIndex = 1;
             label3.Text = "2";
-            label3.Click += label2_Click;
             // 
             // label35
             // 
@@ -722,7 +723,6 @@
             label35.Size = new Size(22, 15);
             label35.TabIndex = 1;
             label35.Text = "LO";
-            label35.Click += label2_Click;
             // 
             // label24
             // 
@@ -732,7 +732,6 @@
             label24.Size = new Size(19, 15);
             label24.TabIndex = 1;
             label24.Text = "24";
-            label24.Click += label2_Click;
             // 
             // label34
             // 
@@ -742,7 +741,6 @@
             label34.Size = new Size(19, 15);
             label34.TabIndex = 1;
             label34.Text = "HI";
-            label34.Click += label2_Click;
             // 
             // label23
             // 
@@ -752,7 +750,6 @@
             label23.Size = new Size(19, 15);
             label23.TabIndex = 1;
             label23.Text = "23";
-            label23.Click += label2_Click;
             // 
             // label33
             // 
@@ -762,7 +759,6 @@
             label33.Size = new Size(22, 15);
             label33.TabIndex = 1;
             label33.Text = "PC";
-            label33.Click += label2_Click;
             // 
             // label22
             // 
@@ -772,7 +768,6 @@
             label22.Size = new Size(19, 15);
             label22.TabIndex = 1;
             label22.Text = "22";
-            label22.Click += label2_Click;
             // 
             // label32
             // 
@@ -782,7 +777,6 @@
             label32.Size = new Size(19, 15);
             label32.TabIndex = 1;
             label32.Text = "32";
-            label32.Click += label2_Click;
             // 
             // label21
             // 
@@ -792,7 +786,6 @@
             label21.Size = new Size(19, 15);
             label21.TabIndex = 1;
             label21.Text = "21";
-            label21.Click += label2_Click;
             // 
             // label31
             // 
@@ -802,7 +795,6 @@
             label31.Size = new Size(19, 15);
             label31.TabIndex = 1;
             label31.Text = "31";
-            label31.Click += label2_Click;
             // 
             // label20
             // 
@@ -812,7 +804,6 @@
             label20.Size = new Size(19, 15);
             label20.TabIndex = 1;
             label20.Text = "20";
-            label20.Click += label2_Click;
             // 
             // label30
             // 
@@ -822,7 +813,6 @@
             label30.Size = new Size(19, 15);
             label30.TabIndex = 1;
             label30.Text = "30";
-            label30.Click += label2_Click;
             // 
             // label19
             // 
@@ -832,7 +822,6 @@
             label19.Size = new Size(19, 15);
             label19.TabIndex = 1;
             label19.Text = "19";
-            label19.Click += label2_Click;
             // 
             // label29
             // 
@@ -842,7 +831,6 @@
             label29.Size = new Size(19, 15);
             label29.TabIndex = 1;
             label29.Text = "29";
-            label29.Click += label2_Click;
             // 
             // label18
             // 
@@ -852,7 +840,6 @@
             label18.Size = new Size(19, 15);
             label18.TabIndex = 1;
             label18.Text = "18";
-            label18.Click += label2_Click;
             // 
             // label28
             // 
@@ -862,7 +849,6 @@
             label28.Size = new Size(19, 15);
             label28.TabIndex = 1;
             label28.Text = "28";
-            label28.Click += label2_Click;
             // 
             // label17
             // 
@@ -872,7 +858,6 @@
             label17.Size = new Size(19, 15);
             label17.TabIndex = 1;
             label17.Text = "17";
-            label17.Click += label2_Click;
             // 
             // label27
             // 
@@ -882,7 +867,6 @@
             label27.Size = new Size(19, 15);
             label27.TabIndex = 1;
             label27.Text = "27";
-            label27.Click += label2_Click;
             // 
             // label16
             // 
@@ -892,7 +876,6 @@
             label16.Size = new Size(19, 15);
             label16.TabIndex = 1;
             label16.Text = "16";
-            label16.Click += label2_Click;
             // 
             // label26
             // 
@@ -902,7 +885,6 @@
             label26.Size = new Size(19, 15);
             label26.TabIndex = 1;
             label26.Text = "26";
-            label26.Click += label2_Click;
             // 
             // label15
             // 
@@ -912,7 +894,6 @@
             label15.Size = new Size(19, 15);
             label15.TabIndex = 1;
             label15.Text = "15";
-            label15.Click += label2_Click;
             // 
             // label25
             // 
@@ -922,7 +903,6 @@
             label25.Size = new Size(19, 15);
             label25.TabIndex = 1;
             label25.Text = "25";
-            label25.Click += label2_Click;
             // 
             // label14
             // 
@@ -932,7 +912,6 @@
             label14.Size = new Size(19, 15);
             label14.TabIndex = 1;
             label14.Text = "14";
-            label14.Click += label2_Click;
             // 
             // label1
             // 
@@ -942,7 +921,6 @@
             label1.Size = new Size(19, 15);
             label1.TabIndex = 1;
             label1.Text = "13";
-            label1.Click += label2_Click;
             // 
             // label2
             // 
@@ -952,7 +930,6 @@
             label2.Size = new Size(13, 15);
             label2.TabIndex = 1;
             label2.Text = "1";
-            label2.Click += label2_Click;
             // 
             // registerLabel
             // 
@@ -963,7 +940,6 @@
             registerLabel.Size = new Size(74, 21);
             registerLabel.TabIndex = 0;
             registerLabel.Text = "Registers";
-            registerLabel.Click += label1_Click;
             // 
             // button1
             // 
@@ -981,6 +957,7 @@
             memoryTextBox.Location = new Point(14, 39);
             memoryTextBox.Multiline = true;
             memoryTextBox.Name = "memoryTextBox";
+            memoryTextBox.ReadOnly = true;
             memoryTextBox.Size = new Size(813, 227);
             memoryTextBox.TabIndex = 11;
             // 
