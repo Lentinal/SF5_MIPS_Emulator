@@ -33,9 +33,7 @@ namespace MIPS_Emulator_SF
 
         private void Form1_Load(object sender, EventArgs e) //Delanie was here
         {
-            //textBox1.Text = Register.Rzero().ToString();
-            //textBox2.Text = Register.Rat().ToString();
-            //textBox3.Text = Register.Rv0().ToString();
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
