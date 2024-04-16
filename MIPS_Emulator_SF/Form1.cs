@@ -69,9 +69,7 @@ namespace MIPS_Emulator_SF
         //Step button
         private void stepButtonClick(object sender, EventArgs e)
         {
-            String getText = setPCTextBox.Text;
-            textBox1.Text= Decoder.EncodeType(getText);
-
+            textBox1.Text = Decoder.EncodeType(setPCTextBox.Text);
 
         }
 
@@ -93,7 +91,7 @@ namespace MIPS_Emulator_SF
         //Run button
         private void runButton_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         //Save button
@@ -128,6 +126,11 @@ namespace MIPS_Emulator_SF
                     }
                 }
             }
+        }
+
+        private void setPCTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

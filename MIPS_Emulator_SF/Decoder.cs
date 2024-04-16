@@ -31,8 +31,8 @@ namespace MIPS_Emulator_SF
             switch(opcode)
             {
                 case "000000":
-                    return opcode+ " " + registerDecode(instruction);
-                    //break;
+                    return opcode + " " + registerDecode(instruction);
+                    //break; //breaks "cant be reached" when we are setting the instruction from text box
 
                 case "000010":
                 case "000011":
@@ -54,7 +54,22 @@ namespace MIPS_Emulator_SF
 
         private static String registerDecode(string instruction) 
         {
-            return "this is R-type";
+            try
+            {
+                String firstRegister = instruction.Substring(6, 5);
+                String secondRegister = instruction.Substring(11, 5);
+                String destinationRegister = instruction.Substring(16, 5);
+                String shiftAmmount = instruction.Substring(21, 5);
+                String function = instruction.Substring(26, 6);
+
+                return "this is R-type" + " " + firstRegister + " " + secondRegister + " " + destinationRegister + " " + shiftAmmount + " " + function;
+            }
+            catch(Exception e)
+            {
+                return "Text too long" + e;
+            }
+
+            
         }
 
         private static String immediateDecode(string instruction) 
@@ -64,7 +79,7 @@ namespace MIPS_Emulator_SF
 
         private static String jump(string instruction)
         {
-            return "this si j-type";
+            return "this is j-type";
         }
 
 

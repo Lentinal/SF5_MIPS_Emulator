@@ -166,7 +166,7 @@
             // 
             // pcButton
             // 
-            pcButton.Location = new Point(868, 128);
+            pcButton.Location = new Point(868, 168);
             pcButton.Name = "pcButton";
             pcButton.Size = new Size(87, 26);
             pcButton.TabIndex = 4;
@@ -176,10 +176,11 @@
             // 
             // setPCTextBox
             // 
-            setPCTextBox.Location = new Point(961, 131);
+            setPCTextBox.Location = new Point(961, 168);
             setPCTextBox.Name = "setPCTextBox";
-            setPCTextBox.Size = new Size(180, 23);
+            setPCTextBox.Size = new Size(302, 23);
             setPCTextBox.TabIndex = 5;
+            setPCTextBox.TextChanged += setPCTextBox_TextChanged;
             // 
             // radioPanel
             // 
@@ -391,7 +392,6 @@
             textBox21.ReadOnly = true;
             textBox21.Size = new Size(240, 23);
             textBox21.TabIndex = 14;
-
             // 
             // textBox32
             // 
@@ -942,10 +942,10 @@
             registerLabel.TabIndex = 0;
             registerLabel.Text = "Registers";
             // 
-            // File button
+            // button1
             // 
-            button1.Location = new Point(868, 165);
-            button1.Name = "fileButton";
+            button1.Location = new Point(868, 220);
+            button1.Name = "button1";
             button1.Size = new Size(128, 50);
             button1.TabIndex = 10;
             button1.Text = "Select File";
