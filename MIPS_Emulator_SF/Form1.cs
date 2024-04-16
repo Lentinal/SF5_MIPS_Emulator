@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Numerics;
 using System.Windows.Forms.Design;
 
 namespace MIPS_Emulator_SF
@@ -7,14 +9,31 @@ namespace MIPS_Emulator_SF
         public Form1()
         {
             InitializeComponent();
+            foreach (Control control in registerPanel.Controls)
+            {
+                if (control is TextBox text && text.Name.StartsWith("textBox"))
+                {
+                    text.Text = "0000000000000000000000000000000";
+                }
+            }
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private static String convertToBinary(int number)
         {
-            textBox1.Text = Register.Rzero().ToString();
-            textBox2.Text = Register.Rat().ToString();
-            textBox3.Text = Register.Rv0().ToString();
+            string binaryString = Convert.ToString(number, 2); // Convert to binary string
+            int length = binaryString.Length;
+            int neededZeros = 32 - length;
+            if (length != 32)                                                   
+            {
+                    binaryString = binaryString.PadLeft(neededZeros, '0'); // I want to add zeros until the length is 32 bits
+            }
+            return binaryString;
+        }
+
+        private void Form1_Load(object sender, EventArgs e) //Delanie was here
+        {
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -22,7 +41,7 @@ namespace MIPS_Emulator_SF
             String instruction = "00000001000000000100000000100000";
             Decoder.EncodeType(instruction);
 
-            
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -32,23 +51,34 @@ namespace MIPS_Emulator_SF
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-
+            foreach (Control control in registerPanel.Controls)
+            {
+                if (control is TextBox text && text.Name.StartsWith("textBox"))
+                {
+                    int getText = int.Parse(text.Text);
+                    String getBinary = convertToBinary(getText);
+                    Debug.WriteLine(getBinary);
+                    text.Text = getBinary;
+                }
+            }
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-
+            foreach (Control control in registerPanel.Controls)
+            {
+                if (control is TextBox text && text.Name.StartsWith("textBox"))
+                {
+                    String getText = text.Text;
+                    int getDecimal = Convert.ToInt32(getText, 2);
+                    text.Text = getDecimal.ToString();
+                }
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            foreach (Control control in Controls)
-            {
-                if (control is TextBox textBox)
-                {
-                    textBox.Text = "0";
-                }
-            }
+
         }
 
         private void R1_TextChanged(object sender, EventArgs e)
@@ -102,7 +132,7 @@ namespace MIPS_Emulator_SF
                         string fileContents = File.ReadAllText(filePath);
 
                         // Display the file contents in the r1TextBox
-                        textBox4.Text = fileContents;
+                        memoryTextBox.Text = fileContents;
                     }
                     catch (Exception ex)
                     {
@@ -110,6 +140,11 @@ namespace MIPS_Emulator_SF
                     }
                 }
             }
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "10";
         }
     }
 }

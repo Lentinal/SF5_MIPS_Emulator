@@ -29,8 +29,8 @@ namespace MIPS_Emulator_SF
             //need to check if its register encoding, immediate encoding, or jump
 
             //Testing to display to the textbox forms
-            Form1.textBox2.Text = opcode;
-            Form1.textBox3.Text = instruction;
+            //Form1.textBox2.Text = opcode;
+            //Form1.textBox3.Text = instruction;
         }
 
         public static void RegisterDecode() 
