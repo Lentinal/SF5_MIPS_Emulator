@@ -32,17 +32,21 @@ namespace MIPS_Emulator_SF
 
                 switch (opcode)
                 {
+                    //Register encode
                     case "000000":
                         return opcode + " " + registerDecode(instruction);
                     //break; //breaks "cant be reached" when we are setting the instruction from text box
 
-                    case "000010":
-                    case "000011":
-                    case "001001":
-                    case "001000":
+                    //Jump
+                    case "000010"://j       pc += i << 2 
+                    case "000011"://jal     #31 = pc; pc += i <<2
+                    case "001001"://jalr    $31 = pc; pc = $s
+                    case "001000"://jr      pc = $s
+                    case "011010"://Trap function prob wont do
                         return opcode + " " + jump(instruction);
                     //break;
 
+                     //Immediate encode
                     default:
                         return opcode + " " + immediateDecode(instruction);
                         //break;
