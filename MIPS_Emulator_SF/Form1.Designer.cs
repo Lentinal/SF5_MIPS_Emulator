@@ -126,7 +126,7 @@
             // 
             stepButton.AccessibleDescription = "";
             stepButton.AccessibleName = "";
-            stepButton.Location = new Point(1012, 550);
+            stepButton.Location = new Point(1006, 550);
             stepButton.Name = "stepButton";
             stepButton.Size = new Size(87, 45);
             stepButton.TabIndex = 0;
@@ -137,7 +137,7 @@
             // 
             // microButton
             // 
-            microButton.Location = new Point(1105, 550);
+            microButton.Location = new Point(1099, 550);
             microButton.Name = "microButton";
             microButton.Size = new Size(87, 45);
             microButton.TabIndex = 1;
@@ -146,7 +146,7 @@
             // 
             // runButton
             // 
-            runButton.Location = new Point(1198, 550);
+            runButton.Location = new Point(1192, 550);
             runButton.Name = "runButton";
             runButton.Size = new Size(87, 45);
             runButton.TabIndex = 2;
@@ -156,7 +156,7 @@
             // 
             // saveButton
             // 
-            saveButton.Location = new Point(1012, 601);
+            saveButton.Location = new Point(1006, 601);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(87, 45);
             saveButton.TabIndex = 3;
@@ -166,7 +166,7 @@
             // 
             // pcButton
             // 
-            pcButton.Location = new Point(1023, 681);
+            pcButton.Location = new Point(1006, 652);
             pcButton.Name = "pcButton";
             pcButton.Size = new Size(87, 26);
             pcButton.TabIndex = 4;
@@ -176,9 +176,9 @@
             // 
             // setPCTextBox
             // 
-            setPCTextBox.Location = new Point(1116, 681);
+            setPCTextBox.Location = new Point(1099, 652);
             setPCTextBox.Name = "setPCTextBox";
-            setPCTextBox.Size = new Size(302, 23);
+            setPCTextBox.Size = new Size(265, 23);
             setPCTextBox.TabIndex = 5;
             // 
             // radioPanel
@@ -188,7 +188,7 @@
             radioPanel.Controls.Add(radioDecimal);
             radioPanel.Controls.Add(radioHex);
             radioPanel.Controls.Add(radioBinary);
-            radioPanel.Location = new Point(1302, 547);
+            radioPanel.Location = new Point(1370, 547);
             radioPanel.Name = "radioPanel";
             radioPanel.Size = new Size(116, 128);
             radioPanel.TabIndex = 6;
@@ -241,7 +241,7 @@
             // 
             // clearButton
             // 
-            clearButton.Location = new Point(1105, 601);
+            clearButton.Location = new Point(1099, 601);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(87, 45);
             clearButton.TabIndex = 7;
@@ -251,7 +251,7 @@
             // 
             // saveStateButton
             // 
-            saveStateButton.Location = new Point(1198, 601);
+            saveStateButton.Location = new Point(1192, 601);
             saveStateButton.Name = "saveStateButton";
             saveStateButton.Size = new Size(87, 45);
             saveStateButton.TabIndex = 8;
