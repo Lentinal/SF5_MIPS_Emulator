@@ -8,5 +8,6 @@ namespace MIPS_Emulator_SF
 {
     internal class AssemblyDecoder
     {
+
     }
 }

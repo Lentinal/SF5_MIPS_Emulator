@@ -180,7 +180,6 @@
             setPCTextBox.Name = "setPCTextBox";
             setPCTextBox.Size = new Size(302, 23);
             setPCTextBox.TabIndex = 5;
-            setPCTextBox.TextChanged += setPCTextBox_TextChanged;
             // 
             // radioPanel
             // 
@@ -332,7 +331,6 @@
             registerPanel.Name = "registerPanel";
             registerPanel.Size = new Size(976, 516);
             registerPanel.TabIndex = 9;
-            registerPanel.Paint += registerPanel_Paint;
             // 
             // textBox24
             // 
@@ -381,7 +379,6 @@
             textBox0.ReadOnly = true;
             textBox0.Size = new Size(240, 23);
             textBox0.TabIndex = 14;
-            textBox0.TextChanged += textBox0_TextChanged;
             // 
             // textBox20
             // 
