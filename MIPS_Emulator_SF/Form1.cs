@@ -132,6 +132,16 @@ namespace MIPS_Emulator_SF
         {
 
         }
+
+        private void registerPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBox0_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }
