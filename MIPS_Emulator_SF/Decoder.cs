@@ -12,11 +12,25 @@ namespace MIPS_Emulator_SF
     /// </summary>
     public class Decoder
     {
+        private static String[] returnArray = new String[10];
+        /* Only way I can think of sending muliple elements I want to send back to form1 without making everything public
+            *  returnArray[0] = function opcode
+            *  returnArray[1] = source 1
+            *  returnArray[2] = source 2
+            *  returnArray[3] = destination
+            *  returnArray[4] = shift
+            *  returnArray[5] = immediate data
+            *  returnArray[6] = # - Type
+            *  returnArray[7] = unused
+            *  returnArray[8] = instruction line
+            *  returnArray[9] = Console
+            */
+
         /// <summary>
         /// * Splits instruction
         /// </summary>
         /// <param name="instruction"></param>
-        public static String EncodeType(string instruction)
+        public static String[] EncodeType(string instruction)
         {
             /* Proof of concept
              * to be decoded
@@ -28,13 +42,15 @@ namespace MIPS_Emulator_SF
             try
             {
                 String opcode = instruction.Substring(0, 6);
+                returnArray[0] = opcode;
                 //need to check if its register encoding, immediate encoding, or jump
 
                 switch (opcode)
                 {
                     //Register encode
                     case "000000":
-                        return opcode + " " + registerDecode(instruction);
+                        returnArray[0] = registerDecode(instruction);
+                        return returnArray;
                     //break; //breaks "cant be reached" when we are setting the instruction from text box
 
                     //Jump
@@ -43,12 +59,14 @@ namespace MIPS_Emulator_SF
                     case "001001"://jalr    $31 = pc; pc = $s
                     case "001000"://jr      pc = $s
                     case "011010"://Trap function prob wont do
-                        return opcode + " " + jump(instruction);
+                        returnArray[6] = jump(instruction);
+                        return returnArray;
                     //break;
 
                      //Immediate encode
                     default:
-                        return opcode + " " + immediateDecode(instruction);
+                        returnArray[6] = immediateDecode(instruction);
+                        return returnArray;
                         //break;
 
                 }
@@ -56,8 +74,8 @@ namespace MIPS_Emulator_SF
 
             }catch(Exception e)
             {
-                Form1.textBox33.Text += "Decoder.Encoder instruction too short or bad code: " + e.Message + "\r\n";
-                return "0000000000000000000000000000000";
+                returnArray[9]= "Decoder.Encoder instruction too short or bad code: " + e.Message + "\r\n";
+                return returnArray;
 
             }
 
@@ -73,11 +91,12 @@ namespace MIPS_Emulator_SF
                 String shiftAmmount = instruction.Substring(21, 5);
                 String function = instruction.Substring(26, 6);
 
+                returnArray[9] = "Read in raw instruction: " + instruction + "\r\n"; 
                 return "this is R-type" + " " + firstRegister + " " + secondRegister + " " + destinationRegister + " " + shiftAmmount + " " + function;
             }
             catch(Exception e)
             {
-                Form1.textBox33.Text += "registerDecoding Instruction too short or bad code: " + e.Message + "\r\n";
+                returnArray[9] = "registerDecoding Instruction too short or bad code: " + e.Message + "\r\n";
                 return "00000000000000000000000000000000";
             }
 

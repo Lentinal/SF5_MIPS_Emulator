@@ -1106,6 +1106,6 @@
         //Console
         private Label label37;
         private Panel panel2;
-        public static TextBox textBox33;
+        private TextBox textBox33;
     }
 }
