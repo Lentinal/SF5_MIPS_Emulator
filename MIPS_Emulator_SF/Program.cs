@@ -8,7 +8,6 @@ namespace MIPS_Emulator_SF
         ///  The main entry point for the application.
         /// </summary>
         ///
-      
 
         [STAThread]
         public static void Main(String[] args)
@@ -18,16 +17,7 @@ namespace MIPS_Emulator_SF
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
 
-            //Initialize Registers Object
-            Register registers = new Register();
-
-            // Decoder Testing
-            //String instruction = "00000001000000000100000000100000";
-            //Decoder.Decode(instruction);
-
-
-
-
+         
         }
     }
 }
