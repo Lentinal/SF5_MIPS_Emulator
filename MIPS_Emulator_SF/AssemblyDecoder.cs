@@ -14,12 +14,12 @@ namespace MIPS_Emulator_SF
         /* Only way I can think of sending muliple elements I want to send back to form1 without making everything public
             *  returnArray[0] = function opcode
             *  returnArray[1] = source 1
-            *  returnArray[2] = source 2
+            *  returnArray[2] = source 2/immediate data
             *  returnArray[3] = destination
             *  returnArray[4] = shift
-            *  returnArray[5] = immediate data
-            *  returnArray[6] = # - Type
-            *  returnArray[7] = unused
+            *  returnArray[5] = R/I/J - type
+            *  returnArray[6] = if header = true
+            *  returnArray[7] = if comment = true
             *  returnArray[8] = instruction line
             *  returnArray[9] = Console
             */
@@ -35,14 +35,16 @@ namespace MIPS_Emulator_SF
                 {
                     Decoder(instruction);//Helps me read this mess better  
                     return returnArray;
-                }else //Header read
+                }else //Label read
                 {
-                    returnArray[9] = "Read header: " + instruction+ "\r\n";
+                    returnArray[6] = "true"; //Label true
+                    returnArray[9] = "Read label: " + instruction+ "\r\n";
                     return returnArray;
                 }
 
             }else //Comment read
             {
+                returnArray[7] = "true"; //Comment true
                 returnArray[9] = "Read Comment: " + instruction + "\r\n";
                 return returnArray;
             }
@@ -74,3 +76,4 @@ namespace MIPS_Emulator_SF
         }
     }
 }
+ 

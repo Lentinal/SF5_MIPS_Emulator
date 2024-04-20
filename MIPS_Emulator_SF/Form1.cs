@@ -70,7 +70,7 @@ namespace MIPS_Emulator_SF
         private void stepButtonClick(object sender, EventArgs e)
         {
             String[] tempRaw = Decoder.EncodeType(setPCTextBox.Text); //Debug and testing
-            textBox1.Text = tempRaw[0];
+            textBox33.Text = tempRaw[0];
             textBox33.Text += tempRaw[9];
             String[] temp =  AssemblyDecoder.Fetch("addi $a0, $zero, 7");
             textBox33.Text += temp[9];//Spits out message on console

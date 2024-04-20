@@ -16,11 +16,11 @@ namespace MIPS_Emulator_SF
         /* Only way I can think of sending muliple elements I want to send back to form1 without making everything public
             *  returnArray[0] = function opcode
             *  returnArray[1] = source 1
-            *  returnArray[2] = source 2
+            *  returnArray[2] = source 2/immediate data
             *  returnArray[3] = destination
             *  returnArray[4] = shift
-            *  returnArray[5] = immediate data
-            *  returnArray[6] = # - Type
+            *  returnArray[5] = R/I/J - Type
+            *  returnArray[6] = unused
             *  returnArray[7] = unused
             *  returnArray[8] = instruction line
             *  returnArray[9] = Console
@@ -92,7 +92,7 @@ namespace MIPS_Emulator_SF
                 String function = instruction.Substring(26, 6);
 
                 returnArray[9] = "Read in raw instruction: " + instruction + "\r\n"; 
-                return "this is R-type" + " " + firstRegister + " " + secondRegister + " " + destinationRegister + " " + shiftAmmount + " " + function;
+                return "this is R-type" + " " + firstRegister + " " + secondRegister + " " + destinationRegister + " " + shiftAmmount + " " + function + "\r\n";
             }
             catch(Exception e)
             {
@@ -105,12 +105,12 @@ namespace MIPS_Emulator_SF
 
         private static String immediateDecode(string instruction) 
         {
-            return "this is I-Type";
+            return "this is I-Type \r\n";
         }
 
         private static String jump(string instruction)
         {
-            return "this is j-type";
+            return "this is j-type \r\n";
         }
 
 
