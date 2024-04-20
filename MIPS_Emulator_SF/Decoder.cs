@@ -24,7 +24,7 @@ namespace MIPS_Emulator_SF
         /// <param name="instruction"></param>
         public static void EncodeType(string[] instruction)
         {
-
+         
             /* Proof of concept
              * to be decoded
              * 000000 01000 00000 01000 00000 100000
@@ -32,15 +32,15 @@ namespace MIPS_Emulator_SF
              * add $t0, $t0, $zero # sum = 0 
              * 
              */
-            Form1 form1 = new button1_Click_1(); //Identifier not being recognized
-            instruction[] = form1.fileContents;
+            Form1.cs form1 = new button1_Click_1();
+            instruction[] = button1_Click_1.fileContents;
             string mipsType;
             string rType;
             string iType;
             string jType;
             foreach (string mipsLine in instruction) {
                 String opcode = instruction.Substring(10, 15);
-                switch (opcode) {
+                switch opcode {
                     case "000000": mipsType = rType;
                         break;
                     case "001001":
@@ -65,15 +65,15 @@ namespace MIPS_Emulator_SF
                         break;
 
                 }
-                //need to check if its register encoding, immediate encoding, or jump
+            //need to check if its register encoding, immediate encoding, or jump
 
-                //Testing to display to the textbox forms
-                //Form1.textBox2.Text = opcode;
-                //Form1.textBox3.Text = instruction;
-            }
+            //Testing to display to the textbox forms
+            //Form1.textBox2.Text = opcode;
+            //Form1.textBox3.Text = instruction;
+        }
 
-            static void RegisterDecode(string instruction)
-            {
+        public static void RegisterDecode(string instruction) 
+        {
                 string rstemp = instruction.Substring(16, 20);
                 string rttemp = instruction.Substring(21, 25);
                 string rdtemp = instruction.Substring(26, 30);
@@ -84,8 +84,8 @@ namespace MIPS_Emulator_SF
                 string rd = RegisterNames[Convert.ToInt32(rdtemp, 2)];
                 string shampt = RegisterNames[Convert.ToInt32(shampttemp, 2)];
                 string func;
-                switch (functemp) {
-                    case 100000:
+                switch functemp {
+                    case 100000: 
                         func = "add";
                         break;
                     case 100010:
@@ -117,17 +117,16 @@ namespace MIPS_Emulator_SF
                 return decoded;
             }
 
-            static void ImmediateDecode()
-            {
-
-            }
-
-            static void Jump()
-            {
-
-            }
-
+        public static void ImmediateDecode() 
+        { 
 
         }
+
+        public static void Jump()
+        {
+
+        }
+
+
     }
 }
