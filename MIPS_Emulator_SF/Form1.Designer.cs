@@ -30,7 +30,6 @@
         {
             stepButton = new Button();
             microButton = new Button();
-            runButton = new Button();
             saveButton = new Button();
             pcButton = new Button();
             setPCTextBox = new TextBox();
@@ -143,16 +142,6 @@
             microButton.TabIndex = 1;
             microButton.Text = "Micro Step 1";
             microButton.UseVisualStyleBackColor = true;
-            // 
-            // runButton
-            // 
-            runButton.Location = new Point(1192, 550);
-            runButton.Name = "runButton";
-            runButton.Size = new Size(87, 45);
-            runButton.TabIndex = 2;
-            runButton.Text = "Run until stop";
-            runButton.UseVisualStyleBackColor = true;
-            runButton.Click += runButton_Click;
             // 
             // saveButton
             // 
@@ -989,7 +978,6 @@
             Controls.Add(setPCTextBox);
             Controls.Add(pcButton);
             Controls.Add(saveButton);
-            Controls.Add(runButton);
             Controls.Add(microButton);
             Controls.Add(stepButton);
             Name = "Form1";
@@ -1011,7 +999,6 @@
         //Buttons
         private Button stepButton;
         private Button microButton;
-        private Button runButton;
         private Button saveButton;
         private Button pcButton;
         private Button button1;
