@@ -1,11 +1,15 @@
 using System.Diagnostics;
 using System.Numerics;
 using System.Windows.Forms.Design;
+using System.Collections;
 
 namespace MIPS_Emulator_SF
 {
     public partial class Form1 : Form
     {
+        private static ArrayList memory = new ArrayList();
+        private static int memLocation = 0;
+        
         public Form1()
         {
             InitializeComponent();
@@ -70,10 +74,15 @@ namespace MIPS_Emulator_SF
         private void stepButtonClick(object sender, EventArgs e)
         {
             String[] tempRaw = Decoder.EncodeType(setPCTextBox.Text); //Debug and testing
-            textBox33.Text = tempRaw[0];
-            textBox33.Text += tempRaw[9];
+            //textBox33.Text += tempRaw[0] + "\r\n";
+            //textBox33.Text += tempRaw[9] + "\r\n";
             String[] temp =  AssemblyDecoder.Fetch("addi $a0, $zero, 7");
-            textBox33.Text += temp[9];//Spits out message on console
+            //memLocation += 1;
+            //temp[10] = memLocation.ToString(); 
+            textBox33.Text += string.Join(" | ",temp) + "\r\n";
+            textBox33.Text += string.Join(" | ", memory) + "\r\n";
+            memoryTextBox.Text += temp[10] + " " + temp[8] + "\r\n";
+            //textBox33.Text += temp[9];//Spits out message on console
 
         }
 
