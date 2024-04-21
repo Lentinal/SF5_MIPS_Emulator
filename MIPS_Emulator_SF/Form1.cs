@@ -122,6 +122,7 @@ namespace MIPS_Emulator_SF
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 #pragma warning restore CS8604 // Possible null reference argument.
                 //console.Text += getFetch[9];//Spits out message on console
+                /*
                 if (!getFetch[6].Equals("1"))
                 {
                     String[] getDecode = AssemblyDecoder.Decode(getFetch); //Need to determine source registers and pass thru the contents TO-DO make another method
@@ -129,7 +130,7 @@ namespace MIPS_Emulator_SF
                     String[] getMemory = AssemblyDecoder.MemoryAccess(getExecute);
                     String[] write = AssemblyDecoder.Writeback(getMemory);
                     console.Text += "Completed one step: " + write[9] + "\r\n";
-                }
+                }*/
 
                 //Decoder debugging
                 //textBox33.Text += tempRaw[0] + "\r\n"; //Checks opcode
@@ -159,13 +160,28 @@ namespace MIPS_Emulator_SF
         private void microStepButton(Object sender, EventArgs e)
         {
 
+            try
+            {
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                String[] getFetch = AssemblyDecoder.Fetch(instructionsArray[intPC].ToString());
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8604 // Possible null reference argument.
+
+
+
+            }
+            catch (Exception ex)
+            {
+                console.Text += "Memory is possibly empty or end of instruction set:  (stepButtonClick) " + ex.Message + "\r\n";
+            }
         }
 
-        /// <summary> FINISHED
-        /// clearButton_Click
-        /// Calls clear()
-        /// </summary>
-        private void clearButton_Click(object sender, EventArgs e)
+    /// <summary> FINISHED
+    /// clearButton_Click
+    /// Calls clear()
+    /// </summary>
+    private void clearButton_Click(object sender, EventArgs e)
         {
             clear();
         }

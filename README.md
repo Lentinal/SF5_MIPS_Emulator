@@ -38,8 +38,8 @@ Associative caching with TLB implemented
 ## Workload Planner
 1. ~~Make GUI Layout~~ 
 2. ~~Read file~~
-3. Separate and read opcode
-4. Write to register/memory
+3. ~~Separate and read opcode~~
+4. ~~Write to register/memory~~
 5. Create Add/Subtract fuction
 6. Create Multiply/Divide function
 7. Create Compare function
