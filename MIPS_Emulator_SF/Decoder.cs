@@ -72,9 +72,9 @@ namespace MIPS_Emulator_SF
                 }
 
 
-            }catch(Exception e)
+            }catch(Exception ex)
             {
-                returnArray[9]= "Decoder.Encoder instruction too short or bad code: " + e.Message + "\r\n";
+                returnArray[9]= "Decoder.Encoder instruction too short or bad code: " + ex.Message + "\r\n";
                 return returnArray;
 
             }

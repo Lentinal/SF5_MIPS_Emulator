@@ -10,7 +10,7 @@ namespace MIPS_Emulator_SF
     internal class AssemblyDecoder
     {
 
-        private static String[] returnArray = new String[11];
+        private static String[] returnArray = new String[10];
         /* Only way I can think of sending muliple elements I want to send back to form1 without making everything public
             *  returnArray[0] = function opcode
             *  returnArray[1] = source 1
@@ -22,7 +22,6 @@ namespace MIPS_Emulator_SF
             *  returnArray[7] = if comment = 1
             *  returnArray[8] = instruction line
             *  returnArray[9] = Console
-            *  returnArray[10] = Memory Location
             */
         //Takes line and sends it to decode if it is something to decode
         public static String[] Fetch(string instruction) 

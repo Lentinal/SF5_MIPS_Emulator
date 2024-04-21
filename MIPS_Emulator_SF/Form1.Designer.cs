@@ -112,7 +112,9 @@
             memoryTextBox = new TextBox();
             label36 = new Label();
             panel1 = new Panel();
-            textBox33 = new TextBox();
+            label35 = new Label();
+            label34 = new Label();
+            console = new TextBox();
             label37 = new Label();
             panel2 = new Panel();
             radioPanel.SuspendLayout();
@@ -905,13 +907,15 @@
             // memoryTextBox
             // 
             memoryTextBox.Font = new Font("Segoe UI", 12F);
-            memoryTextBox.Location = new Point(14, 39);
+            memoryTextBox.Location = new Point(14, 66);
             memoryTextBox.Multiline = true;
             memoryTextBox.Name = "memoryTextBox";
             memoryTextBox.ReadOnly = true;
-            memoryTextBox.ScrollBars = ScrollBars.Vertical;
-            memoryTextBox.Size = new Size(445, 456);
+            memoryTextBox.RightToLeft = RightToLeft.No;
+            memoryTextBox.ScrollBars = ScrollBars.Both;
+            memoryTextBox.Size = new Size(462, 447);
             memoryTextBox.TabIndex = 11;
+            memoryTextBox.WordWrap = false;
             // 
             // label36
             // 
@@ -925,24 +929,42 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(label35);
+            panel1.Controls.Add(label34);
             panel1.Controls.Add(memoryTextBox);
             panel1.Controls.Add(label36);
             panel1.Location = new Point(1008, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(479, 516);
+            panel1.Size = new Size(488, 516);
             panel1.TabIndex = 13;
             // 
-            // textBox33
+            // label35
             // 
-            textBox33.AcceptsReturn = true;
-            textBox33.AcceptsTab = true;
-            textBox33.Location = new Point(15, 39);
-            textBox33.Multiline = true;
-            textBox33.Name = "textBox33";
-            textBox33.ReadOnly = true;
-            textBox33.ScrollBars = ScrollBars.Vertical;
-            textBox33.Size = new Size(942, 227);
-            textBox33.TabIndex = 14;
+            label35.AutoSize = true;
+            label35.Location = new Point(91, 48);
+            label35.Name = "label35";
+            label35.Size = new Size(64, 15);
+            label35.TabIndex = 14;
+            label35.Text = "Instruction";
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.Location = new Point(14, 48);
+            label34.Name = "label34";
+            label34.Size = new Size(53, 15);
+            label34.TabIndex = 13;
+            label34.Text = "Location";
+            // 
+            // console
+            // 
+            console.Location = new Point(15, 39);
+            console.Multiline = true;
+            console.Name = "console";
+            console.ReadOnly = true;
+            console.ScrollBars = ScrollBars.Vertical;
+            console.Size = new Size(942, 227);
+            console.TabIndex = 14;
             // 
             // label37
             // 
@@ -957,7 +979,7 @@
             // panel2
             // 
             panel2.Controls.Add(label37);
-            panel2.Controls.Add(textBox33);
+            panel2.Controls.Add(console);
             panel2.Location = new Point(12, 550);
             panel2.Name = "panel2";
             panel2.Size = new Size(976, 283);
@@ -1093,6 +1115,8 @@
         //Console
         private Label label37;
         private Panel panel2;
-        private TextBox textBox33;
+        private TextBox console;
+        private Label label35;
+        private Label label34;
     }
 }
