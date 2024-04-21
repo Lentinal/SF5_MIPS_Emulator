@@ -116,15 +116,19 @@ namespace MIPS_Emulator_SF
             //Assembly decode call
             try
             {
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 String[] getFetch = AssemblyDecoder.Fetch(instructionsArray[intPC].ToString());
-                console.Text += getFetch[9];//Spits out message on console
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8604 // Possible null reference argument.
+                //console.Text += getFetch[9];//Spits out message on console
                 if (!getFetch[6].Equals("1"))
                 {
-                    String[] getDecode = AssemblyDecoder.Decode(instructionsArray[intPC].ToString());
+                    String[] getDecode = AssemblyDecoder.Decode(getFetch); //Need to determine source registers and pass thru the contents TO-DO make another method
                     String[] getExecute = AssemblyDecoder.Execute(getDecode);
                     String[] getMemory = AssemblyDecoder.MemoryAccess(getExecute);
                     String[] write = AssemblyDecoder.Writeback(getMemory);
-                    console.Text += "Completed one step: " + getDecode[9] + "\r\n";
+                    console.Text += "Completed one step: " + write[9] + "\r\n";
                 }
 
                 //Decoder debugging

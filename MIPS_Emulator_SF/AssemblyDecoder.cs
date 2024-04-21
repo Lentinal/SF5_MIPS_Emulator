@@ -54,9 +54,10 @@ namespace MIPS_Emulator_SF
         /// </summary>
         /// <param name="instruction"></param>
         /// <returns></returns>
-        public static String[] Decode(string instruction)
+        public static String[] Decode(string[] instruction)
         {
-            String lowercase = instruction.ToLower();
+            redundancy(instruction);
+            String lowercase = instruction[8].ToLower();
             String[] temp = lowercase.Split(' '); //Need first part of the instruction
             returnArray[0] = temp[0];
 
@@ -93,7 +94,7 @@ namespace MIPS_Emulator_SF
             {
                 case "add":
                 case "addi":
-                    returnArray[7] = returnArray[1] + returnArray[2];
+                    returnArray[7] = (Convert.ToInt32(returnArray[1]) + Convert.ToInt32(returnArray[2])).ToString();
                     break;
                 default:
                     returnArray[9] = "Error at Execute with instruction: " + returnArray[8];
@@ -118,11 +119,10 @@ namespace MIPS_Emulator_SF
 
         private static void redundancy(string[] instruction)
             {
-            int i = 0;
-            foreach(string s in instruction)
+            for(int i = 0; i < instruction.Length; i++)
             {
-                returnArray[0] = s;
-                i++;
+                returnArray[i] = instruction[i];
+                
             }
         }
 
