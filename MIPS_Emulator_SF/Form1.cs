@@ -1,9 +1,5 @@
-using System.Diagnostics;
-using System.Numerics;
-using System.Windows.Forms.Design;
 using System.Collections;
-using static System.Net.Mime.MediaTypeNames;
-using System;
+using System.Diagnostics;
 
 namespace MIPS_Emulator_SF
 {
@@ -23,7 +19,6 @@ namespace MIPS_Emulator_SF
         public Form1()
         {
             InitializeComponent();
-            PC.Text = "0000000000000000000000000000000";
             foreach (Control control in registerPanel.Controls)
             {
                 if (control is TextBox text && text.Name.StartsWith("textBox"))
@@ -31,7 +26,7 @@ namespace MIPS_Emulator_SF
                     text.Text = "0000000000000000000000000000000";
                 }
             }
-            
+
 
         }
 
@@ -41,7 +36,7 @@ namespace MIPS_Emulator_SF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Form1_Load(object sender, EventArgs e) 
+        private void Form1_Load(object sender, EventArgs e)
         {
             //Delanie was here 
             //Kian moved the msg above to be in the method
@@ -121,24 +116,44 @@ namespace MIPS_Emulator_SF
             //Assembly decode call
             try
             {
-                String[] temp = AssemblyDecoder.Fetch(instructionsArray[stepCount].ToString());
+                String[] getFetch = AssemblyDecoder.Fetch(instructionsArray[intPC].ToString());
+                console.Text += getFetch[9];//Spits out message on console
+                if (!getFetch[6].Equals("1"))
+                {
+                    String[] getDecode = AssemblyDecoder.Decode(instructionsArray[intPC].ToString());
+                    String[] getExecute = AssemblyDecoder.Execute(getDecode);
+                    String[] getMemory = AssemblyDecoder.MemoryAccess(getExecute);
+                    String[] write = AssemblyDecoder.Writeback(getMemory);
+                    console.Text += "Completed one step: " + getDecode[9] + "\r\n";
+                }
 
                 //Decoder debugging
                 //textBox33.Text += tempRaw[0] + "\r\n"; //Checks opcode
                 //textBox33.Text += tempRaw[9] + "\r\n";    //Displays to console
                 //Assembly debugging
-                //textBox33.Text += string.Join(" | ",temp) + "\r\n"; //Splits returned array
+                console.Text += string.Join(" | ", getFetch) + "\r\n"; //Splits returned array
                 //textBox33.Text += instructionsList[0].ToString()+ "\r\n"; //Checks if the instruction list made it to the ArrayList
 
-                //Display out to console and advances memory
-                console.Text += temp[9];//Spits out message on console
-                stepCount++;
-
-            }catch (Exception ex)
+                //Advances memory/PC
+                PC.Text = convertToBinary(intPC);
+                intPC++;
+            }
+            catch (Exception ex)
             {
                 console.Text += "Memory is possibly empty or end of instruction set:  (stepButtonClick) " + ex.Message + "\r\n";
             }
 
+
+        }
+
+        /// <summary> UNIMPLEMENTED
+        /// microStepButton
+        /// Takes one line and goes thru each part of the pipeline
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void microStepButton(Object sender, EventArgs e)
+        {
 
         }
 
@@ -160,7 +175,7 @@ namespace MIPS_Emulator_SF
             intPC = 0;
             memoryTextBox.Text = "";
             console.Text = "";
-            PC.Text = "0000000000000000000000000000000";
+            PC.Text = "";
             instructionsArray.Clear();
             foreach (Control control in registerPanel.Controls)
             {
@@ -209,7 +224,7 @@ namespace MIPS_Emulator_SF
             {
                 if (control is TextBox text && text.Name.StartsWith("textBox"))
                 {
-                   
+
                 }
             }
         }
@@ -242,9 +257,12 @@ namespace MIPS_Emulator_SF
 
                         foreach (string line in instructions)
                         {
-                            instructionsArray.Add(line);
-                            memoryTextBox.Text += intPC + "\t" + line + "\r\n";
-                            intPC++;
+                            if (line.Length > 1)
+                            {
+                                instructionsArray.Add(line);
+                                memoryTextBox.Text += intPC + "\t" + line + "\r\n";
+                                intPC++;
+                            }
                         }
                         intPC = 0; //Resets counter
                         console.Text += "Loaded in: " + filePath + "\r\n";

@@ -144,6 +144,7 @@
             microButton.TabIndex = 1;
             microButton.Text = "Micro Step 1";
             microButton.UseVisualStyleBackColor = true;
+            microButton.Click += microButton_Click;
             // 
             // saveButton
             // 
@@ -896,6 +897,7 @@
             // 
             // button1
             // 
+            button1.AllowDrop = true;
             button1.Location = new Point(1358, 783);
             button1.Name = "button1";
             button1.Size = new Size(128, 50);
@@ -958,12 +960,12 @@
             // 
             // console
             // 
-            console.Location = new Point(15, 39);
+            console.Location = new Point(14, 37);
             console.Multiline = true;
             console.Name = "console";
             console.ReadOnly = true;
             console.ScrollBars = ScrollBars.Vertical;
-            console.Size = new Size(942, 227);
+            console.Size = new Size(959, 234);
             console.TabIndex = 14;
             // 
             // label37
@@ -1015,6 +1017,11 @@
             panel2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
+        }
+
+        private void microButton_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

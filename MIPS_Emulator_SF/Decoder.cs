@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MIPS_Emulator_SF
+﻿namespace MIPS_Emulator_SF
 {
     /// <summary>
     /// Decodes MIPS instruction set
@@ -63,7 +57,7 @@ namespace MIPS_Emulator_SF
                         return returnArray;
                     //break;
 
-                     //Immediate encode
+                    //Immediate encode
                     default:
                         returnArray[6] = immediateDecode(instruction);
                         return returnArray;
@@ -72,16 +66,17 @@ namespace MIPS_Emulator_SF
                 }
 
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                returnArray[9]= "Decoder.Encoder instruction too short or bad code: " + ex.Message + "\r\n";
+                returnArray[9] = "Decoder.Encoder instruction too short or bad code: " + ex.Message + "\r\n";
                 return returnArray;
 
             }
 
         }
 
-        private static String registerDecode(string instruction) 
+        private static String registerDecode(string instruction)
         {
             try
             {
@@ -91,19 +86,19 @@ namespace MIPS_Emulator_SF
                 String shiftAmmount = instruction.Substring(21, 5);
                 String function = instruction.Substring(26, 6);
 
-                returnArray[9] = "Read in raw instruction: " + instruction + "\r\n"; 
+                returnArray[9] = "Read in raw instruction: " + instruction + "\r\n";
                 return "this is R-type" + " " + firstRegister + " " + secondRegister + " " + destinationRegister + " " + shiftAmmount + " " + function + "\r\n";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 returnArray[9] = "registerDecoding Instruction too short or bad code: " + e.Message + "\r\n";
                 return "00000000000000000000000000000000";
             }
 
-            
+
         }
 
-        private static String immediateDecode(string instruction) 
+        private static String immediateDecode(string instruction)
         {
             return "this is I-Type \r\n";
         }
