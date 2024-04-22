@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Diagnostics;
 
 namespace MIPS_Emulator_SF
@@ -113,27 +112,57 @@ namespace MIPS_Emulator_SF
             try
             {
                 OpcodeObject temp = list[intPC];
-                console.Text += "Fetched: " + temp.getOpcode() + "\r\n";
+                console.Text += "Fetched: " + temp.toString() + "\r\n";
                 switch (temp.getMisc())
                 {
                     case "0":
                         advancePC();
                         break;
                     case "1":
-                        console.Text += "Fetching registers \r\n";
-                        String destin = getRegisterTextBox(temp.getDestination());
-                        String source1 = getRegisterTextBox(temp.getSource1());
-                        String source2 = getRegisterTextBox(temp.getSource2());
+                        console.Text += "Fetching registers for R-Type \r\n";
+                        Control source1 = getRegisterTextBox(temp.getSource1());
+                        Control source2 = getRegisterTextBox(temp.getSource2());
+                        String source1Text = source1.Text;
+                        String source2Text = source2.Text;
 
-                        String write = execute(temp.getOpcode(), source1, source2);
-                        console.Text += write + "\r\n";
+                        console.Text += "Decoding R-type instruction \r\n";
+                        int write = execute(temp.getOpcode(), source1Text, source2Text);
+
+                        console.Text += "Accessing destination register \r\n";
+                        Control destin = getRegisterTextBox(temp.getDestination());
+
+                        console.Text += "Writing back to " + temp.getDestination() + "\r\n";
+                        destin.Text = convertToBinary(write) + "\r\n";
 
                         advancePC();
                         break;
+
                     case "2":
-                        console.Text += "Fetched Jump: (UNIMPLEMENT)" + "\r\n";
+                        console.Text += "Fetching registers for J-Type (UNIMPLEMENTED) \r\n";
                         advancePC();
                         break;
+
+                    case "3":
+                        console.Text += "Fetching registers for I-Type \r\n";
+                        source1 = getRegisterTextBox(temp.getSource1());
+                        source1Text = source1.Text;
+
+                        console.Text += "Decoding I-type instruction \r\n";
+                        write = execute(temp.getOpcode(), source1Text, temp.getSource2());
+
+                        console.Text += "Accessing destination register \r\n";
+                        destin = getRegisterTextBox(temp.getDestination());
+
+                        console.Text += "Writing back to " + temp.getDestination() + "\r\n";
+                        destin.Text = convertToBinary(write) + "\r\n";
+                        advancePC();
+                        break;
+
+                    case "4":
+                        console.Text += "Possibly a load/save instruction: (UNIMPLEMENTED) \r\n";
+                        advancePC();
+                        break;
+
                     default:
                         console.Text += "Defaulted on Form1.stepButton: " + temp.ToString() + "\r\n";
                         advancePC();
@@ -319,25 +348,36 @@ namespace MIPS_Emulator_SF
                         list.Add(instruct);
                         break;
                     case 2:
-                        console.Text += " Possible Jump: " + instruction + "\r\n";
+                        console.Text += " Possible J-Type instruction: " + instruction + "\r\n";
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], "", "", "2", intPC.ToString());
                         list.Add(instruct);
                         break;
                     case 3:
-                        console.Text += " Possible instruction: " + instruction + "\r\n";
+
+                        console.Text += " Possible Load or Save instruction: " + instruction + "\r\n";
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", "1", intPC.ToString());
+                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", "4", intPC.ToString());
                         list.Add(instruct);
                         break;
                     case 4:
-                        console.Text += " Possible instruction: " + instruction + "\r\n";
-                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], "1", intPC.ToString());
-                        list.Add(instruct);
+                        if (!(temp[0].Contains("i") || !temp[3].Contains("$")))
+                        {
+                            console.Text += " Possible R-Type instruction: " + instruction + "\r\n";
+                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                            instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], "1", intPC.ToString());
+                            list.Add(instruct);
+                        }
+                        else
+                        {
+                            console.Text += " Possible I-Type instruction: " + instruction + "\r\n";
+                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                            instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], "3", intPC.ToString());
+                            list.Add(instruct);
+                        }
                         break;
                     case 5:
-                        console.Text += " Possible instruction: " + instruction + "\r\n";
+                        console.Text += " Possible instruction 5: " + instruction + "\r\n";
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], "1", intPC.ToString());
                         list.Add(instruct);
@@ -357,128 +397,148 @@ namespace MIPS_Emulator_SF
 
         }
 
-        private string getRegisterTextBox(string search)
+        private Control getRegisterTextBox(string search)
         {
             switch (search)
             {
                 case "$zero":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox0.Text;
+                    return textBox0;
                 case "$at":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox1.Text;
+                    return textBox1;
                 case "$v0":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox2.Text;
+                    return textBox2;
                 case "$v1":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox3.Text;
+                    return textBox3;
                 case "$a0":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox4.Text;
+                    return textBox4;
                 case "$a1":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox5.Text;
+                    return textBox5;
                 case "$a2":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox6.Text;
+                    return textBox6;
                 case "$a3":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox7.Text;
+                    return textBox7;
                 case "$t0":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox8.Text;
+                    return textBox8;
                 case "$t1":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox9.Text;
+                    return textBox9;
                 case "$t2":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox10.Text;
+                    return textBox10;
                 case "$t3":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox11.Text;
+                    return textBox11;
                 case "$t4":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox12.Text;
+                    return textBox12;
                 case "$t5":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox13.Text;
+                    return textBox13;
                 case "$t6":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox14.Text;
+                    return textBox14;
                 case "$t7":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox15.Text;
+                    return textBox15;
                 case "$s0":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox16.Text;
+                    return textBox16;
                 case "$s1":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox17.Text;
+                    return textBox17;
                 case "$s2":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox18.Text;
+                    return textBox18;
                 case "$s3":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox19.Text;
+                    return textBox19;
                 case "$s4":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox20.Text;
+                    return textBox20;
                 case "$s5":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox21.Text;
+                    return textBox21;
                 case "$s6":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox22.Text;
+                    return textBox22;
                 case "$s7":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox23.Text;
+                    return textBox23;
                 case "$t8":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox24.Text;
+                    return textBox24;
                 case "$t9":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox25.Text;
+                    return textBox25;
                 case "$k0":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox26.Text;
+                    return textBox26;
                 case "$k1":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox27.Text;
+                    return textBox27;
                 case "$gp":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox28.Text;
+                    return textBox28;
                 case "$sp":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox29.Text;
+                    return textBox29;
                 case "$fp":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox30.Text;
+                    return textBox30;
                 case "$ra":
                     console.Text += "Recognized register: " + search + "\r\n";
-                    return textBox31.Text;
+                    return textBox31;
                 default:
                     console.Text += "Did not recognize the register: " + search + "\r\n";
-                    return search;
+                    return textBox0;
             }
 
         }
 
-        private string execute(string function, string source1, string source2)
+        private int execute(string function, string source1, string source2)
         {
+            int s1 = int.Parse(source1);
+            int s2 = int.Parse(source2);
             switch (function)
             {
                 case "add":
                 case "addi":
-                    console.Text += "Executing Add/Addi: " + source1 + " + " + source2 + "\r\n";
-                    int result = int.Parse(source1) + int.Parse(source2);
-                    return result.ToString();
-                case "mul":
+                    console.Text += "Executing Addition: " + source1 + " + " + source2 + "\r\n";
+                    int result = s1 + s2;
+                    return result;
+                case "mult":
+                    result = s1 * s2;
+                    return result;
+                case "div":
+                    result = s1 / s2;
+                    return result;
+                case "slt":
+                case "slti":
+                    if (s1 < s2)
+                    {
+                        result = 1;
+                    }
+                    else
+                    {
+                        result = 0;
+                    }
+                    return result;
+                case "beq":
 
-                    return "";
+                    result = 0; 
+                    return result;
                 default:
                     console.Text += "Defaulted on Form1.execute: " + function + "\r\n";
-                    return "";
+                    return 0;
             }
 
         }

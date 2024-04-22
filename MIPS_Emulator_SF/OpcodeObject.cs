@@ -5,14 +5,12 @@
     {
 
 #pragma warning disable IDE0044 // Add readonly modifier
-#pragma warning disable IDE0051 // Remove unused private members
-        private String opcode;//opcode/function/label
-        private String destination;
-        private String source1;
-        private String source2;// or immediate data
-        private String misc; //Indicator label, instruction, or other 0 = label     1 = instruct    2 = jump
-        private String memory;
-#pragma warning restore IDE0051 // Remove unused private members
+        private string opcode;//opcode/function/label
+        private string destination;
+        private string source1;
+        private string source2;// or immediate data
+        private string misc; //Indicator label, instruction, or other 0 = label     1 = r type    2 = jump      3 = i type      4= Load/Save
+        private string memory;
 #pragma warning restore IDE0044 // Add readonly modifier
 
         public OpcodeObject(string opcode, string destination, string source1, string source2, string misc, string memory)
@@ -53,6 +51,11 @@
         public string getMemory()
         {
             return memory;
+        }
+
+        public string toString() 
+        {
+            return opcode + " " + destination + " " + source1 + " " + source2;
         }
     }
 }
