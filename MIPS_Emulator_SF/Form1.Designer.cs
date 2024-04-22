@@ -138,6 +138,7 @@
             // 
             // microButton
             // 
+            microButton.ForeColor = Color.FromArgb(64, 64, 0);
             microButton.Location = new Point(1087, 550);
             microButton.Name = "microButton";
             microButton.Size = new Size(87, 45);
@@ -148,6 +149,7 @@
             // 
             // saveButton
             // 
+            saveButton.ForeColor = Color.Red;
             saveButton.Location = new Point(994, 601);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(87, 45);
@@ -234,6 +236,7 @@
             // 
             // clearButton
             // 
+            clearButton.ForeColor = Color.Red;
             clearButton.Location = new Point(1087, 601);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(87, 45);
@@ -925,11 +928,11 @@
             // 
             label36.AutoSize = true;
             label36.Font = new Font("Segoe UI", 12F);
-            label36.Location = new Point(14, 13);
+            label36.Location = new Point(3, 18);
             label36.Name = "label36";
-            label36.Size = new Size(72, 21);
+            label36.Size = new Size(87, 21);
             label36.TabIndex = 12;
-            label36.Text = "Memory:";
+            label36.Text = "Instruction:";
             // 
             // panel1
             // 
