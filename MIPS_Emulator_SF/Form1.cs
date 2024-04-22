@@ -163,6 +163,11 @@ namespace MIPS_Emulator_SF
                         advancePC();
                         break;
 
+                    case 5:
+                        console.Text += "Possibly a branch instruction: (UNIMPLEMENTED) \r\n" + temp.toString();
+                        advancePC();
+                        break;
+
                     default:
                         console.Text += "Defaulted on Form1.stepButton: " + temp.ToString() + "\r\n";
                         advancePC();
@@ -370,10 +375,23 @@ namespace MIPS_Emulator_SF
                         }
                         else
                         {
-                            console.Text += " Possible I-Type instruction: " + instruction + "\r\n";
-                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                            instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 3, intPC);
-                            list.Add(instruct);
+                            if (!(temp[0].Contains("b")))
+                            {
+                                console.Text += " Possible I-Type instruction: " + instruction + "\r\n";
+                                memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                                instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 3, intPC);
+                                list.Add(instruct);
+                            }
+                            else
+                            {
+
+                                console.Text += " Possible Branch instruction: " + instruction + "\r\n";
+                                memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                                instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 5, intPC);
+                                list.Add(instruct);
+                            }
+
+
                         }
                         break;
                     case 5:
@@ -532,10 +550,24 @@ namespace MIPS_Emulator_SF
                         result = 0;
                     }
                     return result;
-                case "beq":
+                case "beq": //CHECK
+                    if (s1 == s2)
+                    {
 
-                    result = 0; 
-                    return result;
+                        result = 0;
+                        return result;
+                    }
+                    else
+                    {
+
+                        result = 0;
+                        return result;
+                    }
+                case "j":
+                    //list.Find("SAdasds");
+
+
+                    return result = 0;
                 default:
                     console.Text += "Defaulted on Form1.execute: " + function + "\r\n";
                     return 0;
