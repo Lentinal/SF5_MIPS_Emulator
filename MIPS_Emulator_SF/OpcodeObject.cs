@@ -10,17 +10,17 @@
         private string source1;
         private string source2;// or immediate data
         private int misc; //Indicator label, instruction, or other 0 = label     1 = r type    2 = jump      3 = i type      4= Load/Save
-        private string memory;
+        private string location;
 #pragma warning restore IDE0044 // Add readonly modifier
 
-        public OpcodeObject(string opcode, string destination, string source1, string source2, int misc, string memory)
+        public OpcodeObject(string opcode, string destination, string source1, string source2, int misc, string location)
         {
             this.opcode = opcode;
             this.destination = destination;
             this.source1 = source1;
             this.source2 = source2;
             this.misc = misc;
-            this.memory = memory;
+            this.location = location;
         }
 
         public string getOpcode()
@@ -48,9 +48,9 @@
             return misc;
         }
 
-        public string getMemory()
+        public string getLocation()
         {
-            return memory;
+            return location;
         }
 
         public string toString() 
