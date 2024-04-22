@@ -344,20 +344,20 @@ namespace MIPS_Emulator_SF
                     case 1:
                         console.Text += "Possible label: " + instruction + "\r\n";
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                        OpcodeObject instruct = new OpcodeObject(instruction, "", "", "", 0, intPC.ToString());
+                        OpcodeObject instruct = new OpcodeObject(instruction, "", "", "", 0, intPC);
                         list.Add(instruct);
                         break;
                     case 2:
                         console.Text += " Possible J-Type instruction: " + instruction + "\r\n";
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                        instruct = new OpcodeObject(temp[0], temp[1], "", "", 2, intPC.ToString());
+                        instruct = new OpcodeObject(temp[0], temp[1], "", "", 2, intPC);
                         list.Add(instruct);
                         break;
                     case 3:
 
                         console.Text += " Possible Load or Save instruction: " + instruction + "\r\n";
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", 4, intPC.ToString());
+                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", 4, intPC);
                         list.Add(instruct);
                         break;
                     case 4:
@@ -365,21 +365,21 @@ namespace MIPS_Emulator_SF
                         {
                             console.Text += " Possible R-Type instruction: " + instruction + "\r\n";
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                            instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC.ToString());
+                            instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC);
                             list.Add(instruct);
                         }
                         else
                         {
                             console.Text += " Possible I-Type instruction: " + instruction + "\r\n";
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                            instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 3, intPC.ToString());
+                            instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 3, intPC);
                             list.Add(instruct);
                         }
                         break;
                     case 5:
                         console.Text += " Possible instruction 5: " + instruction + "\r\n";
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC.ToString());
+                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC);
                         list.Add(instruct);
                         break;
                     default:
