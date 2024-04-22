@@ -8,7 +8,6 @@ namespace MIPS_Emulator_SF
         /// <summary>
         /// Global Variables
         /// </summary>
-        private static ArrayList instructionsArray = new ArrayList();
         private static List<OpcodeObject> list = new List<OpcodeObject>();
         private static int intPC = 0; //For holding PC/Memory location
         private static int stepCount = 0; //For microstep
