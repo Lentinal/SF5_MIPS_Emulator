@@ -9,11 +9,11 @@
         private string destination;
         private string source1;
         private string source2;// or immediate data
-        private string misc; //Indicator label, instruction, or other 0 = label     1 = r type    2 = jump      3 = i type      4= Load/Save
+        private int misc; //Indicator label, instruction, or other 0 = label     1 = r type    2 = jump      3 = i type      4= Load/Save
         private string memory;
 #pragma warning restore IDE0044 // Add readonly modifier
 
-        public OpcodeObject(string opcode, string destination, string source1, string source2, string misc, string memory)
+        public OpcodeObject(string opcode, string destination, string source1, string source2, int misc, string memory)
         {
             this.opcode = opcode;
             this.destination = destination;
@@ -43,7 +43,7 @@
             return destination;
         }
 
-        public string getMisc()
+        public int getMisc()
         {
             return misc;
         }
