@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms.VisualStyles;
-
-namespace MIPS_Emulator_SF
+﻿namespace MIPS_Emulator_SF
 {
     internal class AssemblyDecoder
     {
@@ -63,9 +61,11 @@ namespace MIPS_Emulator_SF
 
             for (int i = 0; i < temp.Length; i++)
             {
-                if (temp[i].Contains(",")) {
+                if (temp[i].Contains(","))
+                {
                     temp[i] = temp[i].TrimEnd(','); //Removes weird characters
                 }
+
 
             }
 
@@ -118,11 +118,11 @@ namespace MIPS_Emulator_SF
         }
 
         private static void redundancy(string[] instruction)
-            {
-            for(int i = 0; i < instruction.Length; i++)
+        {
+            for (int i = 0; i < instruction.Length; i++)
             {
                 returnArray[i] = instruction[i];
-                
+
             }
         }
 

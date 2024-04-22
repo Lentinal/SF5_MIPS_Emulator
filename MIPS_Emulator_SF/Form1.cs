@@ -9,8 +9,9 @@ namespace MIPS_Emulator_SF
         /// Global Variables
         /// </summary>
         private static ArrayList instructionsArray = new ArrayList();
-        private static int intPC = 0;
-        private static int stepCount = 0;
+        private static List<OpcodeObject> list = new List<OpcodeObject>();
+        private static int intPC = 0; //For holding PC/Memory location
+        private static int stepCount = 0; //For microstep
 
         /// <summary>
         /// Form1 
@@ -48,7 +49,7 @@ namespace MIPS_Emulator_SF
         /// </summary>
         /// <param name="number"></param>
         /// <returns></returns>
-        private static String convertToBinary(int number)
+        private static string convertToBinary(int number)
         {
             string binaryString = Convert.ToString(number, 2); // Convert to binary string
             int length = binaryString.Length;
@@ -110,45 +111,40 @@ namespace MIPS_Emulator_SF
         /// <param name="e"></param>
         private void stepButtonClick(object sender, EventArgs e)
         {
-            //Decoder call
-            //String[] tempRaw = Decoder.EncodeType(setPCTextBox.Text); //Debug and testing
-
-            //Assembly decode call
             try
             {
-#pragma warning disable CS8604 // Possible null reference argument.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-                String[] getFetch = AssemblyDecoder.Fetch(instructionsArray[intPC].ToString());
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-#pragma warning restore CS8604 // Possible null reference argument.
-                //console.Text += getFetch[9];//Spits out message on console
-                /*
-                if (!getFetch[6].Equals("1"))
+                OpcodeObject temp = list[intPC];
+                console.Text += "Fetched: " + temp.getOpcode() + "\r\n";
+                switch (temp.getMisc())
                 {
-                    String[] getDecode = AssemblyDecoder.Decode(getFetch); //Need to determine source registers and pass thru the contents TO-DO make another method
-                    String[] getExecute = AssemblyDecoder.Execute(getDecode);
-                    String[] getMemory = AssemblyDecoder.MemoryAccess(getExecute);
-                    String[] write = AssemblyDecoder.Writeback(getMemory);
-                    console.Text += "Completed one step: " + write[9] + "\r\n";
-                }*/
+                    case "0":
+                        advancePC();
+                        break;
+                    case "1":
+                        console.Text += "Fetching registers \r\n";
+                        String destin = getRegisterTextBox(temp.getDestination());
+                        String source1 = getRegisterTextBox(temp.getSource1());
+                        String source2 = getRegisterTextBox(temp.getSource2());
 
-                //Decoder debugging
-                //textBox33.Text += tempRaw[0] + "\r\n"; //Checks opcode
-                //textBox33.Text += tempRaw[9] + "\r\n";    //Displays to console
-                //Assembly debugging
-                console.Text += string.Join(" | ", getFetch) + "\r\n"; //Splits returned array
-                //textBox33.Text += instructionsList[0].ToString()+ "\r\n"; //Checks if the instruction list made it to the ArrayList
+                        String write = execute(temp.getOpcode(), source1, source2);
+                        console.Text += write + "\r\n";
 
-                //Advances memory/PC
-                PC.Text = convertToBinary(intPC);
-                intPC++;
+                        advancePC();
+                        break;
+                    case "2":
+                        console.Text += "Fetched Jump: (UNIMPLEMENT)" + "\r\n";
+                        advancePC();
+                        break;
+                    default:
+                        console.Text += "Defaulted on Form1.stepButton: " + temp.ToString() + "\r\n";
+                        advancePC();
+                        break;
+                }
             }
             catch (Exception ex)
             {
-                console.Text += "Memory is possibly empty or end of instruction set:  (stepButtonClick) " + ex.Message + "\r\n";
+                console.Text += "Memory is possibly empty or PC points to nowhere: " + ex.Message + "\r\n";
             }
-
-
         }
 
         /// <summary> UNIMPLEMENTED
@@ -157,33 +153,24 @@ namespace MIPS_Emulator_SF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void microStepButton(Object sender, EventArgs e)
+        private void microButton_Click(Object sender, EventArgs e)
         {
-
-            try
-            {
-#pragma warning disable CS8604 // Possible null reference argument.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-                String[] getFetch = AssemblyDecoder.Fetch(instructionsArray[intPC].ToString());
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-#pragma warning restore CS8604 // Possible null reference argument.
-
-
-
-            }
-            catch (Exception ex)
-            {
-                console.Text += "Memory is possibly empty or end of instruction set:  (stepButtonClick) " + ex.Message + "\r\n";
-            }
+            console.Text += "test";
         }
 
-    /// <summary> FINISHED
-    /// clearButton_Click
-    /// Calls clear()
-    /// </summary>
-    private void clearButton_Click(object sender, EventArgs e)
+        private void clearConsole_Click(object sender, EventArgs e)
+        {
+            console.Text = "";
+        }
+
+        /// <summary> FINISHED
+        /// clearButton_Click
+        /// Calls clear()
+        /// </summary>
+        private void clearButton_Click(object sender, EventArgs e)
         {
             clear();
+            console.Text = "CLEARED\r\n";
         }
 
         /// <summary> FINISHED
@@ -196,7 +183,7 @@ namespace MIPS_Emulator_SF
             memoryTextBox.Text = "";
             console.Text = "";
             PC.Text = "";
-            instructionsArray.Clear();
+            list.Clear();
             foreach (Control control in registerPanel.Controls)
             {
                 if (control is TextBox text && text.Name.StartsWith("textBox"))
@@ -206,19 +193,17 @@ namespace MIPS_Emulator_SF
             }
         }
 
-        /// <summary> CHECK
+        /// <summary> FINISHED
         /// pcButton_Click
         /// Sets PC value to what is in the setPCTextBox
-        /// CHECK: Needs to account for if in binary or decimal
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void pcButton_Click(object sender, EventArgs e)
         {
-            if (setPCTextBox != null)
-            {
-                PC.Text = setPCTextBox.Text;
-            }
+            PC.Text = convertToBinary(int.Parse(setPCTextBox.Text));
+            intPC = int.Parse(setPCTextBox.Text);
+            console.Text += "Set PC to : " + intPC + "\r\n";
         }
 
         /// <summary> UNIMPLEMENTED POSSIBLE SCRAP
@@ -275,15 +260,11 @@ namespace MIPS_Emulator_SF
                         string fileContents = File.ReadAllText(filePath);
                         String[] instructions = fileContents.Split("\n");
 
-                        foreach (string line in instructions)
+                        for (int i = 0; i < instructions.Length; i++)
                         {
-                            if (line.Length > 1)
-                            {
-                                instructionsArray.Add(line);
-                                memoryTextBox.Text += intPC + "\t" + line + "\r\n";
-                                intPC++;
-                            }
+                            FileHandler(instructions[i]);
                         }
+
                         intPC = 0; //Resets counter
                         console.Text += "Loaded in: " + filePath + "\r\n";
                         //Debugging 
@@ -295,6 +276,212 @@ namespace MIPS_Emulator_SF
                     }
                 }
             }
+        }
+
+        private void advancePC()
+        {
+            intPC++;
+            PC.Text = convertToBinary(intPC);
+        }
+
+        /// <summary> CHECK
+        /// FileHandler
+        /// For file button legibility 
+        /// CHECK: Need clearing and review
+        /// </summary>
+        /// <param name="instruction"></param>
+        private void FileHandler(string instruction)
+        {
+            char[] charsToTrim = { ' ', '#', '\n', '\r', '\t' };
+            string commentcut = (instruction.Substring(0, instruction.LastIndexOf("#") + 1)).ToLower();
+            commentcut = commentcut.TrimEnd(charsToTrim);
+            String[] temp = commentcut.Split(" ");
+            //Trim
+            if (temp.Length >= 1)
+            {
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    if (temp[i].Contains(","))
+                    {
+                        temp[i] = temp[i].TrimEnd(','); //Removes weird characters
+                    }
+                }
+
+                console.Text += string.Join(" | ", temp);
+                switch (temp.Length)
+                {
+                    case 0:
+                        console.Text += "Empty line \r\n";
+                        break;
+                    case 1:
+                        console.Text += "Possible label: " + instruction + "\r\n";
+                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        OpcodeObject instruct = new OpcodeObject(instruction, "", "", "", "0", intPC.ToString());
+                        list.Add(instruct);
+                        break;
+                    case 2:
+                        console.Text += " Possible Jump: " + instruction + "\r\n";
+                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        instruct = new OpcodeObject(temp[0], temp[1], "", "", "2", intPC.ToString());
+                        list.Add(instruct);
+                        break;
+                    case 3:
+                        console.Text += " Possible instruction: " + instruction + "\r\n";
+                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", "1", intPC.ToString());
+                        list.Add(instruct);
+                        break;
+                    case 4:
+                        console.Text += " Possible instruction: " + instruction + "\r\n";
+                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], "1", intPC.ToString());
+                        list.Add(instruct);
+                        break;
+                    case 5:
+                        console.Text += " Possible instruction: " + instruction + "\r\n";
+                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], "1", intPC.ToString());
+                        list.Add(instruct);
+                        break;
+                    default:
+                        console.Text += " Confused." + instruction + "\r\n";
+                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        break;
+
+                }
+                intPC++;
+
+
+            }
+
+
+
+        }
+
+        private string getRegisterTextBox(string search)
+        {
+            switch (search)
+            {
+                case "$zero":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox0.Text;
+                case "$at":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox1.Text;
+                case "$v0":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox2.Text;
+                case "$v1":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox3.Text;
+                case "$a0":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox4.Text;
+                case "$a1":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox5.Text;
+                case "$a2":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox6.Text;
+                case "$a3":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox7.Text;
+                case "$t0":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox8.Text;
+                case "$t1":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox9.Text;
+                case "$t2":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox10.Text;
+                case "$t3":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox11.Text;
+                case "$t4":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox12.Text;
+                case "$t5":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox13.Text;
+                case "$t6":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox14.Text;
+                case "$t7":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox15.Text;
+                case "$s0":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox16.Text;
+                case "$s1":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox17.Text;
+                case "$s2":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox18.Text;
+                case "$s3":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox19.Text;
+                case "$s4":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox20.Text;
+                case "$s5":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox21.Text;
+                case "$s6":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox22.Text;
+                case "$s7":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox23.Text;
+                case "$t8":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox24.Text;
+                case "$t9":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox25.Text;
+                case "$k0":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox26.Text;
+                case "$k1":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox27.Text;
+                case "$gp":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox28.Text;
+                case "$sp":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox29.Text;
+                case "$fp":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox30.Text;
+                case "$ra":
+                    console.Text += "Recognized register: " + search + "\r\n";
+                    return textBox31.Text;
+                default:
+                    console.Text += "Did not recognize the register: " + search + "\r\n";
+                    return search;
+            }
+
+        }
+
+        private string execute(string function, string source1, string source2)
+        {
+            switch (function)
+            {
+                case "add":
+                case "addi":
+                    console.Text += "Executing Add/Addi: " + source1 + " + " + source2 + "\r\n";
+                    int result = int.Parse(source1) + int.Parse(source2);
+                    return result.ToString();
+                case "mul":
+
+                    return "";
+                default:
+                    console.Text += "Defaulted on Form1.execute: " + function + "\r\n";
+                    return "";
+            }
+
         }
 
     }

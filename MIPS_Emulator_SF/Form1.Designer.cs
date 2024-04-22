@@ -39,7 +39,7 @@
             radioHex = new RadioButton();
             radioBinary = new RadioButton();
             clearButton = new Button();
-            saveStateButton = new Button();
+            clearConsoleButton = new Button();
             registerPanel = new Panel();
             textBox24 = new TextBox();
             textBox23 = new TextBox();
@@ -127,7 +127,7 @@
             // 
             stepButton.AccessibleDescription = "";
             stepButton.AccessibleName = "";
-            stepButton.Location = new Point(1006, 550);
+            stepButton.Location = new Point(994, 550);
             stepButton.Name = "stepButton";
             stepButton.Size = new Size(87, 45);
             stepButton.TabIndex = 0;
@@ -138,7 +138,7 @@
             // 
             // microButton
             // 
-            microButton.Location = new Point(1099, 550);
+            microButton.Location = new Point(1087, 550);
             microButton.Name = "microButton";
             microButton.Size = new Size(87, 45);
             microButton.TabIndex = 1;
@@ -148,7 +148,7 @@
             // 
             // saveButton
             // 
-            saveButton.Location = new Point(1006, 601);
+            saveButton.Location = new Point(994, 601);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(87, 45);
             saveButton.TabIndex = 3;
@@ -158,7 +158,7 @@
             // 
             // pcButton
             // 
-            pcButton.Location = new Point(1006, 652);
+            pcButton.Location = new Point(994, 798);
             pcButton.Name = "pcButton";
             pcButton.Size = new Size(87, 26);
             pcButton.TabIndex = 4;
@@ -168,7 +168,7 @@
             // 
             // setPCTextBox
             // 
-            setPCTextBox.Location = new Point(1099, 652);
+            setPCTextBox.Location = new Point(1087, 798);
             setPCTextBox.Name = "setPCTextBox";
             setPCTextBox.Size = new Size(265, 23);
             setPCTextBox.TabIndex = 5;
@@ -199,7 +199,7 @@
             // radioDecimal
             // 
             radioDecimal.AutoSize = true;
-            radioDecimal.Location = new Point(10, 86);
+            radioDecimal.Location = new Point(10, 61);
             radioDecimal.Name = "radioDecimal";
             radioDecimal.Size = new Size(68, 19);
             radioDecimal.TabIndex = 2;
@@ -211,7 +211,8 @@
             // radioHex
             // 
             radioHex.AutoSize = true;
-            radioHex.Location = new Point(10, 61);
+            radioHex.ForeColor = Color.Red;
+            radioHex.Location = new Point(10, 86);
             radioHex.Name = "radioHex";
             radioHex.Size = new Size(46, 19);
             radioHex.TabIndex = 1;
@@ -233,7 +234,7 @@
             // 
             // clearButton
             // 
-            clearButton.Location = new Point(1099, 601);
+            clearButton.Location = new Point(1087, 601);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(87, 45);
             clearButton.TabIndex = 7;
@@ -241,14 +242,15 @@
             clearButton.UseVisualStyleBackColor = true;
             clearButton.Click += clearButton_Click;
             // 
-            // saveStateButton
+            // clearConsoleButton
             // 
-            saveStateButton.Location = new Point(1192, 601);
-            saveStateButton.Name = "saveStateButton";
-            saveStateButton.Size = new Size(87, 45);
-            saveStateButton.TabIndex = 8;
-            saveStateButton.Text = "Save state";
-            saveStateButton.UseVisualStyleBackColor = true;
+            clearConsoleButton.Location = new Point(994, 747);
+            clearConsoleButton.Name = "clearConsoleButton";
+            clearConsoleButton.Size = new Size(87, 45);
+            clearConsoleButton.TabIndex = 8;
+            clearConsoleButton.Text = "Clear Console";
+            clearConsoleButton.UseVisualStyleBackColor = true;
+            clearConsoleButton.Click += clearConsole_Click;
             // 
             // registerPanel
             // 
@@ -909,13 +911,13 @@
             // memoryTextBox
             // 
             memoryTextBox.Font = new Font("Segoe UI", 12F);
-            memoryTextBox.Location = new Point(14, 66);
+            memoryTextBox.Location = new Point(3, 66);
             memoryTextBox.Multiline = true;
             memoryTextBox.Name = "memoryTextBox";
             memoryTextBox.ReadOnly = true;
             memoryTextBox.RightToLeft = RightToLeft.No;
             memoryTextBox.ScrollBars = ScrollBars.Both;
-            memoryTextBox.Size = new Size(462, 447);
+            memoryTextBox.Size = new Size(489, 447);
             memoryTextBox.TabIndex = 11;
             memoryTextBox.WordWrap = false;
             // 
@@ -935,15 +937,15 @@
             panel1.Controls.Add(label34);
             panel1.Controls.Add(memoryTextBox);
             panel1.Controls.Add(label36);
-            panel1.Location = new Point(1008, 12);
+            panel1.Location = new Point(994, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(488, 516);
+            panel1.Size = new Size(502, 516);
             panel1.TabIndex = 13;
             // 
             // label35
             // 
             label35.AutoSize = true;
-            label35.Location = new Point(91, 48);
+            label35.Location = new Point(93, 48);
             label35.Name = "label35";
             label35.Size = new Size(64, 15);
             label35.TabIndex = 14;
@@ -952,7 +954,7 @@
             // label34
             // 
             label34.AutoSize = true;
-            label34.Location = new Point(14, 48);
+            label34.Location = new Point(3, 48);
             label34.Name = "label34";
             label34.Size = new Size(53, 15);
             label34.TabIndex = 13;
@@ -996,7 +998,7 @@
             Controls.Add(panel1);
             Controls.Add(button1);
             Controls.Add(registerPanel);
-            Controls.Add(saveStateButton);
+            Controls.Add(clearConsoleButton);
             Controls.Add(clearButton);
             Controls.Add(radioPanel);
             Controls.Add(setPCTextBox);
@@ -1019,11 +1021,6 @@
             PerformLayout();
         }
 
-        private void microButton_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
         //Buttons
         private Button stepButton;
@@ -1032,7 +1029,7 @@
         private Button pcButton;
         private Button button1;
         private Button clearButton;
-        private Button saveStateButton;
+        private Button clearConsoleButton;
       
         //RadioButtons
         private Panel radioPanel;
