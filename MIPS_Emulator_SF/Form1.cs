@@ -122,17 +122,17 @@ namespace MIPS_Emulator_SF
                         console.Text += "Fetching registers for R-Type \r\n";
                         Control source1 = getRegisterTextBox(temp.getSource1());
                         Control source2 = getRegisterTextBox(temp.getSource2());
-                        int source1Int = Convert.ToInt32(source1.Text);
-                        int source2Int = Convert.ToInt32(source2.Text);
+                        String source1Int = source1.Text;
+                        String source2Int = source2.Text;
 
                         console.Text += "Decoding R-type instruction \r\n";
-                        int write = execute(temp.getOpcode(), source1Int, source2Int);
+                        int write = executeR(temp.getOpcode(), source1Int, source2Int);
 
                         console.Text += "Accessing destination register \r\n";
                         Control destin = getRegisterTextBox(temp.getDestination());
 
                         console.Text += "Writing back to " + temp.getDestination() + "\r\n";
-                        destin.Text = convertToBinary(write) + "\r\n";
+                        destin.Text = convertToBinary(write);
 
                         advancePC();
                         break;
@@ -151,16 +151,18 @@ namespace MIPS_Emulator_SF
                     case 3:
                         console.Text += "Fetching registers for I-Type \r\n";
                         source1 = getRegisterTextBox(temp.getSource1());
-                        source1Int = Convert.ToInt32(source1.Text);
+                        source1Int = source1.Text;
 
                         console.Text += "Decoding I-type instruction \r\n";
-                        write = execute(temp.getOpcode(), source1Int, Convert.ToInt32((temp.getSource2())));
+                        source2Int = temp.getSource2();
+
+                        write = executeI(temp.getOpcode(), source1Int, source2Int);
 
                         console.Text += "Accessing destination register \r\n";
                         destin = getRegisterTextBox(temp.getDestination());
 
                         console.Text += "Writing back to " + temp.getDestination() + "\r\n";
-                        destin.Text = convertToBinary(write) + "\r\n";
+                        destin.Text = convertToBinary(write);
                         advancePC();
                         break;
 
@@ -170,7 +172,34 @@ namespace MIPS_Emulator_SF
                         break;
 
                     case 5:
-                        console.Text += "Possibly a branch instruction: (UNIMPLEMENTED) \r\n" + temp.toString();
+                        console.Text += "Fetched branch \r\n";
+
+                        console.Text += "Decoding branch instruction \r\n";
+                        source1 = getRegisterTextBox(temp.getDestination());
+                        source1Int = source1.Text;
+                        source2 = getRegisterTextBox(temp.getSource1());
+                        source2Int = source2.Text;
+
+                        console.Text += "Executing branch instruction \r\n";
+                        write = executeBranch(temp.getOpcode(),source1Int, source2Int);
+
+                        if (write == 1) {
+                            console.Text += "Accessing jump location \r\n";
+                            foreach (OpcodeObject ex in list)
+                            {
+                                if (ex.getOpcode().Contains(temp.getSource2()))
+                                {
+                                    intPC = ex.getLocation();
+                                        console.Text += "Setting PC \r\n";
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            console.Text += "Branch is false \r\n";
+                        }
+
                         advancePC();
                         break;
 
@@ -528,12 +557,13 @@ namespace MIPS_Emulator_SF
 
         }
 
-        private int execute(string function, int s1, int s2)
+        private int executeR(string function, string source1, string source2)
         {
+            int s1 = Convert.ToInt32(source1, 2);
+            int s2 = Convert.ToInt32(source2, 2);
             switch (function)
             {
                 case "add":
-                case "addi":
                     console.Text += "Executing Addition: " + s1 + " + " + s2 + "\r\n";
                     int result = s1 + s2;
                     return result;
@@ -543,7 +573,7 @@ namespace MIPS_Emulator_SF
                 case "div":
                     result = s1 / s2;
                     return result;
-                case "slt":
+                /*case "slt":
                 case "slti":
                     if (s1 < s2)
                     {
@@ -566,11 +596,39 @@ namespace MIPS_Emulator_SF
 
                         result = 0;
                         return result;
-                    }
+                    }*/
                 
                 default:
                     console.Text += "Defaulted on Form1.execute: " + function + "\r\n";
                     return 0;
+            }
+
+        }
+
+        private int executeI(string function, string source1, string source2)
+        {
+            int s1 = Convert.ToInt32(source1, 2);
+            int s2 = int.Parse(source2);
+            switch (function)
+            {
+                case "addi":
+                    console.Text += "Executing Addition: " + s1 + " + " + s2 + "\r\n";
+                    int result = s1 + s2;
+                    return result;
+
+                case "slti":
+                    if (s1 < s2)
+                    {
+                        result = 1;
+                    }
+                    else
+                    {
+                        result = 0;
+                    }
+                    return result;
+                default:
+                    console.Text += "Defaulted executeI: " + function + "\r\n";
+                    return result = 0 ;
             }
 
         }
@@ -596,6 +654,30 @@ namespace MIPS_Emulator_SF
 
             }
 
+        }
+
+        private int executeBranch(string function, string destination, string source1)
+        {
+
+            int s1 = Convert.ToInt32(destination, 2);
+            int s2 = Convert.ToInt32(source1, 2);
+            switch (function)
+            {
+                case "beq":
+                    if (s1 == s2)
+                    {
+                        int result = 1;
+                        return result;
+                    }
+                    else
+                    {
+                        int result = 0;
+                        return result;
+                    }
+                default:
+                    console.Text += "Defaulted on Form1.executeBranch: " + function + "\r\n";
+                    return 0;
+            }
         }
     }
 
