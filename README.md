@@ -14,22 +14,22 @@ The object file will be a simple text file of address: bytecode that will load i
 
 
 ## Functionalities (From project proposal sheet):
-1.	Button - Perform one machine step (instruction)
-2.	Button - Perform one microcode step
-3.	Button - Run full speed until halt instruction
-4.	Button - Edit a value in memory
-5.	(Radio Button) Switch register, cache and memory displays between binary, hex, and decimal
-6.	Label Display cache “hit” rate
-7.	Button - Set/edit the PC value
-8.	Button – Clear Cache
-9.	Save/Load Machine “state”
+1.	~~Button - Perform one machine step (instruction)~~ **Works
+2.	Button - Perform one microcode step **Backburner(BB)
+3.	Button - Run full speed until halt instruction **BB
+4.	~~Button - Edit a value in memory~~ **SCRAPPED
+5.	~~(Radio Button) Switch register, cache and memory displays between binary, hex, and decimal~~ **SCRAPPED/DISFUNCTIONAL
+6.	~~Label Display cache “hit” rate~~ **SCRAPPED
+7.	~~Button - Set/edit the PC value~~ **Works
+8.	Button – Clear Cache **BB
+9.	~~Save/Load Machine “state”~~ **SCRAPPED
 
 ## Final Deliverables (From Final Presentation sheet):
-1. One load operation implemented in microcode and visible on user interface
-2. One store operation implements in microcode and visible on user interface
-3. add, subtract and multiply implemented in microcode and visible on user interface. (integer only). 
-4. AND, OR, NOT, and XOR implemented in microcode and visible on user interface
-5. One caching technique implemented
+1. One load operation implemented in microcode and visible on user interface **To-Do
+2. One store operation implements in microcode and visible on user interface **To-Do
+3. ~~add, subtract and multiply implemented in microcode and visible on user interface. (integer only).~~
+4. ~~AND, OR, NOT, and XOR implemented in microcode and visible on user interface~~
+5. One caching technique implemented **To-Do 
 
 Extra credit:
 Floating point operations implemented and visible
@@ -39,15 +39,15 @@ Associative caching with TLB implemented
 1. ~~Make GUI Layout~~ 
 2. ~~Read file~~
 3. ~~Separate and read opcode~~
-4. ~~Write to register/memory~~
-5. Create Add/Subtract fuction
-6. Create Multiply/Divide function
-7. Create Compare function
-8. Create Jump function
-9. Create Step/microstep function
-11. Implement GUI Button calls
-12. Implement GUI textbox calls
-13. Only allow numbers in text box(Might need to redo all text box to be rich text) oops -KA
+4. ~~Write to register~~/memory
+5. ~~Create Add/Subtract fuction~~
+6. ~~Create Multiply/Divide function~~
+7. ~~Create a Compare function~~
+8. ~~Create a Jump function~~
+9. ~~Create Step~~/microstep function
+11. ~~Implement GUI Button calls~~
+12. ~~Implement GUI textbox calls~~
+13. ~~Only allow numbers in text box(Might need to redo all text box to be rich text) oops -KA~~ **Made the registers read-only
 
 
 ## Phase 1 Febuary 23, 2024
