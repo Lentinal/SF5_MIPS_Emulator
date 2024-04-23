@@ -1,11 +1,4 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MIPS_Emulator_SF
+﻿namespace MIPS_Emulator_SF
 {
     internal class AssemblyDecoder
     {
@@ -17,63 +10,123 @@ namespace MIPS_Emulator_SF
             *  returnArray[2] = source 2/immediate data
             *  returnArray[3] = destination
             *  returnArray[4] = shift
-            *  returnArray[5] = R/I/J - type
-            *  returnArray[6] = if header = true
-            *  returnArray[7] = if comment = true
+            *  returnArray[5] = R/I/J - Type
+            *  returnArray[6] = Label or Comment = 1    Instruction = 0
+            *  returnArray[7] = Write data
             *  returnArray[8] = instruction line
             *  returnArray[9] = Console
             */
-        //Takes line and sends it to decode if it is something to decode
-        public static String[] Fetch(string instruction) 
+
+        /// <summary>
+        /// Fetch
+        /// Takes line and sends it to decode if it is something to decode
+        /// When microstep
+        /// </summary>
+        /// <param name="instruction"></param>
+        /// <returns></returns>
+        public static String[] Fetch(string instruction)
         {
             returnArray[8] = instruction;
-           
-
-            if (!instruction.StartsWith("#")) //Checks for comment
+            if (instruction.StartsWith("#")) //Checks for comment
             {
-                if (!instruction.Contains(':')) //Checks for segment headers
-                {
-                    Decoder(instruction);//Helps me read this mess better  
-                    return returnArray;
-                }else //Label read
-                {
-                    returnArray[6] = "true"; //Label true
-                    returnArray[9] = "Read label: " + instruction+ "\r\n";
-                    return returnArray;
-                }
-
-            }else //Comment read
-            {
-                returnArray[7] = "true"; //Comment true
-                returnArray[9] = "Read Comment: " + instruction + "\r\n";
+                returnArray[6] = "1"; //Comment true
+                returnArray[9] = "Dectected Comment: " + returnArray[8] + "\r\n";
                 return returnArray;
             }
+
+            if (instruction.Contains(':')) //Checks for segment headers
+            {
+                returnArray[6] = "1"; //Label true
+                returnArray[9] = "Dectected Label: " + returnArray[8] + "\r\n";
+                return returnArray;
+            }
+
+            returnArray[6] = "0";
+            returnArray[9] = "Fetched: " + returnArray[8] + "\r\n";
+            return returnArray;
         }
 
-
-        //Helps me split and read it better prob can fix and force it in the if SADwich
-        private static String[] Decoder(string instruction)
+        /// <summary>
+        /// Decode
+        /// Helps me split and read it better prob can fix and force it in the if SADwich
+        /// </summary>
+        /// <param name="instruction"></param>
+        /// <returns></returns>
+        public static String[] Decode(string[] instruction)
         {
-            String lowercase = instruction.ToLower();
+            redundancy(instruction);
+            String lowercase = instruction[8].ToLower();
             String[] temp = lowercase.Split(' '); //Need first part of the instruction
             returnArray[0] = temp[0];
+
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (temp[i].Contains(","))
+                {
+                    temp[i] = temp[i].TrimEnd(','); //Removes weird characters
+                }
+
+
+            }
 
             switch (returnArray[0])
             {
                 case "add":
                 case "addi":
-                    returnArray[1] = temp[1].Remove(temp.Length); //Removes the , at the end of the string
-                    returnArray[2] = temp[2].Remove(temp.Length); //Removes the , at the end of the string
-                    returnArray[9] = "Caught at case add/addi: " + instruction + "\r\n";
+                    returnArray[3] = temp[1];
+                    returnArray[1] = temp[2];
+                    returnArray[2] = temp[3];
+                    returnArray[9] = "Caught at case add/addi: " + returnArray[8] + "\r\n";
                     return returnArray;
 
                 default:
-                    returnArray[9] = "Function not implemented/Function incorrect: " + instruction + "\r\n";
+                    returnArray[9] = "Function not implemented/Function incorrect: " + returnArray[8] + "\r\n";
                     return returnArray;
 
             }
 
         }
+
+        public static String[] Execute(string[] instruction)
+        {
+            redundancy(instruction);
+            switch (returnArray[0])
+            {
+                case "add":
+                case "addi":
+                    returnArray[7] = (Convert.ToInt32(returnArray[1]) + Convert.ToInt32(returnArray[2])).ToString();
+                    break;
+                default:
+                    returnArray[9] = "Error at Execute with instruction: " + returnArray[8];
+                    break;
+            }
+
+            return returnArray;
+        }
+
+        public static String[] MemoryAccess(string[] instruction)
+        {
+            redundancy(instruction);
+
+            return returnArray;
+        }
+
+        public static String[] Writeback(string[] instruction)
+        {
+            redundancy(instruction);
+            return returnArray;
+        }
+
+        private static void redundancy(string[] instruction)
+        {
+            for (int i = 0; i < instruction.Length; i++)
+            {
+                returnArray[i] = instruction[i];
+
+            }
+        }
+
+
+
     }
 }
- 

@@ -1,5 +1,3 @@
-using System.Reflection.Metadata;
-
 namespace MIPS_Emulator_SF
 {
     public static class Program
@@ -17,7 +15,7 @@ namespace MIPS_Emulator_SF
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
 
-         
+
         }
     }
 }

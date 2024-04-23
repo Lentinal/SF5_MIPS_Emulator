@@ -39,7 +39,7 @@
             radioHex = new RadioButton();
             radioBinary = new RadioButton();
             clearButton = new Button();
-            saveStateButton = new Button();
+            clearConsoleButton = new Button();
             registerPanel = new Panel();
             textBox24 = new TextBox();
             textBox23 = new TextBox();
@@ -109,23 +109,31 @@
             label2 = new Label();
             registerLabel = new Label();
             button1 = new Button();
-            memoryTextBox = new TextBox();
+            instructionTextBox = new TextBox();
             label36 = new Label();
             panel1 = new Panel();
-            textBox33 = new TextBox();
+            label35 = new Label();
+            label34 = new Label();
+            console = new TextBox();
             label37 = new Label();
             panel2 = new Panel();
+            panel3 = new Panel();
+            label38 = new Label();
+            label39 = new Label();
+            memoryTextBox = new TextBox();
+            label40 = new Label();
             radioPanel.SuspendLayout();
             registerPanel.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // stepButton
             // 
             stepButton.AccessibleDescription = "";
             stepButton.AccessibleName = "";
-            stepButton.Location = new Point(1006, 550);
+            stepButton.Location = new Point(994, 696);
             stepButton.Name = "stepButton";
             stepButton.Size = new Size(87, 45);
             stepButton.TabIndex = 0;
@@ -136,16 +144,19 @@
             // 
             // microButton
             // 
-            microButton.Location = new Point(1099, 550);
+            microButton.ForeColor = Color.FromArgb(64, 64, 0);
+            microButton.Location = new Point(1098, 696);
             microButton.Name = "microButton";
             microButton.Size = new Size(87, 45);
             microButton.TabIndex = 1;
             microButton.Text = "Micro Step 1";
             microButton.UseVisualStyleBackColor = true;
+            microButton.Click += microButton_Click;
             // 
             // saveButton
             // 
-            saveButton.Location = new Point(1006, 601);
+            saveButton.ForeColor = Color.Red;
+            saveButton.Location = new Point(1098, 747);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(87, 45);
             saveButton.TabIndex = 3;
@@ -155,7 +166,7 @@
             // 
             // pcButton
             // 
-            pcButton.Location = new Point(1006, 652);
+            pcButton.Location = new Point(994, 798);
             pcButton.Name = "pcButton";
             pcButton.Size = new Size(87, 26);
             pcButton.TabIndex = 4;
@@ -165,7 +176,7 @@
             // 
             // setPCTextBox
             // 
-            setPCTextBox.Location = new Point(1099, 652);
+            setPCTextBox.Location = new Point(1087, 798);
             setPCTextBox.Name = "setPCTextBox";
             setPCTextBox.Size = new Size(265, 23);
             setPCTextBox.TabIndex = 5;
@@ -177,7 +188,7 @@
             radioPanel.Controls.Add(radioDecimal);
             radioPanel.Controls.Add(radioHex);
             radioPanel.Controls.Add(radioBinary);
-            radioPanel.Location = new Point(1370, 547);
+            radioPanel.Location = new Point(1513, 708);
             radioPanel.Name = "radioPanel";
             radioPanel.Size = new Size(116, 128);
             radioPanel.TabIndex = 6;
@@ -196,7 +207,7 @@
             // radioDecimal
             // 
             radioDecimal.AutoSize = true;
-            radioDecimal.Location = new Point(10, 86);
+            radioDecimal.Location = new Point(10, 61);
             radioDecimal.Name = "radioDecimal";
             radioDecimal.Size = new Size(68, 19);
             radioDecimal.TabIndex = 2;
@@ -208,7 +219,8 @@
             // radioHex
             // 
             radioHex.AutoSize = true;
-            radioHex.Location = new Point(10, 61);
+            radioHex.ForeColor = Color.Red;
+            radioHex.Location = new Point(10, 86);
             radioHex.Name = "radioHex";
             radioHex.Size = new Size(46, 19);
             radioHex.TabIndex = 1;
@@ -230,7 +242,8 @@
             // 
             // clearButton
             // 
-            clearButton.Location = new Point(1099, 601);
+            clearButton.ForeColor = Color.Red;
+            clearButton.Location = new Point(1191, 747);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(87, 45);
             clearButton.TabIndex = 7;
@@ -238,14 +251,15 @@
             clearButton.UseVisualStyleBackColor = true;
             clearButton.Click += clearButton_Click;
             // 
-            // saveStateButton
+            // clearConsoleButton
             // 
-            saveStateButton.Location = new Point(1192, 601);
-            saveStateButton.Name = "saveStateButton";
-            saveStateButton.Size = new Size(87, 45);
-            saveStateButton.TabIndex = 8;
-            saveStateButton.Text = "Save state";
-            saveStateButton.UseVisualStyleBackColor = true;
+            clearConsoleButton.Location = new Point(994, 747);
+            clearConsoleButton.Name = "clearConsoleButton";
+            clearConsoleButton.Size = new Size(87, 45);
+            clearConsoleButton.TabIndex = 8;
+            clearConsoleButton.Text = "Clear Console";
+            clearConsoleButton.UseVisualStyleBackColor = true;
+            clearConsoleButton.Click += clearConsole_Click;
             // 
             // registerPanel
             // 
@@ -894,7 +908,8 @@
             // 
             // button1
             // 
-            button1.Location = new Point(1358, 783);
+            button1.AllowDrop = true;
+            button1.Location = new Point(1635, 786);
             button1.Name = "button1";
             button1.Size = new Size(128, 50);
             button1.TabIndex = 10;
@@ -902,47 +917,67 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += fileButton_Click;
             // 
-            // memoryTextBox
+            // instructionTextBox
             // 
-            memoryTextBox.Font = new Font("Segoe UI", 12F);
-            memoryTextBox.Location = new Point(14, 39);
-            memoryTextBox.Multiline = true;
-            memoryTextBox.Name = "memoryTextBox";
-            memoryTextBox.ReadOnly = true;
-            memoryTextBox.ScrollBars = ScrollBars.Vertical;
-            memoryTextBox.Size = new Size(445, 456);
-            memoryTextBox.TabIndex = 11;
+            instructionTextBox.Font = new Font("Segoe UI", 12F);
+            instructionTextBox.Location = new Point(3, 66);
+            instructionTextBox.Multiline = true;
+            instructionTextBox.Name = "instructionTextBox";
+            instructionTextBox.ReadOnly = true;
+            instructionTextBox.RightToLeft = RightToLeft.No;
+            instructionTextBox.ScrollBars = ScrollBars.Both;
+            instructionTextBox.Size = new Size(377, 609);
+            instructionTextBox.TabIndex = 11;
+            instructionTextBox.WordWrap = false;
             // 
             // label36
             // 
             label36.AutoSize = true;
             label36.Font = new Font("Segoe UI", 12F);
-            label36.Location = new Point(14, 13);
+            label36.Location = new Point(3, 18);
             label36.Name = "label36";
-            label36.Size = new Size(72, 21);
+            label36.Size = new Size(87, 21);
             label36.TabIndex = 12;
-            label36.Text = "Memory:";
+            label36.Text = "Instruction:";
             // 
             // panel1
             // 
-            panel1.Controls.Add(memoryTextBox);
+            panel1.Controls.Add(label35);
+            panel1.Controls.Add(label34);
+            panel1.Controls.Add(instructionTextBox);
             panel1.Controls.Add(label36);
-            panel1.Location = new Point(1008, 12);
+            panel1.Location = new Point(994, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(479, 516);
+            panel1.Size = new Size(383, 678);
             panel1.TabIndex = 13;
             // 
-            // textBox33
+            // label35
             // 
-            textBox33.AcceptsReturn = true;
-            textBox33.AcceptsTab = true;
-            textBox33.Location = new Point(15, 39);
-            textBox33.Multiline = true;
-            textBox33.Name = "textBox33";
-            textBox33.ReadOnly = true;
-            textBox33.ScrollBars = ScrollBars.Vertical;
-            textBox33.Size = new Size(942, 227);
-            textBox33.TabIndex = 14;
+            label35.AutoSize = true;
+            label35.Location = new Point(93, 48);
+            label35.Name = "label35";
+            label35.Size = new Size(64, 15);
+            label35.TabIndex = 14;
+            label35.Text = "Instruction";
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.Location = new Point(3, 48);
+            label34.Name = "label34";
+            label34.Size = new Size(53, 15);
+            label34.TabIndex = 13;
+            label34.Text = "Location";
+            // 
+            // console
+            // 
+            console.Location = new Point(14, 37);
+            console.Multiline = true;
+            console.Name = "console";
+            console.ReadOnly = true;
+            console.ScrollBars = ScrollBars.Vertical;
+            console.Size = new Size(959, 259);
+            console.TabIndex = 14;
             // 
             // label37
             // 
@@ -957,22 +992,75 @@
             // panel2
             // 
             panel2.Controls.Add(label37);
-            panel2.Controls.Add(textBox33);
-            panel2.Location = new Point(12, 550);
+            panel2.Controls.Add(console);
+            panel2.Location = new Point(12, 534);
             panel2.Name = "panel2";
-            panel2.Size = new Size(976, 283);
+            panel2.Size = new Size(976, 299);
             panel2.TabIndex = 16;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(label38);
+            panel3.Controls.Add(label39);
+            panel3.Controls.Add(memoryTextBox);
+            panel3.Controls.Add(label40);
+            panel3.Location = new Point(1383, 12);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(383, 678);
+            panel3.TabIndex = 17;
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.Location = new Point(93, 48);
+            label38.Name = "label38";
+            label38.Size = new Size(55, 15);
+            label38.TabIndex = 14;
+            label38.Text = "Contents";
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Location = new Point(3, 48);
+            label39.Name = "label39";
+            label39.Size = new Size(53, 15);
+            label39.TabIndex = 13;
+            label39.Text = "Location";
+            // 
+            // memoryTextBox
+            // 
+            memoryTextBox.Font = new Font("Segoe UI", 12F);
+            memoryTextBox.Location = new Point(3, 66);
+            memoryTextBox.Multiline = true;
+            memoryTextBox.Name = "memoryTextBox";
+            memoryTextBox.ReadOnly = true;
+            memoryTextBox.RightToLeft = RightToLeft.No;
+            memoryTextBox.ScrollBars = ScrollBars.Both;
+            memoryTextBox.Size = new Size(377, 609);
+            memoryTextBox.TabIndex = 11;
+            memoryTextBox.WordWrap = false;
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Font = new Font("Segoe UI", 12F);
+            label40.Location = new Point(3, 18);
+            label40.Name = "label40";
+            label40.Size = new Size(72, 21);
+            label40.TabIndex = 12;
+            label40.Text = "Memory:";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1498, 845);
+            ClientSize = new Size(1770, 845);
+            Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(button1);
             Controls.Add(registerPanel);
-            Controls.Add(saveStateButton);
+            Controls.Add(clearConsoleButton);
             Controls.Add(clearButton);
             Controls.Add(radioPanel);
             Controls.Add(setPCTextBox);
@@ -991,6 +1079,8 @@
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1003,7 +1093,7 @@
         private Button pcButton;
         private Button button1;
         private Button clearButton;
-        private Button saveStateButton;
+        private Button clearConsoleButton;
       
         //RadioButtons
         private Panel radioPanel;
@@ -1088,11 +1178,18 @@
 
         //Memory panel
         private Panel panel1;
-        private TextBox memoryTextBox;
+        private TextBox instructionTextBox;
 
         //Console
         private Label label37;
         private Panel panel2;
-        private TextBox textBox33;
+        private TextBox console;
+        private Label label35;
+        private Label label34;
+        private Panel panel3;
+        private Label label38;
+        private Label label39;
+        private TextBox memoryTextBox;
+        private Label label40;
     }
 }
