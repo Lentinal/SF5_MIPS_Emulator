@@ -145,7 +145,7 @@
             // microButton
             // 
             microButton.ForeColor = Color.FromArgb(64, 64, 0);
-            microButton.Location = new Point(1087, 696);
+            microButton.Location = new Point(1098, 696);
             microButton.Name = "microButton";
             microButton.Size = new Size(87, 45);
             microButton.TabIndex = 1;
@@ -156,7 +156,7 @@
             // saveButton
             // 
             saveButton.ForeColor = Color.Red;
-            saveButton.Location = new Point(1087, 747);
+            saveButton.Location = new Point(1098, 747);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(87, 45);
             saveButton.TabIndex = 3;
@@ -243,7 +243,7 @@
             // clearButton
             // 
             clearButton.ForeColor = Color.Red;
-            clearButton.Location = new Point(1180, 747);
+            clearButton.Location = new Point(1191, 747);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(87, 45);
             clearButton.TabIndex = 7;
@@ -976,7 +976,7 @@
             console.Name = "console";
             console.ReadOnly = true;
             console.ScrollBars = ScrollBars.Vertical;
-            console.Size = new Size(959, 234);
+            console.Size = new Size(959, 259);
             console.TabIndex = 14;
             // 
             // label37
@@ -993,9 +993,9 @@
             // 
             panel2.Controls.Add(label37);
             panel2.Controls.Add(console);
-            panel2.Location = new Point(12, 550);
+            panel2.Location = new Point(12, 534);
             panel2.Name = "panel2";
-            panel2.Size = new Size(976, 283);
+            panel2.Size = new Size(976, 299);
             panel2.TabIndex = 16;
             // 
             // panel3

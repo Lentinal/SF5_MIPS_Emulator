@@ -51,11 +51,8 @@ namespace MIPS_Emulator_SF
         {
             string binaryString = Convert.ToString(number, 2); // Convert to binary string
             int length = binaryString.Length;
-            int neededZeros = 32 - length;
-            if (length != 32)
-            {
-                binaryString = binaryString.PadLeft(neededZeros, '0'); // I want to add zeros until the length is 32 bits
-            }
+                binaryString = binaryString.PadLeft(32, '0'); // I want to add zeros until the length is 32 bits
+            
             return binaryString;
         }
 
@@ -212,7 +209,7 @@ namespace MIPS_Emulator_SF
             }
             catch (Exception ex)
             {
-                console.Text += "Memory is possibly empty or PC points to nowhere: " + ex.Message + "\r\n";
+                console.Text += "Encountered error: " + ex.Message + "\r\n";
             }
         }
 
@@ -574,6 +571,30 @@ namespace MIPS_Emulator_SF
                 case "div":
                     result = s1 / s2;
                     return result;
+                case "and":
+
+                    console.Text += "Reached and \r\n";
+                    String[] s1Bi = splitBinary(source1);
+                    String[] s2Bi = splitBinary(source2);
+                    String[] ret = new string[32];
+
+                    console.Text += "Reached and for start \r\n";
+                    for (int i = 0; i < s1Bi.Length; i++)
+                    {
+                        console.Text += "Reached and if \r\n" + i ;
+                        if (s1Bi[i].Equals("1") && s2Bi[i].Equals("1"))
+                        {
+                            ret[i] = "1";
+                        }
+                        else
+                        {
+                            ret[i] = "0";
+                        }
+                    }
+
+                    console.Text += "Passed and loop \r\n";
+                    console.Text += string.Join("",ret);
+                    return result = 0;
 
                 default:
                     console.Text += "Defaulted on Form1.execute: " + function + "\r\n";
@@ -615,6 +636,7 @@ namespace MIPS_Emulator_SF
             switch (function)
             {
                 case "j":
+                case "jal":
                     foreach (OpcodeObject e in list)
                     {
                         if (e.getOpcode().Contains(destination))
@@ -657,5 +679,18 @@ namespace MIPS_Emulator_SF
             }
         }
 
+        private string[] splitBinary(string s)
+        {
+            console.Text += s + "\r\n";
+            console.Text += "Reached sBi \r\n";
+            String[] returnArray = new String[32];
+            for (int i = 0; i < 31; i++)
+            {
+                returnArray[i] = s.Substring(i).Trim();
+            }
+
+            console.Text += "Passed sBi \r\n";
+            return returnArray;
+        }
     }
 }
