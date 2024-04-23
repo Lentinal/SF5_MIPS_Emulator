@@ -109,7 +109,7 @@
             label2 = new Label();
             registerLabel = new Label();
             button1 = new Button();
-            memoryTextBox = new TextBox();
+            instructionTextBox = new TextBox();
             label36 = new Label();
             panel1 = new Panel();
             label35 = new Label();
@@ -117,17 +117,23 @@
             console = new TextBox();
             label37 = new Label();
             panel2 = new Panel();
+            panel3 = new Panel();
+            label38 = new Label();
+            label39 = new Label();
+            memoryTextBox = new TextBox();
+            label40 = new Label();
             radioPanel.SuspendLayout();
             registerPanel.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // stepButton
             // 
             stepButton.AccessibleDescription = "";
             stepButton.AccessibleName = "";
-            stepButton.Location = new Point(994, 550);
+            stepButton.Location = new Point(994, 696);
             stepButton.Name = "stepButton";
             stepButton.Size = new Size(87, 45);
             stepButton.TabIndex = 0;
@@ -139,7 +145,7 @@
             // microButton
             // 
             microButton.ForeColor = Color.FromArgb(64, 64, 0);
-            microButton.Location = new Point(1087, 550);
+            microButton.Location = new Point(1087, 696);
             microButton.Name = "microButton";
             microButton.Size = new Size(87, 45);
             microButton.TabIndex = 1;
@@ -150,7 +156,7 @@
             // saveButton
             // 
             saveButton.ForeColor = Color.Red;
-            saveButton.Location = new Point(994, 601);
+            saveButton.Location = new Point(1087, 747);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(87, 45);
             saveButton.TabIndex = 3;
@@ -182,7 +188,7 @@
             radioPanel.Controls.Add(radioDecimal);
             radioPanel.Controls.Add(radioHex);
             radioPanel.Controls.Add(radioBinary);
-            radioPanel.Location = new Point(1370, 547);
+            radioPanel.Location = new Point(1513, 708);
             radioPanel.Name = "radioPanel";
             radioPanel.Size = new Size(116, 128);
             radioPanel.TabIndex = 6;
@@ -237,7 +243,7 @@
             // clearButton
             // 
             clearButton.ForeColor = Color.Red;
-            clearButton.Location = new Point(1087, 601);
+            clearButton.Location = new Point(1180, 747);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(87, 45);
             clearButton.TabIndex = 7;
@@ -903,7 +909,7 @@
             // button1
             // 
             button1.AllowDrop = true;
-            button1.Location = new Point(1358, 783);
+            button1.Location = new Point(1635, 786);
             button1.Name = "button1";
             button1.Size = new Size(128, 50);
             button1.TabIndex = 10;
@@ -911,18 +917,18 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += fileButton_Click;
             // 
-            // memoryTextBox
+            // instructionTextBox
             // 
-            memoryTextBox.Font = new Font("Segoe UI", 12F);
-            memoryTextBox.Location = new Point(3, 66);
-            memoryTextBox.Multiline = true;
-            memoryTextBox.Name = "memoryTextBox";
-            memoryTextBox.ReadOnly = true;
-            memoryTextBox.RightToLeft = RightToLeft.No;
-            memoryTextBox.ScrollBars = ScrollBars.Both;
-            memoryTextBox.Size = new Size(489, 447);
-            memoryTextBox.TabIndex = 11;
-            memoryTextBox.WordWrap = false;
+            instructionTextBox.Font = new Font("Segoe UI", 12F);
+            instructionTextBox.Location = new Point(3, 66);
+            instructionTextBox.Multiline = true;
+            instructionTextBox.Name = "instructionTextBox";
+            instructionTextBox.ReadOnly = true;
+            instructionTextBox.RightToLeft = RightToLeft.No;
+            instructionTextBox.ScrollBars = ScrollBars.Both;
+            instructionTextBox.Size = new Size(377, 609);
+            instructionTextBox.TabIndex = 11;
+            instructionTextBox.WordWrap = false;
             // 
             // label36
             // 
@@ -938,11 +944,11 @@
             // 
             panel1.Controls.Add(label35);
             panel1.Controls.Add(label34);
-            panel1.Controls.Add(memoryTextBox);
+            panel1.Controls.Add(instructionTextBox);
             panel1.Controls.Add(label36);
             panel1.Location = new Point(994, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(502, 516);
+            panel1.Size = new Size(383, 678);
             panel1.TabIndex = 13;
             // 
             // label35
@@ -992,11 +998,64 @@
             panel2.Size = new Size(976, 283);
             panel2.TabIndex = 16;
             // 
+            // panel3
+            // 
+            panel3.Controls.Add(label38);
+            panel3.Controls.Add(label39);
+            panel3.Controls.Add(memoryTextBox);
+            panel3.Controls.Add(label40);
+            panel3.Location = new Point(1383, 12);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(383, 678);
+            panel3.TabIndex = 17;
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.Location = new Point(93, 48);
+            label38.Name = "label38";
+            label38.Size = new Size(55, 15);
+            label38.TabIndex = 14;
+            label38.Text = "Contents";
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Location = new Point(3, 48);
+            label39.Name = "label39";
+            label39.Size = new Size(53, 15);
+            label39.TabIndex = 13;
+            label39.Text = "Location";
+            // 
+            // memoryTextBox
+            // 
+            memoryTextBox.Font = new Font("Segoe UI", 12F);
+            memoryTextBox.Location = new Point(3, 66);
+            memoryTextBox.Multiline = true;
+            memoryTextBox.Name = "memoryTextBox";
+            memoryTextBox.ReadOnly = true;
+            memoryTextBox.RightToLeft = RightToLeft.No;
+            memoryTextBox.ScrollBars = ScrollBars.Both;
+            memoryTextBox.Size = new Size(377, 609);
+            memoryTextBox.TabIndex = 11;
+            memoryTextBox.WordWrap = false;
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Font = new Font("Segoe UI", 12F);
+            label40.Location = new Point(3, 18);
+            label40.Name = "label40";
+            label40.Size = new Size(72, 21);
+            label40.TabIndex = 12;
+            label40.Text = "Memory:";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1498, 845);
+            ClientSize = new Size(1770, 845);
+            Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(button1);
@@ -1020,6 +1079,8 @@
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1117,7 +1178,7 @@
 
         //Memory panel
         private Panel panel1;
-        private TextBox memoryTextBox;
+        private TextBox instructionTextBox;
 
         //Console
         private Label label37;
@@ -1125,5 +1186,10 @@
         private TextBox console;
         private Label label35;
         private Label label34;
+        private Panel panel3;
+        private Label label38;
+        private Label label39;
+        private TextBox memoryTextBox;
+        private Label label40;
     }
 }

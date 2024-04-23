@@ -181,16 +181,17 @@ namespace MIPS_Emulator_SF
                         source2Int = source2.Text;
 
                         console.Text += "Executing branch instruction \r\n";
-                        write = executeBranch(temp.getOpcode(),source1Int, source2Int);
+                        write = executeBranch(temp.getOpcode(), source1Int, source2Int);
 
-                        if (write == 1) {
+                        if (write == 1)
+                        {
                             console.Text += "Accessing jump location \r\n";
                             foreach (OpcodeObject ex in list)
                             {
                                 if (ex.getOpcode().Contains(temp.getSource2()))
                                 {
                                     intPC = ex.getLocation();
-                                        console.Text += "Setting PC \r\n";
+                                    console.Text += "Setting PC \r\n";
                                 }
 
                             }
@@ -248,7 +249,7 @@ namespace MIPS_Emulator_SF
         private void clear()
         {
             intPC = 0;
-            memoryTextBox.Text = "";
+            instructionTextBox.Text = "";
             console.Text = "";
             PC.Text = "";
             list.Clear();
@@ -383,20 +384,20 @@ namespace MIPS_Emulator_SF
                         break;
                     case 1:
                         console.Text += "Possible label: " + instruction + "\r\n";
-                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         OpcodeObject instruct = new OpcodeObject(instruction, "", "", "", 0, intPC);
                         list.Add(instruct);
                         break;
                     case 2:
                         console.Text += " Possible J-Type instruction: " + instruction + "\r\n";
-                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], "", "", 2, intPC);
                         list.Add(instruct);
                         break;
                     case 3:
 
                         console.Text += " Possible Load or Save instruction: " + instruction + "\r\n";
-                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", 4, intPC);
                         list.Add(instruct);
                         break;
@@ -404,7 +405,7 @@ namespace MIPS_Emulator_SF
                         if (!(temp[0].Contains("i") || !temp[3].Contains("$")))
                         {
                             console.Text += " Possible R-Type instruction: " + instruction + "\r\n";
-                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                            instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
                             instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC);
                             list.Add(instruct);
                         }
@@ -413,7 +414,7 @@ namespace MIPS_Emulator_SF
                             if (!(temp[0].Contains("b")))
                             {
                                 console.Text += " Possible I-Type instruction: " + instruction + "\r\n";
-                                memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                                instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
                                 instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 3, intPC);
                                 list.Add(instruct);
                             }
@@ -421,7 +422,7 @@ namespace MIPS_Emulator_SF
                             {
 
                                 console.Text += " Possible Branch instruction: " + instruction + "\r\n";
-                                memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                                instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
                                 instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 5, intPC);
                                 list.Add(instruct);
                             }
@@ -431,13 +432,13 @@ namespace MIPS_Emulator_SF
                         break;
                     case 5:
                         console.Text += " Possible instruction 5: " + instruction + "\r\n";
-                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC);
                         list.Add(instruct);
                         break;
                     default:
                         console.Text += " Confused." + instruction + "\r\n";
-                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         break;
 
                 }
@@ -573,31 +574,7 @@ namespace MIPS_Emulator_SF
                 case "div":
                     result = s1 / s2;
                     return result;
-                /*case "slt":
-                case "slti":
-                    if (s1 < s2)
-                    {
-                        result = 1;
-                    }
-                    else
-                    {
-                        result = 0;
-                    }
-                    return result;
-                case "beq": //CHECK
-                    if (s1 == s2)
-                    {
 
-                        result = 0;
-                        return result;
-                    }
-                    else
-                    {
-
-                        result = 0;
-                        return result;
-                    }*/
-                
                 default:
                     console.Text += "Defaulted on Form1.execute: " + function + "\r\n";
                     return 0;
@@ -628,7 +605,7 @@ namespace MIPS_Emulator_SF
                     return result;
                 default:
                     console.Text += "Defaulted executeI: " + function + "\r\n";
-                    return result = 0 ;
+                    return result = 0;
             }
 
         }
@@ -679,6 +656,6 @@ namespace MIPS_Emulator_SF
                     return 0;
             }
         }
-    }
 
+    }
 }
