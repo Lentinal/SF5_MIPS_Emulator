@@ -5,7 +5,7 @@
     {
 
 #pragma warning disable IDE0044 // Add readonly modifier
-        private string opcode;//opcode/function/label
+        public string opcode;//opcode/function/label
         private string destination;
         private string source1;
         private string source2;// or immediate data

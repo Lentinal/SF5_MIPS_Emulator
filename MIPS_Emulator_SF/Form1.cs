@@ -122,11 +122,11 @@ namespace MIPS_Emulator_SF
                         console.Text += "Fetching registers for R-Type \r\n";
                         Control source1 = getRegisterTextBox(temp.getSource1());
                         Control source2 = getRegisterTextBox(temp.getSource2());
-                        String source1Text = source1.Text;
-                        String source2Text = source2.Text;
+                        int source1Int = Convert.ToInt32(source1.Text);
+                        int source2Int = Convert.ToInt32(source2.Text);
 
                         console.Text += "Decoding R-type instruction \r\n";
-                        int write = execute(temp.getOpcode(), source1Text, source2Text);
+                        int write = execute(temp.getOpcode(), source1Int, source2Int);
 
                         console.Text += "Accessing destination register \r\n";
                         Control destin = getRegisterTextBox(temp.getDestination());
@@ -138,17 +138,23 @@ namespace MIPS_Emulator_SF
                         break;
 
                     case 2:
-                        console.Text += "Fetching registers for J-Type (UNIMPLEMENTED) \r\n";
-                        advancePC();
+                        console.Text += "Fetched J-Type \r\n";
+
+                        console.Text += "Decoding J-Type instruction \r\n";
+                        console.Text += "Accessing jump location \r\n";
+                        write = executeJump(temp.getOpcode(), temp.getDestination());
+
+                        console.Text += "Setting PC \r\n";
+                        intPC = write;
                         break;
 
                     case 3:
                         console.Text += "Fetching registers for I-Type \r\n";
                         source1 = getRegisterTextBox(temp.getSource1());
-                        source1Text = source1.Text;
+                        source1Int = Convert.ToInt32(source1.Text);
 
                         console.Text += "Decoding I-type instruction \r\n";
-                        write = execute(temp.getOpcode(), source1Text, temp.getSource2());
+                        write = execute(temp.getOpcode(), source1Int, Convert.ToInt32((temp.getSource2())));
 
                         console.Text += "Accessing destination register \r\n";
                         destin = getRegisterTextBox(temp.getDestination());
@@ -522,15 +528,13 @@ namespace MIPS_Emulator_SF
 
         }
 
-        private int execute(string function, string source1, string source2)
+        private int execute(string function, int s1, int s2)
         {
-            int s1 = int.Parse(source1);
-            int s2 = int.Parse(source2);
             switch (function)
             {
                 case "add":
                 case "addi":
-                    console.Text += "Executing Addition: " + source1 + " + " + source2 + "\r\n";
+                    console.Text += "Executing Addition: " + s1 + " + " + s2 + "\r\n";
                     int result = s1 + s2;
                     return result;
                 case "mult":
@@ -563,11 +567,7 @@ namespace MIPS_Emulator_SF
                         result = 0;
                         return result;
                     }
-                case "j":
-                    //list.Find("SAdasds");
-
-
-                    return result = 0;
+                
                 default:
                     console.Text += "Defaulted on Form1.execute: " + function + "\r\n";
                     return 0;
@@ -575,6 +575,28 @@ namespace MIPS_Emulator_SF
 
         }
 
+        private int executeJump(string function, string destination)
+        {
+            switch (function)
+            {
+                case "j":
+                    foreach (OpcodeObject e in list)
+                    {
+                        if (e.getOpcode().Contains(destination))
+                        {
+                            return e.getLocation();
+                        }
+
+                    }
+                    console.Text += "Case j didnt find " + destination + " location \r\n";
+                    return 0;
+                default:
+                    console.Text += "Could not locate jump destination \r\n";
+                    return 0;
+
+            }
+
+        }
     }
 
 }
