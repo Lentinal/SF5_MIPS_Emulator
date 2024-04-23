@@ -561,6 +561,7 @@ namespace MIPS_Emulator_SF
             int s2 = Convert.ToInt32(source2, 2);
             switch (function)
             {
+                //Arrithmetic
                 case "add":
                     console.Text += "Executing Addition: " + s1 + " + " + s2 + "\r\n";
                     int result = s1 + s2;
@@ -571,31 +572,19 @@ namespace MIPS_Emulator_SF
                 case "div":
                     result = s1 / s2;
                     return result;
+                //Logical
                 case "and":
-
-                    console.Text += "Reached and \r\n";
-                    String[] s1Bi = splitBinary(source1);
-                    String[] s2Bi = splitBinary(source2);
-                    String[] ret = new string[32];
-
-                    console.Text += "Reached and for start \r\n";
-                    for (int i = 0; i < s1Bi.Length; i++)
-                    {
-                        console.Text += "Reached and if \r\n" + i ;
-                        if (s1Bi[i].Equals("1") && s2Bi[i].Equals("1"))
-                        {
-                            ret[i] = "1";
-                        }
-                        else
-                        {
-                            ret[i] = "0";
-                        }
-                    }
-
-                    console.Text += "Passed and loop \r\n";
-                    console.Text += string.Join("",ret);
-                    return result = 0;
-
+                    result = s1 & s2;
+                    return result;
+                case "or":
+                    result = s1 | s2;
+                    return result;
+                case "xor":
+                    result = s1 ^ s2;
+                    return result;
+                case "nor": //If ~($r | $zero) == not $r
+                    result = ~(s1 | s2);
+                    return result;
                 default:
                     console.Text += "Defaulted on Form1.execute: " + function + "\r\n";
                     return 0;
@@ -679,18 +668,24 @@ namespace MIPS_Emulator_SF
             }
         }
 
-        private string[] splitBinary(string s)
+        private static int binaryToDecimal(int n)
         {
-            console.Text += s + "\r\n";
-            console.Text += "Reached sBi \r\n";
-            String[] returnArray = new String[32];
-            for (int i = 0; i < 31; i++)
+            int dec_value = 0;
+
+            int base1 = 1;
+
+            int temp = n;
+            while (temp > 0)
             {
-                returnArray[i] = s.Substring(i).Trim();
+                int last_digit = temp % 10;
+                temp = temp / 10;
+
+                dec_value += last_digit * base1;
+
+                base1 = base1 * 2;
             }
 
-            console.Text += "Passed sBi \r\n";
-            return returnArray;
+            return dec_value;
         }
     }
 }
