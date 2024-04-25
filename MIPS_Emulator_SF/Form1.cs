@@ -279,7 +279,10 @@ namespace MIPS_Emulator_SF
         /// <param name="e"></param>
         private void runButton_Click(object sender, EventArgs e)
         {
-
+            while(intPC < list.Count)
+            {
+                stepButtonClick(sender, e);
+            }
         }
 
         /// <summary> UNIMPLEMENTED
@@ -359,7 +362,7 @@ namespace MIPS_Emulator_SF
         private void FileHandler(string instruction)
         {
             char[] charsToTrim = { ' ', '#', '\n', '\r', '\t' };
-            string commentcut = (instruction.Substring(0, instruction.LastIndexOf("#") + 1)).ToLower();
+            string commentcut = (instruction.Substring(0, instruction.IndexOf("#") + 1)).ToLower();
             commentcut = commentcut.TrimEnd(charsToTrim);
             String[] temp = commentcut.Split(" ");
             //Trim
