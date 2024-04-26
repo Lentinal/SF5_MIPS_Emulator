@@ -109,7 +109,7 @@ namespace MIPS_Emulator_SF
             try
             {
                 OpcodeObject temp = list[intPC];
-                console.Text += "Fetched: " + temp.toString() + "\r\n";
+                console.AppendText( "Fetched: " + temp.toString() + "\r\n");
                 
                 switch (temp.getMisc())
                 {
@@ -120,19 +120,19 @@ namespace MIPS_Emulator_SF
 
                     //R-Type instruction
                     case 1:
-                        console.Text += "Fetching registers for R-Type \r\n";
+                        console.AppendText( "Fetching registers for R-Type \r\n");
                         Control source1 = getRegisterTextBox(temp.getSource1());
                         Control source2 = getRegisterTextBox(temp.getSource2());
                         String source1Int = source1.Text;
                         String source2Int = source2.Text;
 
-                        console.Text += "Decoding R-type instruction \r\n";
+                        console.AppendText( "Decoding R-type instruction \r\n");
                         int write = executeR(temp.getOpcode(), source1Int, source2Int);
 
-                        console.Text += "Accessing destination register \r\n";
+                        console.AppendText("Accessing destination register \r\n");
                         Control destin = getRegisterTextBox(temp.getDestination());
 
-                        console.Text += "Writing back to " + temp.getDestination() + "\r\n";
+                        console.AppendText("Writing back to " + temp.getDestination() + "\r\n");
                         destin.Text = convertToBinary(write);
 
                         advancePC();
@@ -140,70 +140,70 @@ namespace MIPS_Emulator_SF
 
                     //J-Type instruction
                     case 2: 
-                        console.Text += "Fetched J-Type \r\n";
+                        console.AppendText("Fetched J-Type \r\n");
 
-                        console.Text += "Decoding J-Type instruction \r\n";
-                        console.Text += "Accessing jump location \r\n";
+                        console.AppendText("Decoding J-Type instruction \r\n");
+                        console.AppendText("Accessing jump location \r\n");
                         write = executeJ(temp.getOpcode(), temp.getDestination());
 
-                        console.Text += "Setting PC \r\n";
+                        console.AppendText("Setting PC \r\n");
                         intPC = write;
                         break;
 
                     //I-Type instruction
                     case 3: 
-                        console.Text += "Fetching registers for I-Type \r\n";
+                        console.AppendText("Fetching registers for I-Type \r\n")     ;
                         source1 = getRegisterTextBox(temp.getSource1());
                         source1Int = source1.Text;
 
-                        console.Text += "Decoding I-type instruction \r\n";
+                        console.AppendText("Decoding I-type instruction \r\n");
                         source2Int = temp.getSource2();
 
                         write = executeI(temp.getOpcode(), source1Int, source2Int);
 
-                        console.Text += "Accessing destination register \r\n";
+                        console.AppendText("Accessing destination register \r\n");
                         destin = getRegisterTextBox(temp.getDestination());
 
-                        console.Text += "Writing back to " + temp.getDestination() + "\r\n";
+                        console.AppendText("Writing back to " + temp.getDestination() + "\r\n");
                         destin.Text = convertToBinary(write);
                         advancePC();
                         break;
 
                     //li la sw sa instruction UNIMPLEMENTED
                     case 4: 
-                        console.Text += "Possibly a load/save instruction: (UNIMPLEMENTED) \r\n";
+                        console.AppendText("Possibly a load/save instruction: (UNIMPLEMENTED) \r\n");
                         advancePC();
                         break;
 
                     //Branch instruction
                     case 5: 
-                        console.Text += "Fetched branch \r\n";
+                        console.AppendText("Fetched branch \r\n");
 
-                        console.Text += "Decoding branch instruction \r\n";
+                        console.AppendText("Decoding branch instruction \r\n");
                         source1 = getRegisterTextBox(temp.getDestination());
                         source1Int = source1.Text;
                         source2 = getRegisterTextBox(temp.getSource1());
                         source2Int = source2.Text;
 
-                        console.Text += "Executing branch instruction \r\n";
+                        console.AppendText("Executing branch instruction \r\n");
                         write = executeBranch(temp.getOpcode(), source1Int, source2Int);
 
                         if (write == 1)
                         {
-                            console.Text += "Accessing jump location \r\n";
+                            console.AppendText("Accessing jump location \r\n");
                             foreach (OpcodeObject ex in list)
                             {
                                 if (ex.getOpcode().Contains(temp.getSource2()))
                                 {
                                     intPC = ex.getLocation();
-                                    console.Text += "Setting PC \r\n";
+                                    console.AppendText("Setting PC \r\n");
                                 }
 
                             }
                         }
                         else
                         {
-                            console.Text += "Branch is false \r\n";
+                            console.AppendText("Branch is false \r\n");
                         }
 
                         advancePC();
@@ -221,14 +221,14 @@ namespace MIPS_Emulator_SF
 
                     //Defaulted
                     default:
-                        console.Text += "Defaulted on Form1.stepButton: " + temp.ToString() + "\r\n";
+                        console.AppendText("Defaulted on Form1.stepButton: " + temp.ToString() + "\r\n");
                         advancePC();
                         break;
                 }
             }
             catch (Exception ex)
             {
-                console.Text += "Encountered error: " + ex.Message + "\r\n";
+                console.AppendText("Encountered error: " + ex.Message + "\r\n");
             }
         }
 
@@ -294,7 +294,7 @@ namespace MIPS_Emulator_SF
         {
             PC.Text = convertToBinary(int.Parse(setPCTextBox.Text));
             intPC = int.Parse(setPCTextBox.Text);
-            console.Text += "Set PC to : " + intPC + "\r\n";
+            console.AppendText("Set PC to : " + intPC + "\r\n");
         }
 
         /// <summary> UNIMPLEMENTED POSSIBLE SCRAP
@@ -360,7 +360,7 @@ namespace MIPS_Emulator_SF
                         }
 
                         intPC = 0; //Resets counter
-                        console.Text += "Loaded in: " + filePath + "\r\n";
+                        console.AppendText("Loaded in: " + filePath + "\r\n");
                         //Debugging 
                         //console.Text += string.Join(" | ", instructionsArray) + "\r\n"; 
                     }
@@ -419,12 +419,12 @@ namespace MIPS_Emulator_SF
                 switch (temp.Length)
                 {
                     case 0:
-                        console.Text += "Empty line \r\n";
+                        console.AppendText("Empty line \r\n");
                         break;
                     case 1:
                         if (instruction.Contains(":"))
                         {
-                            console.Text += "Possible label: " + instruction + "\r\n";
+                            console.AppendText("Possible label: " + instruction + "\r\n");
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                             instruct = new OpcodeObject(instruction, "", "", "", 0, intPC);
                             list.Add(instruct);
@@ -432,7 +432,7 @@ namespace MIPS_Emulator_SF
                         }
                         else if (instruction.Contains("."))
                         {
-                            console.Text += "Possible data or cache allocation remark: " + instruction + "\r\n";
+                            console.AppendText("Possible data or cache allocation remark: " + instruction + "\r\n");
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                             instruct = new OpcodeObject(instruction, "", "", "", 6, intPC);
                             list.Add(instruct);
@@ -440,24 +440,24 @@ namespace MIPS_Emulator_SF
                         }
                         else if (instruction.Contains("syscall"))
                         {
-                            console.Text += "System Functions: " + instruction + "\r\n";
+                            console.AppendText("System Functions: " + instruction + "\r\n");
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                             instruct = new OpcodeObject(instruction, "", "", "", 7, intPC);
                             list.Add(instruct);
                             break;
                         }
                         else{
-                            console.Text += "Passed thru fileHandler case 1: " + instruction + "\r\n";
+                            console.AppendText("Passed thru fileHandler case 1: " + instruction + "\r\n");
                             break;
                         }
                     case 2:
-                        console.Text += " Possible J-Type instruction: " + instruction + "\r\n";
+                        console.AppendText(" Possible J-Type instruction: " + instruction + "\r\n");
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], "", "", 2, intPC);
                         list.Add(instruct);
                         break;
                     case 3:
-                        console.Text += " Possible Load or Save instruction: " + instruction + "\r\n";
+                        console.AppendText(" Possible Load or Save instruction: " + instruction + "\r\n");
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", 4, intPC);
                         list.Add(instruct);
@@ -465,7 +465,7 @@ namespace MIPS_Emulator_SF
                     case 4:
                         if (!(temp[0].Contains("i") || !temp[3].Contains("$")))
                         {
-                            console.Text += " Possible R-Type instruction: " + instruction + "\r\n";
+                            console.AppendText(" Possible R-Type instruction: " + instruction + "\r\n");
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                             instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC);
                             list.Add(instruct);
@@ -474,14 +474,14 @@ namespace MIPS_Emulator_SF
                         {
                             if (!(temp[0].Contains("b")))
                             {
-                                console.Text += " Possible I-Type instruction: " + instruction + "\r\n";
+                                console.AppendText(" Possible I-Type instruction: " + instruction + "\r\n");
                                 memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                                 instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 3, intPC);
                                 list.Add(instruct);
                             }
                             else
                             {
-                                console.Text += " Possible Branch instruction: " + instruction + "\r\n";
+                                console.AppendText(" Possible Branch instruction: " + instruction + "\r\n");
                                 memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                                 instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 5, intPC);
                                 list.Add(instruct);
@@ -489,13 +489,13 @@ namespace MIPS_Emulator_SF
                         }
                         break;
                     case 5:
-                        console.Text += " Possible instruction 5: " + instruction + "\r\n";
+                        console.AppendText(" Possible instruction 5: " + instruction + "\r\n");
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC);
                         list.Add(instruct);
                         break;
                     default:
-                        console.Text += " Confused." + instruction + "\r\n";
+                        console.AppendText(" Confused." + instruction + "\r\n");
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         break;
 
@@ -515,103 +515,103 @@ namespace MIPS_Emulator_SF
             switch (search)
             {
                 case "$zero":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox0;
                 case "$at":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox1;
                 case "$v0":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox2;
                 case "$v1":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox3;
                 case "$a0":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox4;
                 case "$a1":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox5;
                 case "$a2":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox6;
                 case "$a3":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox7;
                 case "$t0":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox8;
                 case "$t1":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox9;
                 case "$t2":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox10;
                 case "$t3":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox11;
                 case "$t4":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox12;
                 case "$t5":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox13;
                 case "$t6":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox14;
                 case "$t7":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox15;
                 case "$s0":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox16;
                 case "$s1":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox17;
                 case "$s2":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox18;
                 case "$s3":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox19;
                 case "$s4":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox20;
                 case "$s5":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox21;
                 case "$s6":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox22;
                 case "$s7":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox23;
                 case "$t8":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox24;
                 case "$t9":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox25;
                 case "$k0":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox26;
                 case "$k1":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox27;
                 case "$gp":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox28;
                 case "$sp":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox29;
                 case "$fp":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox30;
                 case "$ra":
-                    console.Text += "Recognized register: " + search + "\r\n";
+                    console.AppendText("Recognized register: " + search + "\r\n")   ;
                     return textBox31;
                 default:
-                    console.Text += "Did not recognize the register: " + search + "\r\n";
+                    console.AppendText("Did not recognize the register: " + search + "\r\n");
                     return textBox0;
             }
 
@@ -634,7 +634,7 @@ namespace MIPS_Emulator_SF
             {
                 //Arrithmetic
                 case "add":
-                    console.Text += "Executing Addition: " + s1 + " + " + s2 + "\r\n";
+                    console.AppendText("Executing Addition: " + s1 + " + " + s2 + "\r\n");
                     int result = s1 + s2;
                     return result;
                 case "mult":
@@ -657,7 +657,7 @@ namespace MIPS_Emulator_SF
                     result = ~(s1 | s2);
                     return result;
                 default:
-                    console.Text += "Defaulted on Form1.execute: " + function + "\r\n";
+                    console.AppendText("Defaulted on Form1.execute: " + function + "\r\n");
                     return 0;
             }
 
@@ -679,7 +679,7 @@ namespace MIPS_Emulator_SF
             switch (function)
             {
                 case "addi":
-                    console.Text += "Executing Addition: " + s1 + " + " + s2 + "\r\n";
+                    console.AppendText("Executing Addition: " + s1 + " + " + s2 + "\r\n");
                     int result = s1 + s2;
                     return result;
 
@@ -694,7 +694,7 @@ namespace MIPS_Emulator_SF
                     }
                     return result;
                 default:
-                    console.Text += "Defaulted executeI: " + function + "\r\n";
+                    console.AppendText("Defaulted executeI: " + function + "\r\n");
                     return result = 0;
             }
 
@@ -722,10 +722,10 @@ namespace MIPS_Emulator_SF
                         }
 
                     }
-                    console.Text += "Case j didnt find " + destination + " location \r\n";
+                    console.AppendText("Case j didnt find " + destination + " location \r\n");
                     return 0;
                 default:
-                    console.Text += "Could not locate jump destination \r\n";
+                    console.AppendText("Could not locate jump destination \r\n");
                     return 0;
 
             }
@@ -760,7 +760,7 @@ namespace MIPS_Emulator_SF
                         return result;
                     }
                 default:
-                    console.Text += "Defaulted on Form1.executeBranch: " + function + "\r\n";
+                    console.AppendText("Defaulted on Form1.executeBranch: " + function + "\r\n");
                     return 0;
             }
         }
