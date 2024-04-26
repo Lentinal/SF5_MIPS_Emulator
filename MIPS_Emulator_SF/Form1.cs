@@ -109,7 +109,7 @@ namespace MIPS_Emulator_SF
             try
             {
                 OpcodeObject temp = list[intPC];
-                console.AppendText("\r\n" + "Retrieved line: " + temp.toString() + "\r\n" );
+                console.AppendText("\r\n" + "Retrieved line: " + temp.toString() + "\r\n");
 
                 switch (temp.getMisc())
                 {
@@ -771,8 +771,60 @@ namespace MIPS_Emulator_SF
         /// Depeneding on the value in $v0 will execute System Functions
         /// </summary>
         /// <param name="type"></param>
-        private void executeSyscall(int type)
+        private void executeSyscall(int function)
         {
+
+            switch (function)
+            {
+                //1 = Print integer    $a0 = int to print
+                case 1:
+                    break;
+
+                //2 = Print float      $f12 = float to print
+                case 2:
+                    break;
+
+                //3 = Print double     $f12 = float to print
+                case 3:
+                    break;
+
+                //4 = Print string     $a0 = address of beginning of string
+                case 4:
+                    break;
+
+                // 5 = Read integer Stored in $v0
+                case 5:
+                    break;
+
+                //6 = Read float       Stored in $f0
+                case 6:
+                    break;
+
+                //7 = Read double      Stored in $f0
+                case 7:
+                    break;
+
+                //8 = Read string      Stored in buffer
+                case 8:
+                    break;
+
+                //9 = sbrk (allocate memory buffer)    $v0 = address of buffer
+                case 9:
+                    break;
+
+                //10 = exit
+                case 10:
+                    break;
+
+                //11 = Print Char
+                case 11:
+                    break;
+
+                default:
+                    console.AppendText("Defaulted on executeSyscall: " + function + "\r\n");
+                    break;
+            }
+
 
 
         }
