@@ -109,24 +109,24 @@ namespace MIPS_Emulator_SF
             try
             {
                 OpcodeObject temp = list[intPC];
-                console.AppendText( "Fetched: " + temp.toString() + "\r\n");
-                
+                console.AppendText("\r\n" + "Retrieved line: " + temp.toString() + "\r\n" );
+
                 switch (temp.getMisc())
                 {
                     //Label
-                    case 0: 
+                    case 0:
                         advancePC();
                         break;
 
                     //R-Type instruction
                     case 1:
-                        console.AppendText( "Fetching registers for R-Type \r\n");
+                        console.AppendText("Fetching registers for R-Type \r\n");
                         Control source1 = getRegisterTextBox(temp.getSource1());
                         Control source2 = getRegisterTextBox(temp.getSource2());
                         String source1Int = source1.Text;
                         String source2Int = source2.Text;
 
-                        console.AppendText( "Decoding R-type instruction \r\n");
+                        console.AppendText("Decoding R-type instruction \r\n");
                         int write = executeR(temp.getOpcode(), source1Int, source2Int);
 
                         console.AppendText("Accessing destination register \r\n");
@@ -139,7 +139,7 @@ namespace MIPS_Emulator_SF
                         break;
 
                     //J-Type instruction
-                    case 2: 
+                    case 2:
                         console.AppendText("Fetched J-Type \r\n");
 
                         console.AppendText("Decoding J-Type instruction \r\n");
@@ -151,8 +151,8 @@ namespace MIPS_Emulator_SF
                         break;
 
                     //I-Type instruction
-                    case 3: 
-                        console.AppendText("Fetching registers for I-Type \r\n")     ;
+                    case 3:
+                        console.AppendText("Fetching registers for I-Type \r\n");
                         source1 = getRegisterTextBox(temp.getSource1());
                         source1Int = source1.Text;
 
@@ -170,13 +170,13 @@ namespace MIPS_Emulator_SF
                         break;
 
                     //li la sw sa instruction UNIMPLEMENTED
-                    case 4: 
+                    case 4:
                         console.AppendText("Possibly a load/save instruction: (UNIMPLEMENTED) \r\n");
                         advancePC();
                         break;
 
                     //Branch instruction
-                    case 5: 
+                    case 5:
                         console.AppendText("Fetched branch \r\n");
 
                         console.AppendText("Decoding branch instruction \r\n");
@@ -391,7 +391,7 @@ namespace MIPS_Emulator_SF
         private void FileHandler(string instruction)
         {
             char[] charsToTrimEnd = { ' ', '#', '\n', '\r', '\t' };
-            char[] charsToTrimStart = { ' ', '\t',};
+            char[] charsToTrimStart = { ' ', '\t', };
             string commentcut = (instruction.Substring(0, instruction.LastIndexOf("#") + 1)).ToLower();
             commentcut = commentcut.TrimStart();
             commentcut = commentcut.TrimEnd(charsToTrimEnd);
@@ -446,7 +446,8 @@ namespace MIPS_Emulator_SF
                             list.Add(instruct);
                             break;
                         }
-                        else{
+                        else
+                        {
                             console.AppendText("Passed thru fileHandler case 1: " + instruction + "\r\n");
                             break;
                         }
@@ -608,7 +609,7 @@ namespace MIPS_Emulator_SF
                     console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox30;
                 case "$ra":
-                    console.AppendText("Recognized register: " + search + "\r\n")   ;
+                    console.AppendText("Recognized register: " + search + "\r\n");
                     return textBox31;
                 default:
                     console.AppendText("Did not recognize the register: " + search + "\r\n");
@@ -772,7 +773,7 @@ namespace MIPS_Emulator_SF
         /// <param name="type"></param>
         private void executeSyscall(int type)
         {
-            
+
 
         }
 
