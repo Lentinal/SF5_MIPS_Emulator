@@ -51,8 +51,8 @@ namespace MIPS_Emulator_SF
         {
             string binaryString = Convert.ToString(number, 2); // Convert to binary string
             int length = binaryString.Length;
-                binaryString = binaryString.PadLeft(32, '0'); // I want to add zeros until the length is 32 bits
-            
+            binaryString = binaryString.PadLeft(32, '0'); // I want to add zeros until the length is 32 bits
+
             return binaryString;
         }
 
@@ -110,11 +110,15 @@ namespace MIPS_Emulator_SF
             {
                 OpcodeObject temp = list[intPC];
                 console.Text += "Fetched: " + temp.toString() + "\r\n";
+                
                 switch (temp.getMisc())
                 {
-                    case 0:
+                    //Label
+                    case 0: 
                         advancePC();
                         break;
+
+                    //R-Type instruction
                     case 1:
                         console.Text += "Fetching registers for R-Type \r\n";
                         Control source1 = getRegisterTextBox(temp.getSource1());
@@ -134,18 +138,20 @@ namespace MIPS_Emulator_SF
                         advancePC();
                         break;
 
-                    case 2:
+                    //J-Type instruction
+                    case 2: 
                         console.Text += "Fetched J-Type \r\n";
 
                         console.Text += "Decoding J-Type instruction \r\n";
                         console.Text += "Accessing jump location \r\n";
-                        write = executeJump(temp.getOpcode(), temp.getDestination());
+                        write = executeJ(temp.getOpcode(), temp.getDestination());
 
                         console.Text += "Setting PC \r\n";
                         intPC = write;
                         break;
 
-                    case 3:
+                    //I-Type instruction
+                    case 3: 
                         console.Text += "Fetching registers for I-Type \r\n";
                         source1 = getRegisterTextBox(temp.getSource1());
                         source1Int = source1.Text;
@@ -163,12 +169,14 @@ namespace MIPS_Emulator_SF
                         advancePC();
                         break;
 
-                    case 4:
+                    //li la sw sa instruction UNIMPLEMENTED
+                    case 4: 
                         console.Text += "Possibly a load/save instruction: (UNIMPLEMENTED) \r\n";
                         advancePC();
                         break;
 
-                    case 5:
+                    //Branch instruction
+                    case 5: 
                         console.Text += "Fetched branch \r\n";
 
                         console.Text += "Decoding branch instruction \r\n";
@@ -201,6 +209,17 @@ namespace MIPS_Emulator_SF
                         advancePC();
                         break;
 
+                    //Not sure?? its .data .text .globl main marker idk what to do with this UNIMPLEMENTED
+                    case 6:
+                        advancePC();
+                        break;
+
+                    //Syscall UNIMPLEMENTED
+                    case 7:
+                        advancePC();
+                        break;
+
+                    //Defaulted
                     default:
                         console.Text += "Defaulted on Form1.stepButton: " + temp.ToString() + "\r\n";
                         advancePC();
@@ -224,6 +243,12 @@ namespace MIPS_Emulator_SF
             console.Text += "test";
         }
 
+        /// <summary> FINISHED
+        /// clearConsole_Click
+        /// Clears console text box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void clearConsole_Click(object sender, EventArgs e)
         {
             console.Text = "";
@@ -246,7 +271,7 @@ namespace MIPS_Emulator_SF
         private void clear()
         {
             intPC = 0;
-            instructionTextBox.Text = "";
+            memoryTextBox.Text = "";
             console.Text = "";
             PC.Text = "";
             list.Clear();
@@ -328,7 +353,10 @@ namespace MIPS_Emulator_SF
 
                         for (int i = 0; i < instructions.Length; i++)
                         {
-                            FileHandler(instructions[i]);
+                            if (instructions[i].Length > 1 && !instructions[i].StartsWith("#"))
+                            {
+                                FileHandler(instructions[i]);
+                            }
                         }
 
                         intPC = 0; //Resets counter
@@ -344,6 +372,10 @@ namespace MIPS_Emulator_SF
             }
         }
 
+        /// <summary> FINISHED
+        /// advancePC
+        /// AdvancesPC counter and rewrites to PC textbox
+        /// </summary>
         private void advancePC()
         {
             intPC++;
@@ -358,9 +390,11 @@ namespace MIPS_Emulator_SF
         /// <param name="instruction"></param>
         private void FileHandler(string instruction)
         {
-            char[] charsToTrim = { ' ', '#', '\n', '\r', '\t' };
+            char[] charsToTrimEnd = { ' ', '#', '\n', '\r', '\t' };
+            char[] charsToTrimStart = { ' ', '\t',};
             string commentcut = (instruction.Substring(0, instruction.LastIndexOf("#") + 1)).ToLower();
-            commentcut = commentcut.TrimEnd(charsToTrim);
+            commentcut = commentcut.TrimStart();
+            commentcut = commentcut.TrimEnd(charsToTrimEnd);
             String[] temp = commentcut.Split(" ");
             //Trim
             if (temp.Length >= 1)
@@ -373,28 +407,58 @@ namespace MIPS_Emulator_SF
                     }
                 }
 
-                console.Text += string.Join(" | ", temp);
+                console.Text += string.Join(" | ", temp);//Splits line from fileButton to an array to be pushed to make an object
+                OpcodeObject instruct;
+                //string opcode;//opcode/function/label
+                //string destination;
+                //string source1;
+                //string source2;// or immediate data
+                //int misc; //Indicator label, instruction, or other 0 = label      1 = r type      2 = jump        3 = i type      4= Load/Save        5=Branch        6=.something        7=syscall
+                //int location;
+
                 switch (temp.Length)
                 {
                     case 0:
                         console.Text += "Empty line \r\n";
                         break;
                     case 1:
-                        console.Text += "Possible label: " + instruction + "\r\n";
-                        instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                        OpcodeObject instruct = new OpcodeObject(instruction, "", "", "", 0, intPC);
-                        list.Add(instruct);
-                        break;
+                        if (instruction.Contains(":"))
+                        {
+                            console.Text += "Possible label: " + instruction + "\r\n";
+                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                            instruct = new OpcodeObject(instruction, "", "", "", 0, intPC);
+                            list.Add(instruct);
+                            break;
+                        }
+                        else if (instruction.Contains("."))
+                        {
+                            console.Text += "Possible data or cache allocation remark: " + instruction + "\r\n";
+                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                            instruct = new OpcodeObject(instruction, "", "", "", 6, intPC);
+                            list.Add(instruct);
+                            break;
+                        }
+                        else if (instruction.Contains("syscall"))
+                        {
+                            console.Text += "System Functions: " + instruction + "\r\n";
+                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                            instruct = new OpcodeObject(instruction, "", "", "", 7, intPC);
+                            list.Add(instruct);
+                            break;
+                        }
+                        else{
+                            console.Text += "Passed thru fileHandler case 1: " + instruction + "\r\n";
+                            break;
+                        }
                     case 2:
                         console.Text += " Possible J-Type instruction: " + instruction + "\r\n";
-                        instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], "", "", 2, intPC);
                         list.Add(instruct);
                         break;
                     case 3:
-
                         console.Text += " Possible Load or Save instruction: " + instruction + "\r\n";
-                        instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", 4, intPC);
                         list.Add(instruct);
                         break;
@@ -402,7 +466,7 @@ namespace MIPS_Emulator_SF
                         if (!(temp[0].Contains("i") || !temp[3].Contains("$")))
                         {
                             console.Text += " Possible R-Type instruction: " + instruction + "\r\n";
-                            instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                             instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC);
                             list.Add(instruct);
                         }
@@ -411,43 +475,41 @@ namespace MIPS_Emulator_SF
                             if (!(temp[0].Contains("b")))
                             {
                                 console.Text += " Possible I-Type instruction: " + instruction + "\r\n";
-                                instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                                memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                                 instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 3, intPC);
                                 list.Add(instruct);
                             }
                             else
                             {
-
                                 console.Text += " Possible Branch instruction: " + instruction + "\r\n";
-                                instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                                memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                                 instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 5, intPC);
                                 list.Add(instruct);
                             }
-
-
                         }
                         break;
                     case 5:
                         console.Text += " Possible instruction 5: " + instruction + "\r\n";
-                        instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC);
                         list.Add(instruct);
                         break;
                     default:
                         console.Text += " Confused." + instruction + "\r\n";
-                        instructionTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         break;
 
                 }
                 intPC++;
-
-
             }
-
-
-
         }
 
+        /// <summary> FINISHED
+        /// getRegisterTextBox
+        /// Takes in string name of the register and sends back the corresponding textbox object associated with it.
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         private Control getRegisterTextBox(string search)
         {
             switch (search)
@@ -555,6 +617,15 @@ namespace MIPS_Emulator_SF
 
         }
 
+        /// <summary> CHECK
+        /// executeR
+        /// Called for R-Type instructions
+        /// CHECK: Needs review
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="source1"></param>
+        /// <param name="source2"></param>
+        /// <returns></returns>
         private int executeR(string function, string source1, string source2)
         {
             int s1 = Convert.ToInt32(source1, 2);
@@ -592,6 +663,15 @@ namespace MIPS_Emulator_SF
 
         }
 
+        /// <summary> CHECK
+        /// executeI
+        /// Called for I-Type instructions
+        /// CHECK: Needs review
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="source1"></param>
+        /// <param name="source2"></param>
+        /// <returns></returns>
         private int executeI(string function, string source1, string source2)
         {
             int s1 = Convert.ToInt32(source1, 2);
@@ -620,7 +700,15 @@ namespace MIPS_Emulator_SF
 
         }
 
-        private int executeJump(string function, string destination)
+        /// <summary> CHECK
+        /// executeJ
+        /// Called for J-Type instructions
+        /// CHECK: Needs review
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
+        private int executeJ(string function, string destination)
         {
             switch (function)
             {
@@ -630,7 +718,7 @@ namespace MIPS_Emulator_SF
                     {
                         if (e.getOpcode().Contains(destination))
                         {
-                            return e.getLocation();
+                            return e.getLocation() + 1;
                         }
 
                     }
@@ -644,6 +732,15 @@ namespace MIPS_Emulator_SF
 
         }
 
+        /// <summary> CHECK
+        /// executeBranch
+        /// Called for Branch instructions
+        /// CHECK: Needs review
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="destination"></param>
+        /// <param name="source1"></param>
+        /// <returns></returns>
         private int executeBranch(string function, string destination, string source1)
         {
 
@@ -668,6 +765,24 @@ namespace MIPS_Emulator_SF
             }
         }
 
+        /// <summary> UNIMPLEMENTED
+        /// executeSyscall
+        /// Depeneding on the value in $v0 will execute System Functions
+        /// </summary>
+        /// <param name="type"></param>
+        private void executeSyscall(int type)
+        {
+            
+
+        }
+
+        /// <summary> CHECK
+        /// binaryToDecimal
+        /// UNUSED HOLD FOR NOW
+        /// CHECK: Needs review
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
         private static int binaryToDecimal(int n)
         {
             int dec_value = 0;

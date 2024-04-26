@@ -9,7 +9,7 @@
         private string destination;
         private string source1;
         private string source2;// or immediate data
-        private int misc; //Indicator label, instruction, or other 0 = label     1 = r type    2 = jump      3 = i type      4= Load/Save   5=Branch
+        private int misc; //Indicator label, instruction, or other 0 = label     1 = r type    2 = jump      3 = i type      4= Load/Save   5=Branch        6=.something        7=syscall
         private int location;
 #pragma warning restore IDE0044 // Add readonly modifier
 
