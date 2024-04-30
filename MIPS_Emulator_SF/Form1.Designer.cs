@@ -109,7 +109,7 @@
             label2 = new Label();
             registerLabel = new Label();
             button1 = new Button();
-            instructionTextBox = new TextBox();
+            memoryTextBox = new TextBox();
             label36 = new Label();
             panel1 = new Panel();
             label35 = new Label();
@@ -120,7 +120,7 @@
             panel3 = new Panel();
             label38 = new Label();
             label39 = new Label();
-            memoryTextBox = new TextBox();
+            cacheTextBox = new TextBox();
             label40 = new Label();
             radioPanel.SuspendLayout();
             registerPanel.SuspendLayout();
@@ -917,18 +917,18 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += fileButton_Click;
             // 
-            // instructionTextBox
+            // memoryTextBox
             // 
-            instructionTextBox.Font = new Font("Segoe UI", 12F);
-            instructionTextBox.Location = new Point(3, 66);
-            instructionTextBox.Multiline = true;
-            instructionTextBox.Name = "instructionTextBox";
-            instructionTextBox.ReadOnly = true;
-            instructionTextBox.RightToLeft = RightToLeft.No;
-            instructionTextBox.ScrollBars = ScrollBars.Both;
-            instructionTextBox.Size = new Size(377, 609);
-            instructionTextBox.TabIndex = 11;
-            instructionTextBox.WordWrap = false;
+            memoryTextBox.Font = new Font("Segoe UI", 12F);
+            memoryTextBox.Location = new Point(3, 66);
+            memoryTextBox.Multiline = true;
+            memoryTextBox.Name = "memoryTextBox";
+            memoryTextBox.ReadOnly = true;
+            memoryTextBox.RightToLeft = RightToLeft.No;
+            memoryTextBox.ScrollBars = ScrollBars.Both;
+            memoryTextBox.Size = new Size(377, 609);
+            memoryTextBox.TabIndex = 11;
+            memoryTextBox.WordWrap = false;
             // 
             // label36
             // 
@@ -936,15 +936,15 @@
             label36.Font = new Font("Segoe UI", 12F);
             label36.Location = new Point(3, 18);
             label36.Name = "label36";
-            label36.Size = new Size(87, 21);
+            label36.Size = new Size(72, 21);
             label36.TabIndex = 12;
-            label36.Text = "Instruction:";
+            label36.Text = "Memory:";
             // 
             // panel1
             // 
             panel1.Controls.Add(label35);
             panel1.Controls.Add(label34);
-            panel1.Controls.Add(instructionTextBox);
+            panel1.Controls.Add(memoryTextBox);
             panel1.Controls.Add(label36);
             panel1.Location = new Point(994, 12);
             panel1.Name = "panel1";
@@ -1002,7 +1002,7 @@
             // 
             panel3.Controls.Add(label38);
             panel3.Controls.Add(label39);
-            panel3.Controls.Add(memoryTextBox);
+            panel3.Controls.Add(cacheTextBox);
             panel3.Controls.Add(label40);
             panel3.Location = new Point(1383, 12);
             panel3.Name = "panel3";
@@ -1027,18 +1027,18 @@
             label39.TabIndex = 13;
             label39.Text = "Location";
             // 
-            // memoryTextBox
+            // cacheTextBox
             // 
-            memoryTextBox.Font = new Font("Segoe UI", 12F);
-            memoryTextBox.Location = new Point(3, 66);
-            memoryTextBox.Multiline = true;
-            memoryTextBox.Name = "memoryTextBox";
-            memoryTextBox.ReadOnly = true;
-            memoryTextBox.RightToLeft = RightToLeft.No;
-            memoryTextBox.ScrollBars = ScrollBars.Both;
-            memoryTextBox.Size = new Size(377, 609);
-            memoryTextBox.TabIndex = 11;
-            memoryTextBox.WordWrap = false;
+            cacheTextBox.Font = new Font("Segoe UI", 12F);
+            cacheTextBox.Location = new Point(3, 66);
+            cacheTextBox.Multiline = true;
+            cacheTextBox.Name = "cacheTextBox";
+            cacheTextBox.ReadOnly = true;
+            cacheTextBox.RightToLeft = RightToLeft.No;
+            cacheTextBox.ScrollBars = ScrollBars.Both;
+            cacheTextBox.Size = new Size(377, 609);
+            cacheTextBox.TabIndex = 11;
+            cacheTextBox.WordWrap = false;
             // 
             // label40
             // 
@@ -1046,9 +1046,9 @@
             label40.Font = new Font("Segoe UI", 12F);
             label40.Location = new Point(3, 18);
             label40.Name = "label40";
-            label40.Size = new Size(72, 21);
+            label40.Size = new Size(55, 21);
             label40.TabIndex = 12;
-            label40.Text = "Memory:";
+            label40.Text = "Cache:";
             // 
             // Form1
             // 
@@ -1178,7 +1178,7 @@
 
         //Memory panel
         private Panel panel1;
-        private TextBox instructionTextBox;
+        private TextBox memoryTextBox;
 
         //Console
         private Label label37;
@@ -1189,7 +1189,7 @@
         private Panel panel3;
         private Label label38;
         private Label label39;
-        private TextBox memoryTextBox;
+        private TextBox cacheTextBox;
         private Label label40;
     }
 }
