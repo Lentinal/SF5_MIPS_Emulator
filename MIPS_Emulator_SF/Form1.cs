@@ -454,6 +454,7 @@ namespace MIPS_Emulator_SF
                         else
                         {
                             console.AppendText("Passed thru fileHandler case 1 possible bad formatting random tabs or spaces: " + instruction + "\r\n");
+                            intPC--;
                             break;
                         }
                     case 2:
