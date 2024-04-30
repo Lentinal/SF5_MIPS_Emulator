@@ -337,7 +337,7 @@ namespace MIPS_Emulator_SF
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.Filter = "Text files (*.txt)|*.txt|Assembly (*.asm)|*.asm|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 1;
                 openFileDialog.RestoreDirectory = true;
 
@@ -349,13 +349,23 @@ namespace MIPS_Emulator_SF
                         clear(); //Insures no "corruption"
                         string filePath = openFileDialog.FileName;
                         string fileContents = File.ReadAllText(filePath);
+                        char[] charsToTrimEnd = { ' ', '#', '\n', '\r', '\t' };
+                        char[] charsToTrimStart = { ' ', '\t', };
                         String[] instructions = fileContents.Split("\n");
 
                         for (int i = 0; i < instructions.Length; i++)
                         {
                             if (instructions[i].Length > 1 && !instructions[i].StartsWith("#"))
                             {
-                                FileHandler(instructions[i]);
+                                string commentcut = instructions[i];
+                                if (instructions[i].Contains('#'))
+                                {
+                                    commentcut = (instructions[i].Substring(0, instructions[i].LastIndexOf("#") + 1)).ToLower();
+                                }
+                                commentcut = commentcut.TrimStart(charsToTrimStart);
+                                commentcut = commentcut.TrimEnd(charsToTrimEnd);
+                                FileHandler(commentcut);
+
                             }
                         }
 
@@ -390,12 +400,7 @@ namespace MIPS_Emulator_SF
         /// <param name="instruction"></param>
         private void FileHandler(string instruction)
         {
-            char[] charsToTrimEnd = { ' ', '#', '\n', '\r', '\t' };
-            char[] charsToTrimStart = { ' ', '\t', };
-            string commentcut = (instruction.Substring(0, instruction.LastIndexOf("#") + 1)).ToLower();
-            commentcut = commentcut.TrimStart();
-            commentcut = commentcut.TrimEnd(charsToTrimEnd);
-            String[] temp = commentcut.Split(" ");
+            String[] temp = instruction.Split(" ");
             //Trim
             if (temp.Length >= 1)
             {
@@ -422,7 +427,7 @@ namespace MIPS_Emulator_SF
                         console.AppendText("Empty line \r\n");
                         break;
                     case 1:
-                        if (instruction.Contains(":"))
+                        if (instruction.Contains(':'))
                         {
                             console.AppendText("Possible label: " + instruction + "\r\n");
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
@@ -430,7 +435,7 @@ namespace MIPS_Emulator_SF
                             list.Add(instruct);
                             break;
                         }
-                        else if (instruction.Contains("."))
+                        else if (instruction.Contains('.'))
                         {
                             console.AppendText("Possible data or cache allocation remark: " + instruction + "\r\n");
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
@@ -448,7 +453,7 @@ namespace MIPS_Emulator_SF
                         }
                         else
                         {
-                            console.AppendText("Passed thru fileHandler case 1: " + instruction + "\r\n");
+                            console.AppendText("Passed thru fileHandler case 1 possible bad formatting random tabs or spaces: " + instruction + "\r\n");
                             break;
                         }
                     case 2:
@@ -464,7 +469,7 @@ namespace MIPS_Emulator_SF
                         list.Add(instruct);
                         break;
                     case 4:
-                        if (!(temp[0].Contains("i") || !temp[3].Contains("$")))
+                        if (!(temp[0].Contains('i') || !temp[3].Contains('$')))
                         {
                             console.AppendText(" Possible R-Type instruction: " + instruction + "\r\n");
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
