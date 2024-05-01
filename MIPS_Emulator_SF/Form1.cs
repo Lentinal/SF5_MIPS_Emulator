@@ -1,3 +1,4 @@
+using System.CodeDom.Compiler;
 using System.Diagnostics;
 
 namespace MIPS_Emulator_SF
@@ -9,6 +10,7 @@ namespace MIPS_Emulator_SF
         /// </summary>
         private static List<OpcodeObject> list = new List<OpcodeObject>();
         private static int intPC = 0; //For holding PC/Memory location
+        private static int intCache = 0;
         private static int stepCount = 0; //For microstep
 
         /// <summary>
@@ -225,6 +227,17 @@ namespace MIPS_Emulator_SF
                         advancePC();
                         break;
                 }
+
+                /**
+                 * Cache update? *shrugs* Prototype
+                 * TEMPORORY PLEASE CHECK 
+                 */
+                if (temp.getMisc() >= 1 && temp.getMisc() < 6)
+                {
+                    cacheTextBox.AppendText(intCache + "\t" +temp.toString() + "\r\n");
+                    intCache++;
+                }
+
             }
             catch (Exception ex)
             {
