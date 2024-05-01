@@ -12,6 +12,8 @@ namespace MIPS_Emulator_SF
         private static int intCache = 1;
         private static int stepCount = 0; //For microstep
 
+
+        //House keeping and initalizations
         /// <summary>
         /// Form1 
         /// Initalize and sets register textboxes
@@ -41,7 +43,9 @@ namespace MIPS_Emulator_SF
             //Delanie was here 
             //Kian moved the msg above to be in the method
         }
+        
 
+        //Radio Buttons
         /// <summary> CHECK
         /// radioBinary_CheckedChanged
         /// BinaryRadio
@@ -81,6 +85,8 @@ namespace MIPS_Emulator_SF
             }
         }
 
+
+        //Buttons
         /// <summary> CHECK
         /// stepButtonClick
         /// Advances by one instruction
@@ -294,27 +300,6 @@ namespace MIPS_Emulator_SF
         }
 
         /// <summary> FINISHED
-        /// clear
-        /// Clears every thing need this for when they open new file: cannot call the button listener
-        /// </summary>
-        private void clear()
-        {
-            intPC = 0;
-            memoryTextBox.Text = "";
-            console.Text = "";
-            PC.Text = "";
-            list.Clear();
-            cacheTextBox.Clear();
-            foreach (Control control in registerPanel.Controls)
-            {
-                if (control is TextBox text && text.Name.StartsWith("textBox"))
-                {
-                    text.Text = "00000000000000000000000000000000";
-                }
-            }
-        }
-
-        /// <summary> FINISHED
         /// pcButton_Click
         /// Sets PC value to what is in the setPCTextBox
         /// </summary>
@@ -357,7 +342,9 @@ namespace MIPS_Emulator_SF
                 }
             }
         }
+        
 
+        //File handler
         /// <summary> CHECK
         /// fileButton_Click
         /// Opens a dialog to select file
@@ -413,17 +400,6 @@ namespace MIPS_Emulator_SF
                     }
                 }
             }
-        }
-
-        /// <summary> FINISHED
-        /// advancePC
-        /// AdvancesPC counter and rewrites to PC textbox
-        /// </summary>
-        private void advancePC()
-        {
-            intPC++;
-            PC.Text = convertToBinary(intPC);
-            PC.Update();
         }
 
         /// <summary> CHECK
@@ -553,151 +529,9 @@ namespace MIPS_Emulator_SF
             }
         }
 
-        /// <summary> FINISHED
-        /// getRegisterTextBox
-        /// Takes in string name of the register and sends back the corresponding textbox object associated with it.
-        /// </summary>
-        /// <param name="search"></param>
-        /// <returns></returns>
-        private Control getRegisterTextBox(string search)
-        {
-            switch (search)
-            {
-                case "$zero":
-                case "0":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox0;
-                case "$at":
-                case "1":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox1;
-                case "$v0":
-                case "2":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox2;
-                case "$v1":
-                case "3":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox3;
-                case "$a0":
-                case "4":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox4;
-                case "$a1":
-                case "5":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox5;
-                case "$a2":
-                case "6":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox6;
-                case "$a3":
-                case "7":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox7;
-                case "$t0":
-                case "8":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox8;
-                case "$t1":
-                case "9":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox9;
-                case "$t2":
-                case "10":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox10;
-                case "$t3":
-                case "11":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox11;
-                case "$t4":
-                case "12":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox12;
-                case "$t5":
-                case "13":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox13;
-                case "$t6":
-                case "14":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox14;
-                case "$t7":
-                case "15":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox15;
-                case "$s0":
-                case "16":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox16;
-                case "$s1":
-                case "17":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox17;
-                case "$s2":
-                case "18":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox18;
-                case "$s3":
-                case "19":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox19;
-                case "$s4":
-                case "20":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox20;
-                case "$s5":
-                case "21":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox21;
-                case "$s6":
-                case "22":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox22;
-                case "$s7":
-                case "23":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox23;
-                case "$t8":
-                case "24":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox24;
-                case "$t9":
-                case "25":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox25;
-                case "$k0":
-                case "26":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox26;
-                case "$k1":
-                case "27":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox27;
-                case "$gp":
-                case "28":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox28;
-                case "$sp":
-                case "29":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox29;
-                case "$fp":
-                case "30":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox30;
-                case "$ra":
-                case "31":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox31;
-                default:
-                    console.AppendText("Did not recognize the register: " + search + "\r\n");
-                    return textBox0;
-            }
 
-        }
 
+        //Executions
         /// <summary> CHECK
         /// executeR
         /// Called for R-Type instructions
@@ -992,6 +826,186 @@ namespace MIPS_Emulator_SF
                 default:
                     console.AppendText("Defaulted on executeSyscall: " + function + "\r\n");
                     break;
+            }
+
+        }
+
+
+
+        //Conversions, Counters, Resets, and Retrievals
+        /// <summary> FINISHED
+        /// advancePC
+        /// AdvancesPC counter and rewrites to PC textbox
+        /// </summary>
+        private void advancePC()
+        {
+            intPC++;
+            PC.Text = convertToBinary(intPC);
+            PC.Update();
+        }
+
+        /// <summary> FINISHED
+        /// clear
+        /// Clears every thing need this for when they open new file: cannot call the button listener
+        /// </summary>
+        private void clear()
+        {
+            intPC = 0;
+            memoryTextBox.Text = "";
+            console.Text = "";
+            PC.Text = "";
+            list.Clear();
+            cacheTextBox.Clear();
+            foreach (Control control in registerPanel.Controls)
+            {
+                if (control is TextBox text && text.Name.StartsWith("textBox"))
+                {
+                    text.Text = "00000000000000000000000000000000";
+                }
+            }
+        }
+
+        /// <summary> FINISHED
+        /// getRegisterTextBox
+        /// Takes in string name of the register and sends back the corresponding textbox object associated with it.
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        private Control getRegisterTextBox(string search)
+        {
+            switch (search)
+            {
+                case "$zero":
+                case "0":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox0;
+                case "$at":
+                case "1":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox1;
+                case "$v0":
+                case "2":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox2;
+                case "$v1":
+                case "3":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox3;
+                case "$a0":
+                case "4":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox4;
+                case "$a1":
+                case "5":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox5;
+                case "$a2":
+                case "6":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox6;
+                case "$a3":
+                case "7":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox7;
+                case "$t0":
+                case "8":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox8;
+                case "$t1":
+                case "9":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox9;
+                case "$t2":
+                case "10":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox10;
+                case "$t3":
+                case "11":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox11;
+                case "$t4":
+                case "12":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox12;
+                case "$t5":
+                case "13":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox13;
+                case "$t6":
+                case "14":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox14;
+                case "$t7":
+                case "15":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox15;
+                case "$s0":
+                case "16":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox16;
+                case "$s1":
+                case "17":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox17;
+                case "$s2":
+                case "18":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox18;
+                case "$s3":
+                case "19":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox19;
+                case "$s4":
+                case "20":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox20;
+                case "$s5":
+                case "21":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox21;
+                case "$s6":
+                case "22":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox22;
+                case "$s7":
+                case "23":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox23;
+                case "$t8":
+                case "24":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox24;
+                case "$t9":
+                case "25":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox25;
+                case "$k0":
+                case "26":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox26;
+                case "$k1":
+                case "27":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox27;
+                case "$gp":
+                case "28":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox28;
+                case "$sp":
+                case "29":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox29;
+                case "$fp":
+                case "30":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox30;
+                case "$ra":
+                case "31":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox31;
+                default:
+                    console.AppendText("Did not recognize the register: " + search + "\r\n");
+                    return textBox0;
             }
 
         }
