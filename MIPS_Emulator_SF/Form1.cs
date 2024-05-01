@@ -9,8 +9,11 @@ namespace MIPS_Emulator_SF
         /// </summary>
         private static List<OpcodeObject> list = new List<OpcodeObject>();
         private static int intPC = 0; //For holding PC/Memory location
+        private static int intCache = 1;
         private static int stepCount = 0; //For microstep
 
+
+        //House keeping and initalizations
         /// <summary>
         /// Form1 
         /// Initalize and sets register textboxes
@@ -22,7 +25,7 @@ namespace MIPS_Emulator_SF
             {
                 if (control is TextBox text && text.Name.StartsWith("textBox"))
                 {
-                    text.Text = "0000000000000000000000000000000";
+                    text.Text = "00000000000000000000000000000000";
                 }
             }
 
@@ -40,22 +43,9 @@ namespace MIPS_Emulator_SF
             //Delanie was here 
             //Kian moved the msg above to be in the method
         }
+        
 
-        /// <summary> FINISHED
-        /// convertToBinary
-        /// Converts from int to binary
-        /// </summary>
-        /// <param name="number"></param>
-        /// <returns></returns>
-        private static string convertToBinary(int number)
-        {
-            string binaryString = Convert.ToString(number, 2); // Convert to binary string
-            int length = binaryString.Length;
-            binaryString = binaryString.PadLeft(32, '0'); // I want to add zeros until the length is 32 bits
-
-            return binaryString;
-        }
-
+        //Radio Buttons
         /// <summary> CHECK
         /// radioBinary_CheckedChanged
         /// BinaryRadio
@@ -89,13 +79,14 @@ namespace MIPS_Emulator_SF
             {
                 if (control is TextBox text && text.Name.StartsWith("textBox"))
                 {
-                    String getText = text.Text;
-                    int getDecimal = Convert.ToInt32(getText, 2);
+                    int getDecimal = signedBinaryToDecimal(text.Text);
                     text.Text = getDecimal.ToString();
                 }
             }
         }
 
+
+        //Buttons
         /// <summary> CHECK
         /// stepButtonClick
         /// Advances by one instruction
@@ -108,70 +99,92 @@ namespace MIPS_Emulator_SF
         {
             try
             {
-                OpcodeObject temp = list[intPC];
+                OpcodeObject temp = list[intPC]; //Gets next instruction inline
                 console.AppendText("\r\n" + "Retrieved line: " + temp.toString() + "\r\n");
 
                 switch (temp.getMisc())
                 {
                     //Label
                     case 0:
+                        //Failsafe will most likely never go here
                         advancePC();
                         break;
 
-                    //R-Type instruction
+                    //R-Type instruction FINISHED
                     case 1:
                         console.AppendText("Fetching registers for R-Type \r\n");
-                        Control source1 = getRegisterTextBox(temp.getSource1());
-                        Control source2 = getRegisterTextBox(temp.getSource2());
-                        String source1Int = source1.Text;
-                        String source2Int = source2.Text;
+                        Control source1 = getRegisterTextBox(temp.getSource1()); //Retrieves register1 textbox
+                        Control source2 = getRegisterTextBox(temp.getSource2()); //Retrieves register2 textbox
+                        String source1Int = source1.Text; //Retrieves register1 contents
+                        String source2Int = source2.Text; //Retrieves register2 contents
 
                         console.AppendText("Decoding R-type instruction \r\n");
-                        int write = executeR(temp.getOpcode(), source1Int, source2Int);
+                        int write = executeR(temp.getOpcode(), source1Int, source2Int); //Calls executeR to calculate result
 
                         console.AppendText("Accessing destination register \r\n");
-                        Control destin = getRegisterTextBox(temp.getDestination());
+                        Control destin = getRegisterTextBox(temp.getDestination()); //Retrieves destination register
 
                         console.AppendText("Writing back to " + temp.getDestination() + "\r\n");
-                        destin.Text = convertToBinary(write);
+                        destin.Text = convertToBinary(write); //Writes to destination register
+                        destin.Update(); //For realtime textbox updates
 
                         advancePC();
                         break;
 
-                    //J-Type instruction
+                    //J-Type instruction FINISHED
                     case 2:
                         console.AppendText("Fetched J-Type \r\n");
 
                         console.AppendText("Decoding J-Type instruction \r\n");
+                        write = executeJ(temp.getOpcode(), temp.getDestination());//Calls executeJ for new intPC
+
                         console.AppendText("Accessing jump location \r\n");
-                        write = executeJ(temp.getOpcode(), temp.getDestination());
 
                         console.AppendText("Setting PC \r\n");
-                        intPC = write;
+                        intPC = write;//Sets PC
                         break;
 
-                    //I-Type instruction
+                    //I-Type instruction FINISHED
                     case 3:
                         console.AppendText("Fetching registers for I-Type \r\n");
-                        source1 = getRegisterTextBox(temp.getSource1());
-                        source1Int = source1.Text;
+                        source1 = getRegisterTextBox(temp.getSource1()); //Retrieves register location
+                        source1Int = source1.Text; //Retrieves binary string from textbox
 
                         console.AppendText("Decoding I-type instruction \r\n");
-                        source2Int = temp.getSource2();
+                        source2Int = temp.getSource2(); //Retrieves int value from object
 
-                        write = executeI(temp.getOpcode(), source1Int, source2Int);
+                        write = executeI(temp.getOpcode(), source1Int, source2Int); //Calls executeI to calculate 
 
                         console.AppendText("Accessing destination register \r\n");
-                        destin = getRegisterTextBox(temp.getDestination());
+                        destin = getRegisterTextBox(temp.getDestination()); //Retrieves destination register
 
                         console.AppendText("Writing back to " + temp.getDestination() + "\r\n");
-                        destin.Text = convertToBinary(write);
+                        destin.Text = convertToBinary(write); //Writes to destination register
+                        destin.Update(); //For realtime textbox updating
+
                         advancePC();
                         break;
 
-                    //li la sw sa instruction UNIMPLEMENTED
+                    //li la sw sa instruction Data transfer
                     case 4:
-                        console.AppendText("Possibly a load/save instruction: (UNIMPLEMENTED) \r\n");
+                        console.AppendText("Detected data transfer instruction \r\n");
+
+                        console.AppendText("Decoding data transfer instruction \r\n");
+                        String source1Text = temp.getSource1();//Retrieves immediate or the address in register
+
+                        write = executeData(temp.getOpcode(), source1Text);
+
+                        //Checks to see if it was a move instruction move already sets the below 
+                        if (!temp.getOpcode().Equals("move"))
+                        {
+                            console.AppendText("Accessing destination register \r\n");
+                            destin = getRegisterTextBox(temp.getDestination()); //Retrieves destination register
+
+                            console.AppendText("Writing back to " + temp.getDestination() + "\r\n");
+                            destin.Text = convertToBinary(write); //Writes to destination register
+                            destin.Update(); //For real time textbox updates
+                        }
+
                         advancePC();
                         break;
 
@@ -214,8 +227,11 @@ namespace MIPS_Emulator_SF
                         advancePC();
                         break;
 
-                    //Syscall UNIMPLEMENTED
+                    //Syscall PARTIAL
                     case 7:
+                        console.AppendText("Detected a Syscall \r\n");
+                        int systemCall = Convert.ToInt32(textBox2.Text, 2);//turns $v0 to decimal
+                        executeSyscall(systemCall);
                         advancePC();
                         break;
 
@@ -225,6 +241,25 @@ namespace MIPS_Emulator_SF
                         advancePC();
                         break;
                 }
+
+                /*
+                 * Cache update? *shrugs* Prototype
+                 * TEMPORORY PLEASE CHECK 
+                 */
+                if (temp.getMisc() >= 1 && temp.getMisc() < 6)
+                {
+
+                    if (!cacheTextBox.Text.Contains(temp.toString()))
+                    {
+                        cacheTextBox.AppendText(intCache + "\t" + temp.toString() + "\r\n");
+                        intCache++;
+                    }
+                    else
+                    {
+
+                    }
+                }
+
             }
             catch (Exception ex)
             {
@@ -240,7 +275,7 @@ namespace MIPS_Emulator_SF
         /// <param name="e"></param>
         private void microButton_Click(Object sender, EventArgs e)
         {
-            console.Text += "test";
+            console.AppendText("test");
         }
 
         /// <summary> FINISHED
@@ -265,26 +300,6 @@ namespace MIPS_Emulator_SF
         }
 
         /// <summary> FINISHED
-        /// clear
-        /// Clears every thing need this for when they open new file: cannot call the button listener
-        /// </summary>
-        private void clear()
-        {
-            intPC = 0;
-            memoryTextBox.Text = "";
-            console.Text = "";
-            PC.Text = "";
-            list.Clear();
-            foreach (Control control in registerPanel.Controls)
-            {
-                if (control is TextBox text && text.Name.StartsWith("textBox"))
-                {
-                    text.Text = "0000000000000000000000000000000";
-                }
-            }
-        }
-
-        /// <summary> FINISHED
         /// pcButton_Click
         /// Sets PC value to what is in the setPCTextBox
         /// </summary>
@@ -304,7 +319,10 @@ namespace MIPS_Emulator_SF
         /// <param name="e"></param>
         private void runButton_Click(object sender, EventArgs e)
         {
-
+            while (intPC < list.Count && (!list[intPC].getOpcode().Equals("syscall")))
+            {
+                stepButtonClick(sender, e);
+            }
         }
 
         /// <summary> UNIMPLEMENTED
@@ -324,7 +342,9 @@ namespace MIPS_Emulator_SF
                 }
             }
         }
+        
 
+        //File handler
         /// <summary> CHECK
         /// fileButton_Click
         /// Opens a dialog to select file
@@ -382,16 +402,6 @@ namespace MIPS_Emulator_SF
             }
         }
 
-        /// <summary> FINISHED
-        /// advancePC
-        /// AdvancesPC counter and rewrites to PC textbox
-        /// </summary>
-        private void advancePC()
-        {
-            intPC++;
-            PC.Text = convertToBinary(intPC);
-        }
-
         /// <summary> CHECK
         /// FileHandler
         /// For file button legibility 
@@ -412,14 +422,14 @@ namespace MIPS_Emulator_SF
                     }
                 }
 
-                console.Text += string.Join(" | ", temp);//Splits line from fileButton to an array to be pushed to make an object
+                console.AppendText(string.Join(" | ", temp));//Splits line from fileButton to an array to be pushed to make an object
                 OpcodeObject instruct;
-                //string opcode;//opcode/function/label
-                //string destination;
-                //string source1;
-                //string source2;// or immediate data
-                //int misc; //Indicator label, instruction, or other 0 = label      1 = r type      2 = jump        3 = i type      4= Load/Save        5=Branch        6=.something        7=syscall
-                //int location;
+                //0 string opcode;//opcode/function/label
+                //1 string destination;
+                //2 string source1;
+                //3 string source2;// or immediate data
+                //4 int misc; //Indicator label, instruction, or other 0 = label      1 = r type      2 = jump        3 = i type      4= Load/Save        5=Branch        6=.something        7=syscall
+                //5 int location;
 
                 switch (temp.Length)
                 {
@@ -429,7 +439,7 @@ namespace MIPS_Emulator_SF
                     case 1:
                         if (instruction.Contains(':'))
                         {
-                            console.AppendText("Possible label: " + instruction + "\r\n");
+                            console.AppendText(" Possible label: " + instruction + "\r\n");
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                             instruct = new OpcodeObject(instruction, "", "", "", 0, intPC);
                             list.Add(instruct);
@@ -437,7 +447,7 @@ namespace MIPS_Emulator_SF
                         }
                         else if (instruction.Contains('.'))
                         {
-                            console.AppendText("Possible data or cache allocation remark: " + instruction + "\r\n");
+                            console.AppendText(" Possible data or cache allocation remark: " + instruction + "\r\n");
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                             instruct = new OpcodeObject(instruction, "", "", "", 6, intPC);
                             list.Add(instruct);
@@ -445,7 +455,7 @@ namespace MIPS_Emulator_SF
                         }
                         else if (instruction.Contains("syscall"))
                         {
-                            console.AppendText("System Functions: " + instruction + "\r\n");
+                            console.AppendText(" System Functions: " + instruction + "\r\n");
                             memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                             instruct = new OpcodeObject(instruction, "", "", "", 7, intPC);
                             list.Add(instruct);
@@ -453,7 +463,7 @@ namespace MIPS_Emulator_SF
                         }
                         else
                         {
-                            console.AppendText("Passed thru fileHandler case 1 possible bad formatting random tabs or spaces: " + instruction + "\r\n");
+                            console.AppendText(" Passed thru fileHandler case 1 possible bad formatting random tabs or spaces: " + instruction + "\r\n");
                             intPC--;
                             break;
                         }
@@ -502,6 +512,14 @@ namespace MIPS_Emulator_SF
                         list.Add(instruct);
                         break;
                     default:
+                        if ((temp[0].Contains(":")))
+                        {
+                            console.AppendText(" Possible label: " + instruction + "\r\n");
+                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                            instruct = new OpcodeObject(instruction, "", "", "", 0, intPC);
+                            list.Add(instruct);
+                            break;
+                        }
                         console.AppendText(" Confused." + instruction + "\r\n");
                         memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
                         break;
@@ -511,119 +529,9 @@ namespace MIPS_Emulator_SF
             }
         }
 
-        /// <summary> FINISHED
-        /// getRegisterTextBox
-        /// Takes in string name of the register and sends back the corresponding textbox object associated with it.
-        /// </summary>
-        /// <param name="search"></param>
-        /// <returns></returns>
-        private Control getRegisterTextBox(string search)
-        {
-            switch (search)
-            {
-                case "$zero":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox0;
-                case "$at":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox1;
-                case "$v0":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox2;
-                case "$v1":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox3;
-                case "$a0":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox4;
-                case "$a1":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox5;
-                case "$a2":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox6;
-                case "$a3":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox7;
-                case "$t0":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox8;
-                case "$t1":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox9;
-                case "$t2":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox10;
-                case "$t3":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox11;
-                case "$t4":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox12;
-                case "$t5":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox13;
-                case "$t6":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox14;
-                case "$t7":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox15;
-                case "$s0":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox16;
-                case "$s1":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox17;
-                case "$s2":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox18;
-                case "$s3":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox19;
-                case "$s4":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox20;
-                case "$s5":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox21;
-                case "$s6":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox22;
-                case "$s7":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox23;
-                case "$t8":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox24;
-                case "$t9":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox25;
-                case "$k0":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox26;
-                case "$k1":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox27;
-                case "$gp":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox28;
-                case "$sp":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox29;
-                case "$fp":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox30;
-                case "$ra":
-                    console.AppendText("Recognized register: " + search + "\r\n");
-                    return textBox31;
-                default:
-                    console.AppendText("Did not recognize the register: " + search + "\r\n");
-                    return textBox0;
-            }
 
-        }
 
+        //Executions
         /// <summary> CHECK
         /// executeR
         /// Called for R-Type instructions
@@ -635,8 +543,8 @@ namespace MIPS_Emulator_SF
         /// <returns></returns>
         private int executeR(string function, string source1, string source2)
         {
-            int s1 = Convert.ToInt32(source1, 2);
-            int s2 = Convert.ToInt32(source2, 2);
+            int s1 = signedBinaryToDecimal(source1); //Converts source1 binary to decimal int
+            int s2 = signedBinaryToDecimal(source2); //Converts source2 binary to decimal int
             switch (function)
             {
                 //Arrithmetic
@@ -681,8 +589,8 @@ namespace MIPS_Emulator_SF
         /// <returns></returns>
         private int executeI(string function, string source1, string source2)
         {
-            int s1 = Convert.ToInt32(source1, 2);
-            int s2 = int.Parse(source2);
+            int s1 = signedBinaryToDecimal(source1); //Converts binary to decimal int
+            int s2 = int.Parse(source2); //Converts decimal string to int
             switch (function)
             {
                 case "addi":
@@ -719,24 +627,92 @@ namespace MIPS_Emulator_SF
         {
             switch (function)
             {
+                //Jumps to destination
                 case "j":
-                case "jal":
+                    console.AppendText("Dectected j \r\n");
                     foreach (OpcodeObject e in list)
                     {
                         if (e.getOpcode().Contains(destination))
                         {
-                            return e.getLocation() + 1;
+                            return e.getLocation() + 1; //Returns the memory location of jump location
                         }
 
                     }
                     console.AppendText("Case j didnt find " + destination + " location \r\n");
                     return 0;
+
+                //CHECK THIS
+                //Jumps to destination AND Stores current address in $ra 
+                case "jal":
+                    console.AppendText("Dectected jal \r\n");
+                    foreach (OpcodeObject e in list)
+                    {
+                        if (e.getOpcode().Contains(destination))
+                        {
+                            textBox31.Text = convertToBinary(intPC); //Sets $ra to current pos
+                            return e.getLocation() + 1; //Returns the memory location of jump location
+                        }
+
+                    }
+                    console.AppendText("Case jal didnt find " + destination + " location \r\n");
+                    return 0;
+
+                //Jumps to register stored in register
+                case "jr":
+                    console.AppendText("Dectected jr \r\n");
+                    Control desRegist = getRegisterTextBox(destination);
+                    int address = signedBinaryToDecimal(desRegist.Text);//Converts register contents from binary to decimal
+                    return address;
                 default:
                     console.AppendText("Could not locate jump destination \r\n");
                     return 0;
 
             }
 
+        }
+
+        /// <summary> CHECK
+        /// executeData
+        /// Called for data transfer instruction
+        /// CHECK: Not complete missing some
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="source1"></param>
+        /// <returns></returns>
+        private int executeData(string function, string source1)
+        {
+            switch (function)
+            {
+                case "li":
+                    console.AppendText("Executing: " + list[intPC].toString() + "\r\n");
+                    return int.Parse(source1); //Returns string decimal source1 to int
+
+                case "la":
+                    console.AppendText("Executing: " + list[intPC].toString() + "\r\n");
+                    foreach (OpcodeObject e in list)
+                    {
+                        if (e.getOpcode().Contains(source1))
+                        {
+                            return e.getLocation() + 1; //Returns memory address of a matching label
+                        }
+
+                    }
+                    console.AppendText("Case la cant find " + source1 + " label \r\n");
+                    return 0; //Returns 0 if cant find the label
+                case "move":
+                    console.AppendText("Detected Move: ");
+                    string destination = list[intPC].getDestination();
+                    Control destin = getRegisterTextBox(destination); //Retrieves destination register
+                    Control source = getRegisterTextBox(source1); //Retrieves source register
+                    console.AppendText("Moving " + source1 + " to " + destination + "\r\n");
+                    destin.Text = source.Text; //Sets source textbox value to destination textbox
+                    source.Text = "00000000000000000000000000000000"; //sets source text to zero
+                    return 0;
+                default:
+                    console.AppendText("Defaulted at executeData: " + function + "\r\n");
+                    return 0; //Returns 0 if cant find matching case
+
+            }
         }
 
         /// <summary> CHECK
@@ -772,58 +748,79 @@ namespace MIPS_Emulator_SF
             }
         }
 
-        /// <summary> UNIMPLEMENTED
+        /// <summary> CHECK
         /// executeSyscall
         /// Depeneding on the value in $v0 will execute System Functions
-        /// </summary>
+        /// CHECK: Some of the functions are implemented floats are generally unimplementable currently
+        /// </summary> 
         /// <param name="type"></param>
         private void executeSyscall(int function)
         {
 
             switch (function)
             {
-                //1 = Print integer    $a0 = int to print
+                //1 = Print integer    $a0 = int to print FINISHED
                 case 1:
+                    console.AppendText("Detected 1 in $v0: Print integer \r\n");
+                    int s1 = Convert.ToInt32(textBox4.Text, 2);//gets the address from $a0
+                    string[] toPrint = list[s1 - 1].toString().Split('"');//gets the contents from memory and splits it by " to get the int to be printed
+                    MessageBox.Show(toPrint[1] + "\r\n");
                     break;
 
-                //2 = Print float      $f12 = float to print
+                //2 = Print float      $f12 = float to print UNIMPLEMENTED
                 case 2:
+                    MessageBox.Show("UNIMPLEMENTED print float");
                     break;
 
-                //3 = Print double     $f12 = float to print
+                //3 = Print double     $f12 = float to print UNIMPLEMENTED
                 case 3:
+                    MessageBox.Show("UNIMPLEMENTED print double");
                     break;
 
-                //4 = Print string     $a0 = address of beginning of string
+                //4 = Print string     $a0 = address of string FINISHED
                 case 4:
+                    console.AppendText("Detected syscall 4 in $v0: Print string \r\n");
+                    s1 = Convert.ToInt32(textBox4.Text, 2);//gets the address from $a0
+                    toPrint = list[s1 - 1].toString().Split('"');//gets the contents from memory and splits it by " to get the string to be printed
+                    MessageBox.Show(toPrint[1] + "\r\n");
                     break;
 
-                // 5 = Read integer Stored in $v0
+                // 5 = Read integer Stored in $v0 FINISHED
                 case 5:
+                    console.AppendText("Detected syscall 5 in $v0: Reading integer \r\n");
+                    s1 = int.Parse(userInput.Text);
+                    textBox2.Text = convertToBinary(s1);
                     break;
 
-                //6 = Read float       Stored in $f0
+                //6 = Read float       Stored in $f0 UNIMPLEMENTED
                 case 6:
+                    MessageBox.Show("UNIMPLEMENTED read float");
                     break;
 
-                //7 = Read double      Stored in $f0
+                //7 = Read double      Stored in $f0 UNIMPLEMENTED
                 case 7:
+
+                    MessageBox.Show("UNIMPLEMENTED read double");
                     break;
 
-                //8 = Read string      Stored in buffer
+                //8 = Read string      Stored in buffer UNIMPLEMENTED
                 case 8:
+                    MessageBox.Show("UNIMPLEMENTED read string");
                     break;
 
-                //9 = sbrk (allocate memory buffer)    $v0 = address of buffer
+                //9 = sbrk (allocate memory buffer)    $v0 = address of buffer UNIMPLEMENTED
                 case 9:
+                    MessageBox.Show("UNIMPLEMENTED sbrk");
                     break;
 
-                //10 = exit
+                //10 = exit UNIMPLEMENTED
                 case 10:
+                    MessageBox.Show("Syscall Exit CHECK TO-DO: STOP RUNNING/JUMP TO END");
                     break;
 
-                //11 = Print Char
+                //11 = Print Char UNIMPLEMENTED
                 case 11:
+                    MessageBox.Show("UNIMPLEMENTED print char");
                     break;
 
                 default:
@@ -831,35 +828,260 @@ namespace MIPS_Emulator_SF
                     break;
             }
 
+        }
 
+
+
+        //Conversions, Counters, Resets, and Retrievals
+        /// <summary> FINISHED
+        /// advancePC
+        /// AdvancesPC counter and rewrites to PC textbox
+        /// </summary>
+        private void advancePC()
+        {
+            intPC++;
+            PC.Text = convertToBinary(intPC);
+            PC.Update();
+        }
+
+        /// <summary> FINISHED
+        /// clear
+        /// Clears every thing need this for when they open new file: cannot call the button listener
+        /// </summary>
+        private void clear()
+        {
+            intPC = 0;
+            memoryTextBox.Text = "";
+            console.Text = "";
+            PC.Text = "";
+            list.Clear();
+            cacheTextBox.Clear();
+            foreach (Control control in registerPanel.Controls)
+            {
+                if (control is TextBox text && text.Name.StartsWith("textBox"))
+                {
+                    text.Text = "00000000000000000000000000000000";
+                }
+            }
+        }
+
+        /// <summary> FINISHED
+        /// getRegisterTextBox
+        /// Takes in string name of the register and sends back the corresponding textbox object associated with it.
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        private Control getRegisterTextBox(string search)
+        {
+            switch (search)
+            {
+                case "$zero":
+                case "0":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox0;
+                case "$at":
+                case "1":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox1;
+                case "$v0":
+                case "2":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox2;
+                case "$v1":
+                case "3":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox3;
+                case "$a0":
+                case "4":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox4;
+                case "$a1":
+                case "5":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox5;
+                case "$a2":
+                case "6":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox6;
+                case "$a3":
+                case "7":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox7;
+                case "$t0":
+                case "8":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox8;
+                case "$t1":
+                case "9":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox9;
+                case "$t2":
+                case "10":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox10;
+                case "$t3":
+                case "11":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox11;
+                case "$t4":
+                case "12":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox12;
+                case "$t5":
+                case "13":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox13;
+                case "$t6":
+                case "14":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox14;
+                case "$t7":
+                case "15":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox15;
+                case "$s0":
+                case "16":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox16;
+                case "$s1":
+                case "17":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox17;
+                case "$s2":
+                case "18":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox18;
+                case "$s3":
+                case "19":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox19;
+                case "$s4":
+                case "20":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox20;
+                case "$s5":
+                case "21":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox21;
+                case "$s6":
+                case "22":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox22;
+                case "$s7":
+                case "23":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox23;
+                case "$t8":
+                case "24":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox24;
+                case "$t9":
+                case "25":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox25;
+                case "$k0":
+                case "26":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox26;
+                case "$k1":
+                case "27":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox27;
+                case "$gp":
+                case "28":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox28;
+                case "$sp":
+                case "29":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox29;
+                case "$fp":
+                case "30":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox30;
+                case "$ra":
+                case "31":
+                    console.AppendText("Recognized register: " + search + "\r\n");
+                    return textBox31;
+                default:
+                    console.AppendText("Did not recognize the register: " + search + "\r\n");
+                    return textBox0;
+            }
 
         }
 
-        /// <summary> CHECK
-        /// binaryToDecimal
-        /// UNUSED HOLD FOR NOW
-        /// CHECK: Needs review
+        /// <summary> FINISHED
+        /// convertToBinary
+        /// Converts from int to binary
+        /// Seemingly converts to signed
         /// </summary>
-        /// <param name="n"></param>
+        /// <param name="number"></param>
         /// <returns></returns>
-        private static int binaryToDecimal(int n)
+        private static string convertToBinary(int number)
         {
-            int dec_value = 0;
+            string binaryString = Convert.ToString(number, 2); // Convert to binary string
+            int length = binaryString.Length;
+            binaryString = binaryString.PadLeft(32, '0'); // I want to add zeros until the length is 32 bits
 
-            int base1 = 1;
+            return binaryString;
+        }
 
-            int temp = n;
-            while (temp > 0)
+        /// <summary> CHECK
+        /// signedBinaryToDecimal
+        /// Converts string binary to decimal 
+        /// Assumes Binary is signed
+        /// CHECK: Testing for signed binary
+        /// </summary>
+        /// <param name="binary"></param>
+        /// <returns></returns>
+        private static int signedBinaryToDecimal(string binary)
+        {
+            int result = 0;
+            int sign = 1;
+
+            // Check if the number is negative
+            if (binary[0] == '1')
             {
-                int last_digit = temp % 10;
-                temp = temp / 10;
-
-                dec_value += last_digit * base1;
-
-                base1 = base1 * 2;
+                sign = -1;
+                // Invert bits for two's complement
+                binary = binary.Replace('0', 'x').Replace('1', '0').Replace('x', '1');
             }
 
-            return dec_value;
+            // Convert binary to decimal
+            for (int i = binary.Length - 1; i >= 0; i--)
+            {
+                if (binary[i] == '1')
+                {
+                    result += (int)Math.Pow(2, binary.Length - 1 - i);
+                }
+            }
+
+            // Apply sign
+            return result * sign;
+        }
+
+        /// <summary> UNUSED CHECK
+        /// decimalToBinary
+        /// Converts string decimal to string binary
+        /// </summary>
+        /// <param name="deci"></param>
+        /// <returns></returns>
+        private static string decimalToBinary(string deci)
+        {
+            int intDeci = Convert.ToInt32(deci,2);
+            string binaryString;
+            if (intDeci >= 0)
+            {
+                binaryString = Convert.ToString(intDeci, 2); // Convert to binary string
+                binaryString = binaryString.PadLeft(32, '0'); // I want to add zeros until the length is 32 bits
+                return binaryString;
+            }
+            else
+            {
+                binaryString = Convert.ToString(intDeci, 2); // Convert to binary string
+                binaryString = binaryString.PadLeft(32, '1'); // I want to add 1s until the length is 32 bits because it will be negative
+                return binaryString;
+            }
         }
     }
 }

@@ -41,6 +41,8 @@
             clearButton = new Button();
             clearConsoleButton = new Button();
             registerPanel = new Panel();
+            label41 = new Label();
+            userInput = new TextBox();
             textBox24 = new TextBox();
             textBox23 = new TextBox();
             textBox22 = new TextBox();
@@ -122,6 +124,7 @@
             label39 = new Label();
             cacheTextBox = new TextBox();
             label40 = new Label();
+            run = new Button();
             radioPanel.SuspendLayout();
             registerPanel.SuspendLayout();
             panel1.SuspendLayout();
@@ -247,7 +250,7 @@
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(87, 45);
             clearButton.TabIndex = 7;
-            clearButton.Text = "Clear cache";
+            clearButton.Text = "Clear All";
             clearButton.UseVisualStyleBackColor = true;
             clearButton.Click += clearButton_Click;
             // 
@@ -263,6 +266,8 @@
             // 
             // registerPanel
             // 
+            registerPanel.Controls.Add(label41);
+            registerPanel.Controls.Add(userInput);
             registerPanel.Controls.Add(textBox24);
             registerPanel.Controls.Add(textBox23);
             registerPanel.Controls.Add(textBox22);
@@ -334,6 +339,22 @@
             registerPanel.Name = "registerPanel";
             registerPanel.Size = new Size(976, 516);
             registerPanel.TabIndex = 9;
+            // 
+            // label41
+            // 
+            label41.AutoSize = true;
+            label41.Location = new Point(647, 475);
+            label41.Name = "label41";
+            label41.Size = new Size(64, 15);
+            label41.TabIndex = 16;
+            label41.Text = "User Input:";
+            // 
+            // userInput
+            // 
+            userInput.Location = new Point(717, 472);
+            userInput.Name = "userInput";
+            userInput.Size = new Size(240, 23);
+            userInput.TabIndex = 15;
             // 
             // textBox24
             // 
@@ -1050,11 +1071,23 @@
             label40.TabIndex = 12;
             label40.Text = "Cache:";
             // 
+            // run
+            // 
+            run.ForeColor = SystemColors.ActiveCaptionText;
+            run.Location = new Point(1191, 696);
+            run.Name = "run";
+            run.Size = new Size(87, 45);
+            run.TabIndex = 18;
+            run.Text = "Run til Stop";
+            run.UseVisualStyleBackColor = true;
+            run.Click += runButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1770, 845);
+            Controls.Add(run);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -1191,5 +1224,8 @@
         private Label label39;
         private TextBox cacheTextBox;
         private Label label40;
+        private Button run;
+        private Label label41;
+        private TextBox userInput;
     }
 }
