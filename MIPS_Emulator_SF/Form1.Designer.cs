@@ -41,6 +41,8 @@
             clearButton = new Button();
             clearConsoleButton = new Button();
             registerPanel = new Panel();
+            label41 = new Label();
+            userInput = new TextBox();
             textBox24 = new TextBox();
             textBox23 = new TextBox();
             textBox22 = new TextBox();
@@ -248,7 +250,7 @@
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(87, 45);
             clearButton.TabIndex = 7;
-            clearButton.Text = "Clear cache";
+            clearButton.Text = "Clear All";
             clearButton.UseVisualStyleBackColor = true;
             clearButton.Click += clearButton_Click;
             // 
@@ -264,6 +266,8 @@
             // 
             // registerPanel
             // 
+            registerPanel.Controls.Add(label41);
+            registerPanel.Controls.Add(userInput);
             registerPanel.Controls.Add(textBox24);
             registerPanel.Controls.Add(textBox23);
             registerPanel.Controls.Add(textBox22);
@@ -335,6 +339,22 @@
             registerPanel.Name = "registerPanel";
             registerPanel.Size = new Size(976, 516);
             registerPanel.TabIndex = 9;
+            // 
+            // label41
+            // 
+            label41.AutoSize = true;
+            label41.Location = new Point(647, 475);
+            label41.Name = "label41";
+            label41.Size = new Size(64, 15);
+            label41.TabIndex = 16;
+            label41.Text = "User Input:";
+            // 
+            // userInput
+            // 
+            userInput.Location = new Point(717, 472);
+            userInput.Name = "userInput";
+            userInput.Size = new Size(240, 23);
+            userInput.TabIndex = 15;
             // 
             // textBox24
             // 
@@ -1205,5 +1225,7 @@
         private TextBox cacheTextBox;
         private Label label40;
         private Button run;
+        private Label label41;
+        private TextBox userInput;
     }
 }
