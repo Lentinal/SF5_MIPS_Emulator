@@ -10,7 +10,7 @@ namespace MIPS_Emulator_SF
         /// </summary>
         private static List<OpcodeObject> list = new List<OpcodeObject>();
         private static int intPC = 0; //For holding PC/Memory location
-        private static int intCache = 0;
+        private static int intCache = 1;
         private static int stepCount = 0; //For microstep
 
         /// <summary>
@@ -136,6 +136,7 @@ namespace MIPS_Emulator_SF
 
                         console.AppendText("Writing back to " + temp.getDestination() + "\r\n");
                         destin.Text = convertToBinary(write);
+                        destin.Update();
 
                         advancePC();
                         break;
@@ -168,6 +169,8 @@ namespace MIPS_Emulator_SF
 
                         console.AppendText("Writing back to " + temp.getDestination() + "\r\n");
                         destin.Text = convertToBinary(write);
+                        destin.Update();
+
                         advancePC();
                         break;
 
@@ -288,6 +291,7 @@ namespace MIPS_Emulator_SF
             console.Text = "";
             PC.Text = "";
             list.Clear();
+            cacheTextBox.Clear();
             foreach (Control control in registerPanel.Controls)
             {
                 if (control is TextBox text && text.Name.StartsWith("textBox"))
@@ -317,7 +321,10 @@ namespace MIPS_Emulator_SF
         /// <param name="e"></param>
         private void runButton_Click(object sender, EventArgs e)
         {
-
+            while (intPC < list.Count)
+            {
+                stepButtonClick(sender, e);
+            }
         }
 
         /// <summary> UNIMPLEMENTED
@@ -403,6 +410,7 @@ namespace MIPS_Emulator_SF
         {
             intPC++;
             PC.Text = convertToBinary(intPC);
+            PC.Update();
         }
 
         /// <summary> CHECK
@@ -875,4 +883,6 @@ namespace MIPS_Emulator_SF
             return dec_value;
         }
     }
+
+
 }

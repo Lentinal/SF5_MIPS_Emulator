@@ -122,6 +122,7 @@
             label39 = new Label();
             cacheTextBox = new TextBox();
             label40 = new Label();
+            run = new Button();
             radioPanel.SuspendLayout();
             registerPanel.SuspendLayout();
             panel1.SuspendLayout();
@@ -1050,11 +1051,23 @@
             label40.TabIndex = 12;
             label40.Text = "Cache:";
             // 
+            // run
+            // 
+            run.ForeColor = SystemColors.ActiveCaptionText;
+            run.Location = new Point(1191, 696);
+            run.Name = "run";
+            run.Size = new Size(87, 45);
+            run.TabIndex = 18;
+            run.Text = "Run til Stop";
+            run.UseVisualStyleBackColor = true;
+            run.Click += runButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1770, 845);
+            Controls.Add(run);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -1191,5 +1204,6 @@
         private Label label39;
         private TextBox cacheTextBox;
         private Label label40;
+        private Button run;
     }
 }
