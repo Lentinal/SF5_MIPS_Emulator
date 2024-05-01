@@ -231,14 +231,22 @@ namespace MIPS_Emulator_SF
                         break;
                 }
 
-                /**
+                /*
                  * Cache update? *shrugs* Prototype
                  * TEMPORORY PLEASE CHECK 
                  */
                 if (temp.getMisc() >= 1 && temp.getMisc() < 6)
                 {
-                    cacheTextBox.AppendText(intCache + "\t" +temp.toString() + "\r\n");
-                    intCache++;
+
+                    if (!cacheTextBox.Text.Contains(temp.toString()))
+                    {
+                        cacheTextBox.AppendText(intCache + "\t" + temp.toString() + "\r\n");
+                        intCache++;
+                    }
+                    else
+                    {
+
+                    }
                 }
 
             }
@@ -883,6 +891,5 @@ namespace MIPS_Emulator_SF
             return dec_value;
         }
     }
-
 
 }
