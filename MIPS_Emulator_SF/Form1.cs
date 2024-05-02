@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
 namespace MIPS_Emulator_SF
 {
@@ -9,8 +11,9 @@ namespace MIPS_Emulator_SF
         /// </summary>
         private static List<OpcodeObject> list = new List<OpcodeObject>();
         private static int intPC = 0; //For holding PC/Memory location
-        private static int intCache = 1;
+        private static int intCache = 0; //For cache
         private static int stepCount = 0; //For microstep
+        private static List<string> cache = new List<string>();
 
 
         //House keeping and initalizations
@@ -248,16 +251,40 @@ namespace MIPS_Emulator_SF
                  */
                 if (temp.getMisc() >= 1 && temp.getMisc() < 6)
                 {
-
-                    if (!cacheTextBox.Text.Contains(temp.toString()))
+                    if (intCache < 5) //Check if there  < 5 instructions in cache
                     {
-                        cacheTextBox.AppendText(intCache + "\t" + temp.toString() + "\r\n");
-                        intCache++;
+                        if (!cacheTextBox.Text.Contains(temp.toString()))
+                        {
+                            cache.Add(temp.toString());
+                            cacheTextBox.Clear();
+                            foreach (string instruction in cache)
+                            {
+                                cacheTextBox.AppendText(instruction + "\r\n");
+                            }
+                            //cacheTextBox.AppendText(intCache + "\t" + cache[intCache] + "\r\n");
+                            intCache++;
+                        }
                     }
-                    else
-                    {
 
+                    else if (intCache >= 5) //if there are 5 instructions in cache...
+                    {
+                        
+                        if (!cacheTextBox.Text.Contains(temp.toString())) //if the cache box doesn't contain the current instruction...
+                        {
+                            cache.RemoveAt(0);
+                            cache.Add(temp.toString());
+                            cacheTextBox.Clear();
+                            foreach(string instruction in cache)
+                            {
+                                cacheTextBox.AppendText(instruction + "\r\n");
+                            }
+                            intCache++;
+                        }
                     }
+                    
+
+                    
+                    
                 }
 
             }
