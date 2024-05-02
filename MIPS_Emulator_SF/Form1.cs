@@ -21,8 +21,6 @@ namespace MIPS_Emulator_SF
         private static bool toggle = false; //for run
 
 
-        private static bool toggle = false; //for run
-
         //House keeping and initalizations
         /// <summary>
         /// Form1 
