@@ -10,11 +10,15 @@ namespace MIPS_Emulator_SF
         /// Global Variables
         /// </summary>
         private static List<OpcodeObject> list = new List<OpcodeObject>();
-        private static int intPC = 0; //For holding PC
+        private static string[,] cacheList = new string[4,2];
+        private static int intPC = 0; //For holding PC/Memory location
+        private static int intCache = 0;
         private static int intMem = 0;
-        private static int intCache = 0; //For cache
+        private static int cacheHit = 0;
         private static int stepCount = 0; //For microstep
         private static List<string> cache = new List<string>();
+
+        private static bool toggle = false; //for run
 
 
         private static bool toggle = false; //for run
@@ -257,19 +261,131 @@ namespace MIPS_Emulator_SF
                  */
                 if (temp.getMisc() >= 1 && temp.getMisc() < 6)
                 {
-                    if (intCache < 5) //Check if there  < 5 instructions in cache
+                    intCache++;
+                    string binaryAddress = Convert.ToString(temp.getLocation(), 2);
+                    binaryAddress = binaryAddress.PadLeft(8, '0');
+                    console.AppendText("the current line is address:" + binaryAddress + "\r\n");
+                    string binaryId = binaryAddress.Substring(binaryAddress.Length-2, 2);
+                    console.AppendText("the current line is id:" + binaryId + "\r\n");
+                    int id = -1;
+                    switch (binaryId)
                     {
-                        if (!cacheTextBox.Text.Contains(temp.toString()))
-                        {
-                            cache.Add(temp.toString());
-                            cacheTextBox.Clear();
-                            foreach (string instruction in cache)
+                        case "00":
+                            for (int i = 1; i >= 0; i--)
                             {
-                                cacheTextBox.AppendText(instruction + "\r\n");
+                                if (cacheList[0, i] != null)
+                                {
+                                    if (cacheList[0, i].Contains(temp.toString()))
+                                    {
+                                        cacheHit++;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    id = i;
+                                }
                             }
-                            //cacheTextBox.AppendText(intCache + "\t" + cache[intCache] + "\r\n");
-                            intCache++;
+                            if(id >= 0)
+                            {
+                                cacheList[0, id] = temp.toString();
+                            }
+                            else
+                            {
+                                cacheList[0, 0] = temp.toString();
+                            }
+                                break;
+                        case "01":
+                            for (int i = 1; i >= 0; i--)
+                            {
+                                if (cacheList[1, i] != null)
+                                {
+                                    if (cacheList[1, i].Contains(temp.toString()))
+                                    {
+                                        cacheHit++;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    id = i;
+                                }
+                            }
+                            if (id >= 0)
+                            {
+                                cacheList[1, id] = temp.toString();
+                            }
+                            else
+                            {
+                                cacheList[1, 0] = temp.toString();
+                            }
+                            break;
+                        case "10":
+                            for (int i = 1; i >= 0; i--)
+                            {
+                                if(cacheList[2, i] != null)
+                                {
+                                    if (cacheList[2, i].Contains(temp.toString()))
+                                    {
+                                        cacheHit++;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    id = i;
+                                }
+                            }
+                            if (id >= 0)
+                            {
+                                cacheList[2, id] = temp.toString();
+                            }
+                            else
+                            {
+                                cacheList[2, 0] = temp.toString();
+                            }
+                            break;
+                        case "11":
+                            for (int i = 1; i >= 0; i--)
+                            {
+                                if (cacheList[3, i] != null)
+                                {
+                                    if (cacheList[3, i].Contains(temp.toString()))
+                                    {
+                                        cacheHit++;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    id = i;
+                                }
+                            }
+                            if (id >= 0)
+                            {
+                                cacheList[3, id] = temp.toString();
+                            }
+                            else
+                            {
+                                cacheList[3, 0] = temp.toString();
+                            }
+                            break;
+                    }
+                    if (!cacheTextBox.Text.Contains(temp.toString()))
+                    {
+                        cacheTextBox.Clear();
+                        for(int i = 0; i < 4; i++)
+                        {
+                            for(int j = 0; j < 2; j++)
+                            {
+                                if (cacheList[i,j]  != null)
+                                {
+                                    cacheTextBox.AppendText(Convert.ToString(i, 2).PadLeft(2,'0') + "\t" + cacheList[i, j] + "\r\n");
+                                }
+                            }
                         }
+                        //cacheTextBox.AppendText(intCache + "\t" + temp.toString() + "\r\n");
+                        //intCache++;
                     }
 
                     else if (intCache >= 5) //if there are 5 instructions in cache...
@@ -287,10 +403,7 @@ namespace MIPS_Emulator_SF
                             intCache++;
                         }
                     }
-                    
-
-                    
-                    
+                    console.AppendText("cache hit rate: " + (float)(cacheHit)/intCache);
                 }
 
             }
@@ -362,6 +475,7 @@ namespace MIPS_Emulator_SF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+
         private async void running(object sender, EventArgs e)
         {
             while (toggle && intPC < list.Count && (!list[intPC].getOpcode().Equals("syscall")))
@@ -1022,6 +1136,15 @@ namespace MIPS_Emulator_SF
             PC.Text = "";
             list.Clear();
             cacheTextBox.Clear();
+            for(int i = 0; i < 4; i++)
+            {
+                for(int j = 0; j < 2; j++)
+                {
+                    cacheList[i, j] = null;
+                }
+            }
+            intCache = 0;
+            cacheHit = 0;
             foreach (Control control in registerPanel.Controls)
             {
                 if (control is TextBox text && text.Name.StartsWith("textBox"))
