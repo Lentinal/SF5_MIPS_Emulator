@@ -10,7 +10,8 @@ namespace MIPS_Emulator_SF
         /// Global Variables
         /// </summary>
         private static List<OpcodeObject> list = new List<OpcodeObject>();
-        private static int intPC = 0; //For holding PC/Memory location
+        private static int intPC = 0; //For holding PC
+        private static int intMem = 0;
         private static int intCache = 0; //For cache
         private static int stepCount = 0; //For microstep
         private static List<string> cache = new List<string>();
@@ -477,51 +478,51 @@ namespace MIPS_Emulator_SF
                         if (instruction.Contains(':'))
                         {
                             console.AppendText(" Possible label: " + instruction + "\r\n");
-                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                            instruct = new OpcodeObject(instruction, "", "", "", 0, intPC);
+                            memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                            instruct = new OpcodeObject(instruction, "", "", "", 0, intMem);
                             list.Add(instruct);
                             break;
                         }
                         else if (instruction.Contains('.'))
                         {
                             console.AppendText(" Possible data or cache allocation remark: " + instruction + "\r\n");
-                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                            instruct = new OpcodeObject(instruction, "", "", "", 6, intPC);
+                            memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                            instruct = new OpcodeObject(instruction, "", "", "", 6, intMem);
                             list.Add(instruct);
                             break;
                         }
                         else if (instruction.Contains("syscall"))
                         {
                             console.AppendText(" System Functions: " + instruction + "\r\n");
-                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                            instruct = new OpcodeObject(instruction, "", "", "", 7, intPC);
+                            memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                            instruct = new OpcodeObject(instruction, "", "", "", 7, intMem);
                             list.Add(instruct);
                             break;
                         }
                         else
                         {
                             console.AppendText(" Passed thru fileHandler case 1 possible bad formatting random tabs or spaces: " + instruction + "\r\n");
-                            intPC--;
+                            intMem--;
                             break;
                         }
                     case 2:
                         console.AppendText(" Possible J-Type instruction: " + instruction + "\r\n");
-                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                        instruct = new OpcodeObject(temp[0], temp[1], "", "", 2, intPC);
+                        memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                        instruct = new OpcodeObject(temp[0], temp[1], "", "", 2, intMem);
                         list.Add(instruct);
                         break;
                     case 3:
                         console.AppendText(" Possible Load or Save instruction: " + instruction + "\r\n");
-                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", 4, intPC);
+                        memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", 4, intMem);
                         list.Add(instruct);
                         break;
                     case 4:
                         if (!(temp[0].Contains('i') || !temp[3].Contains('$')))
                         {
                             console.AppendText(" Possible R-Type instruction: " + instruction + "\r\n");
-                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                            instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC);
+                            memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                            instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intMem);
                             list.Add(instruct);
                         }
                         else
@@ -529,40 +530,40 @@ namespace MIPS_Emulator_SF
                             if (!(temp[0].Contains("b")))
                             {
                                 console.AppendText(" Possible I-Type instruction: " + instruction + "\r\n");
-                                memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                                instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 3, intPC);
+                                memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                                instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 3, intMem);
                                 list.Add(instruct);
                             }
                             else
                             {
                                 console.AppendText(" Possible Branch instruction: " + instruction + "\r\n");
-                                memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                                instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 5, intPC);
+                                memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                                instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 5, intMem);
                                 list.Add(instruct);
                             }
                         }
                         break;
                     case 5:
                         console.AppendText(" Possible instruction 5: " + instruction + "\r\n");
-                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intPC);
+                        memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                        instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intMem);
                         list.Add(instruct);
                         break;
                     default:
                         if ((temp[0].Contains(":")))
                         {
                             console.AppendText(" Possible label: " + instruction + "\r\n");
-                            memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
-                            instruct = new OpcodeObject(instruction, "", "", "", 0, intPC);
+                            memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                            instruct = new OpcodeObject(instruction, "", "", "", 0, intMem);
                             list.Add(instruct);
                             break;
                         }
                         console.AppendText(" Confused." + instruction + "\r\n");
-                        memoryTextBox.Text += intPC + "\t" + instruction + "\r\n";
+                        memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
                         break;
 
                 }
-                intPC++;
+                intMem++;
             }
         }
 
