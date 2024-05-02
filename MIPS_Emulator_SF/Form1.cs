@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
 namespace MIPS_Emulator_SF
 {
@@ -9,8 +11,9 @@ namespace MIPS_Emulator_SF
         /// </summary>
         private static List<OpcodeObject> list = new List<OpcodeObject>();
         private static int intPC = 0; //For holding PC/Memory location
-        private static int intCache = 1;
+        private static int intCache = 0; //For cache
         private static int stepCount = 0; //For microstep
+        private static List<string> cache = new List<string>();
 
 
         //House keeping and initalizations
@@ -248,16 +251,40 @@ namespace MIPS_Emulator_SF
                  */
                 if (temp.getMisc() >= 1 && temp.getMisc() < 6)
                 {
-
-                    if (!cacheTextBox.Text.Contains(temp.toString()))
+                    if (intCache < 5) //Check if there  < 5 instructions in cache
                     {
-                        cacheTextBox.AppendText(intCache + "\t" + temp.toString() + "\r\n");
-                        intCache++;
+                        if (!cacheTextBox.Text.Contains(temp.toString()))
+                        {
+                            cache.Add(temp.toString());
+                            cacheTextBox.Clear();
+                            foreach (string instruction in cache)
+                            {
+                                cacheTextBox.AppendText(instruction + "\r\n");
+                            }
+                            //cacheTextBox.AppendText(intCache + "\t" + cache[intCache] + "\r\n");
+                            intCache++;
+                        }
                     }
-                    else
-                    {
 
+                    else if (intCache >= 5) //if there are 5 instructions in cache...
+                    {
+                        
+                        if (!cacheTextBox.Text.Contains(temp.toString())) //if the cache box doesn't contain the current instruction...
+                        {
+                            cache.RemoveAt(0);
+                            cache.Add(temp.toString());
+                            cacheTextBox.Clear();
+                            foreach(string instruction in cache)
+                            {
+                                cacheTextBox.AppendText(instruction + "\r\n");
+                            }
+                            intCache++;
+                        }
                     }
+                    
+
+                    
+                    
                 }
 
             }
@@ -555,28 +582,51 @@ namespace MIPS_Emulator_SF
             int s2 = signedBinaryToDecimal(source2); //Converts source2 binary to decimal int
             switch (function)
             {
-                //Arrithmetic
+                //Arithmetic
                 case "add":
                     console.AppendText("Executing Addition: " + s1 + " + " + s2 + "\r\n");
                     int result = s1 + s2;
                     return result;
+                case "sub":
+                    console.AppendText("Executing Subtraction: " + s1 + " - " + s2 + "\r\n");
+                    result = s1 - s2;
+                    return result;
                 case "mult":
+                    console.AppendText("Executing Multiplication: " + s1 + " * " + s2 + "\r\n");
                     result = s1 * s2;
                     return result;
                 case "div":
+                    console.AppendText("Executing Division: " + s1 + " / " + s2 + "\r\n");
                     result = s1 / s2;
                     return result;
+
+                //Comparison: set on less than
+                case "slt": //if s1 < s2 sends 1 other wise sends 0
+                    if(s1 < s2)
+                    {
+                        result = 1;
+                    }
+                    else
+                    {
+                        result = 0;
+                    }
+                    return result;
+
                 //Logical
                 case "and":
+                    console.AppendText("Executing and \r\n");
                     result = s1 & s2;
                     return result;
                 case "or":
+                    console.AppendText("Executing or \r\n");
                     result = s1 | s2;
                     return result;
                 case "xor":
+                    console.AppendText("Executing xor \r\n");
                     result = s1 ^ s2;
                     return result;
                 case "nor": //If ~($r | $zero) == not $r
+                    console.AppendText("Executing nor \r\n");
                     result = ~(s1 | s2);
                     return result;
                 default:
@@ -606,6 +656,7 @@ namespace MIPS_Emulator_SF
                     int result = s1 + s2;
                     return result;
 
+                //Comparison: set on less than immediate
                 case "slti":
                     if (s1 < s2)
                     {
@@ -691,10 +742,21 @@ namespace MIPS_Emulator_SF
         {
             switch (function)
             {
+                //Load word
+                case "lw":
+                    return 0;
+
+                //Store word
+                case "sw":
+
+                    return 0;
+
+                //Load immediate
                 case "li":
                     console.AppendText("Executing: " + list[intPC].toString() + "\r\n");
                     return int.Parse(source1); //Returns string decimal source1 to int
 
+                //Load Address
                 case "la":
                     console.AppendText("Executing: " + list[intPC].toString() + "\r\n");
                     foreach (OpcodeObject e in list)
@@ -707,6 +769,8 @@ namespace MIPS_Emulator_SF
                     }
                     console.AppendText("Case la cant find " + source1 + " label \r\n");
                     return 0; //Returns 0 if cant find the label
+
+                //Move
                 case "move":
                     console.AppendText("Detected Move: ");
                     string destination = list[intPC].getDestination();
@@ -723,10 +787,9 @@ namespace MIPS_Emulator_SF
             }
         }
 
-        /// <summary> CHECK
+        /// <summary> FINISHED
         /// executeBranch
         /// Called for Branch instructions
-        /// CHECK: Needs review
         /// </summary>
         /// <param name="function"></param>
         /// <param name="destination"></param>
@@ -737,19 +800,80 @@ namespace MIPS_Emulator_SF
 
             int s1 = Convert.ToInt32(destination, 2);
             int s2 = Convert.ToInt32(source1, 2);
+            int result;
             switch (function)
             {
-                case "beq":
+                //Branch on equal
+                case "beq": 
                     if (s1 == s2)
                     {
-                        int result = 1;
+                        result = 1;
                         return result;
                     }
                     else
                     {
-                        int result = 0;
+                        result = 0;
                         return result;
                     }
+
+                //Branch on not equal
+                case "bne": 
+                    if(s1 != s2)
+                    {
+                        result = 1;
+                    }else
+                    {
+                        result = 0;
+                    }
+                    return result;
+
+                //Branch on greater than
+                case "bgt": 
+                    if (s1 > s2)
+                    {
+                        result = 1;
+                    }
+                    else
+                    {
+                        result = 0;
+                    }
+                    return result;
+
+                //Branch on greater than or equal
+                case "bge": 
+                    if (s1 >= s2)
+                    {
+                        result = 1;
+                    }
+                    else
+                    {
+                        result = 0;
+                    }
+                    return result;
+
+                //Branch on less than
+                case "blt": 
+                    if (s1 < s2)
+                    {
+                        result = 1;
+                    }
+                    else
+                    {
+                        result = 0;
+                    }
+                    return result;
+
+                //Branch on less than or equal
+                case "ble": 
+                    if (s1 <= s2)
+                    {
+                        result = 1;
+                    }
+                    else
+                    {
+                        result = 0;
+                    }
+                    return result;
                 default:
                     console.AppendText("Defaulted on Form1.executeBranch: " + function + "\r\n");
                     return 0;
