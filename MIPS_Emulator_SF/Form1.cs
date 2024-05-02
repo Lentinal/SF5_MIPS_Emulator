@@ -144,11 +144,14 @@ namespace MIPS_Emulator_SF
                         console.AppendText("Decoding J-Type instruction \r\n");
                         write = executeJ(temp.getOpcode(), temp.getDestination());//Calls executeJ for new intPC
 
-                        console.AppendText("Accessing jump location \r\n");
+                        if (write != 0)
+                        {
+                            console.AppendText("Accessing jump location \r\n");
 
-                        console.AppendText("Setting PC \r\n");
-                        intPC = write;//Sets PC
-                        break;
+                            console.AppendText("Setting PC \r\n");
+                            intPC = write;//Sets PC
+                        }
+                            break;
 
                     //I-Type instruction FINISHED
                     case 3:
@@ -342,7 +345,7 @@ namespace MIPS_Emulator_SF
             console.AppendText("Set PC to : " + intPC + "\r\n");
         }
 
-        /// <summary> UNIMPLEMENTED POSSIBLE SCRAP
+        /// <summary> FINISHED thanks mr.ant
         /// runButton_Click
         /// </summary>
         /// <param name="sender"></param>
@@ -353,6 +356,12 @@ namespace MIPS_Emulator_SF
             running(sender, e);
         }
 
+        /// <summary> FINISHED
+        /// running
+        /// Code for run button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void running(object sender, EventArgs e)
         {
             while (toggle && intPC < list.Count && (!list[intPC].getOpcode().Equals("syscall")))
@@ -506,17 +515,37 @@ namespace MIPS_Emulator_SF
                             break;
                         }
                     case 2:
-                        console.AppendText(" Possible J-Type instruction: " + instruction + "\r\n");
-                        memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
-                        instruct = new OpcodeObject(temp[0], temp[1], "", "", 2, intMem);
-                        list.Add(instruct);
-                        break;
+                        if (!(temp[0].Contains("."))) {
+                            console.AppendText(" Possible J-Type instruction: " + instruction + "\r\n");
+                            memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                            instruct = new OpcodeObject(temp[0], temp[1], "", "", 2, intMem);
+                            list.Add(instruct);
+                            break;
+                        }
+                        else
+                        {
+                            console.AppendText(" Possible data or cache allocation remark: " + instruction + "\r\n");
+                            memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                            instruct = new OpcodeObject(instruction, "", "", "", 6, intMem);
+                            list.Add(instruct);
+                            break;
+                        }
                     case 3:
-                        console.AppendText(" Possible Load or Save instruction: " + instruction + "\r\n");
+                        if (!(temp[0].StartsWith('b'))){ 
+                            console.AppendText(" Possible Load or Save instruction: " + instruction + "\r\n");
                         memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
                         instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", 4, intMem);
                         list.Add(instruct);
-                        break;
+                            break;
+                        }
+                        else
+                        {
+                            console.AppendText(" Possible Branch instruction: " + instruction + "\r\n");
+                            memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
+                            instruct = new OpcodeObject(temp[0], temp[1], temp[2], "", 5, intMem);
+                            list.Add(instruct);
+                            break;
+                        }
                     case 4:
                         if (!(temp[0].Contains('i') || !temp[3].Contains('$')))
                         {
@@ -524,6 +553,7 @@ namespace MIPS_Emulator_SF
                             memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
                             instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 1, intMem);
                             list.Add(instruct);
+                            break;
                         }
                         else
                         {
@@ -533,6 +563,7 @@ namespace MIPS_Emulator_SF
                                 memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
                                 instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 3, intMem);
                                 list.Add(instruct);
+                                break;
                             }
                             else
                             {
@@ -540,9 +571,9 @@ namespace MIPS_Emulator_SF
                                 memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
                                 instruct = new OpcodeObject(temp[0], temp[1], temp[2], temp[3], 5, intMem);
                                 list.Add(instruct);
+                                break;
                             }
                         }
-                        break;
                     case 5:
                         console.AppendText(" Possible instruction 5: " + instruction + "\r\n");
                         memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
@@ -561,7 +592,6 @@ namespace MIPS_Emulator_SF
                         console.AppendText(" Confused." + instruction + "\r\n");
                         memoryTextBox.AppendText(intMem + "\t" + instruction + "\r\n");
                         break;
-
                 }
                 intMem++;
             }
@@ -691,6 +721,7 @@ namespace MIPS_Emulator_SF
             {
                 //Jumps to destination
                 case "j":
+                case "b":
                     console.AppendText("Dectected j \r\n");
                     foreach (OpcodeObject e in list)
                     {
@@ -726,7 +757,7 @@ namespace MIPS_Emulator_SF
                     int address = signedBinaryToDecimal(desRegist.Text);//Converts register contents from binary to decimal
                     return address;
                 default:
-                    console.AppendText("Could not locate jump destination \r\n");
+                    console.AppendText("Could not locate jump instruction \r\n");
                     return 0;
 
             }
@@ -747,6 +778,7 @@ namespace MIPS_Emulator_SF
             {
                 //Load word
                 case "lw":
+
                     return 0;
 
                 //Store word
@@ -898,8 +930,7 @@ namespace MIPS_Emulator_SF
                 case 1:
                     console.AppendText("Detected 1 in $v0: Print integer \r\n");
                     int s1 = Convert.ToInt32(textBox4.Text, 2);//gets the address from $a0
-                    string[] toPrint = list[s1 - 1].toString().Split('"');//gets the contents from memory and splits it by " to get the int to be printed
-                    MessageBox.Show(toPrint[1] + "\r\n");
+                    MessageBox.Show(s1 + "\r\n");
                     break;
 
                 //2 = Print float      $f12 = float to print UNIMPLEMENTED
@@ -916,7 +947,7 @@ namespace MIPS_Emulator_SF
                 case 4:
                     console.AppendText("Detected syscall 4 in $v0: Print string \r\n");
                     s1 = Convert.ToInt32(textBox4.Text, 2);//gets the address from $a0
-                    toPrint = list[s1 - 1].toString().Split('"');//gets the contents from memory and splits it by " to get the string to be printed
+                    String[] toPrint = list[s1 - 1].toString().Split('"');//gets the contents from memory and splits it by " to get the string to be printed
                     MessageBox.Show(toPrint[1] + "\r\n");
                     break;
 
