@@ -319,10 +319,18 @@ namespace MIPS_Emulator_SF
         /// <param name="e"></param>
         private void runButton_Click(object sender, EventArgs e)
         {
-            while (intPC < list.Count && (!list[intPC].getOpcode().Equals("syscall")))
+            toggle = !toggle;
+            running(sender, e);
+        }
+
+        private async void running(object sender, EventArgs e)
+        {
+            while (toggle && intPC < list.Count && (!list[intPC].getOpcode().Equals("syscall")))
             {
                 stepButtonClick(sender, e);
+                await Task.Delay(5);
             }
+            toggle = false;
         }
 
         /// <summary> UNIMPLEMENTED
