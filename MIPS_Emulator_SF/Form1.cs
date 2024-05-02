@@ -281,6 +281,10 @@ namespace MIPS_Emulator_SF
                             {
                                 cacheList[0, id] = temp.toString();
                             }
+                            else
+                            {
+                                cacheList[0, 0] = temp.toString();
+                            }
                                 break;
                         case "01":
                             for (int i = 1; i >= 0; i--)
@@ -301,6 +305,10 @@ namespace MIPS_Emulator_SF
                             if (id >= 0)
                             {
                                 cacheList[1, id] = temp.toString();
+                            }
+                            else
+                            {
+                                cacheList[1, 0] = temp.toString();
                             }
                             break;
                         case "10":
@@ -323,6 +331,10 @@ namespace MIPS_Emulator_SF
                             {
                                 cacheList[2, id] = temp.toString();
                             }
+                            else
+                            {
+                                cacheList[2, 0] = temp.toString();
+                            }
                             break;
                         case "11":
                             for (int i = 1; i >= 0; i--)
@@ -343,6 +355,10 @@ namespace MIPS_Emulator_SF
                             if (id >= 0)
                             {
                                 cacheList[3, id] = temp.toString();
+                            }
+                            else
+                            {
+                                cacheList[3, 0] = temp.toString();
                             }
                             break;
                     }
