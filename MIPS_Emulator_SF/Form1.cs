@@ -8,6 +8,7 @@ namespace MIPS_Emulator_SF
         /// Global Variables
         /// </summary>
         private static List<OpcodeObject> list = new List<OpcodeObject>();
+        private static string[,] cacheList = new string[4,2];
         private static int intPC = 0; //For holding PC/Memory location
         private static int intCache = 1;
         private static int stepCount = 0; //For microstep
@@ -248,11 +249,107 @@ namespace MIPS_Emulator_SF
                  */
                 if (temp.getMisc() >= 1 && temp.getMisc() < 6)
                 {
-
+                    string binaryAdress = Convert.ToString(temp.getLocation(), 2);
+                    string binaryId = binaryAdress.Substring(binaryAdress.Length-3, binaryAdress.Length-1);
+                    int id = -1;
+                    switch (binaryId)
+                    {
+                        case "00":
+                            for (int i = 1; i >= 0; i--)
+                            {
+                                if (cacheList[0, i] != null)
+                                {
+                                    if (cacheList[0, i].Contains(temp.toString()))
+                                    {
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    id = i;
+                                }
+                            }
+                            if(id >= 0)
+                            {
+                                cacheList[0, id] = temp.toString();
+                            }
+                                break;
+                        case "01":
+                            for (int i = 1; i >= 0; i--)
+                            {
+                                if (cacheList[1, i] != null)
+                                {
+                                    if (cacheList[1, i].Contains(temp.toString()))
+                                    {
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    id = i;
+                                }
+                            }
+                            if (id >= 0)
+                            {
+                                cacheList[1, id] = temp.toString();
+                            }
+                            break;
+                        case "10":
+                            for (int i = 1; i >= 0; i--)
+                            {
+                                if(cacheList[2, i] != null)
+                                {
+                                    if (cacheList[2, i].Contains(temp.toString()))
+                                    {
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    id = i;
+                                }
+                            }
+                            if (id >= 0)
+                            {
+                                cacheList[2, id] = temp.toString();
+                            }
+                            break;
+                        case "11":
+                            for (int i = 1; i >= 0; i--)
+                            {
+                                if (cacheList[3, i] != null)
+                                {
+                                    if (cacheList[3, i].Contains(temp.toString()))
+                                    {
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    id = i;
+                                }
+                            }
+                            if (id >= 0)
+                            {
+                                cacheList[3, id] = temp.toString();
+                            }
+                            break;
+                    }
                     if (!cacheTextBox.Text.Contains(temp.toString()))
                     {
-                        cacheTextBox.AppendText(intCache + "\t" + temp.toString() + "\r\n");
-                        intCache++;
+                        cacheTextBox.Clear();
+                        for(int i = 0; i < 4; i++)
+                        {
+                            for(int j = 0; j < 2; j++)
+                            {
+                                if (cacheList[i,j]  != null)
+                                {
+                                    cacheTextBox.AppendText(Convert.ToString(i, 2) + "\t" + cacheList[i, j] + "\r\n");
+                                }
+                            }
+                        }
+                        //cacheTextBox.AppendText(intCache + "\t" + temp.toString() + "\r\n");
+                        //intCache++;
                     }
                     else
                     {
@@ -953,6 +1050,14 @@ namespace MIPS_Emulator_SF
             PC.Text = "";
             list.Clear();
             cacheTextBox.Clear();
+            for(int i = 0; i < 4; i++)
+            {
+                for(int j = 0; j < 2; j++)
+                {
+                    cacheList[i, j] = null;
+                }
+            }
+            //intCache = 0;
             foreach (Control control in registerPanel.Controls)
             {
                 if (control is TextBox text && text.Name.StartsWith("textBox"))
