@@ -16,6 +16,8 @@ namespace MIPS_Emulator_SF
         private static List<string> cache = new List<string>();
 
 
+        private static bool toggle = false; //for run
+
         //House keeping and initalizations
         /// <summary>
         /// Form1 
