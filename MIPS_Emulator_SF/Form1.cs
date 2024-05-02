@@ -10,8 +10,11 @@ namespace MIPS_Emulator_SF
         private static List<OpcodeObject> list = new List<OpcodeObject>();
         private static string[,] cacheList = new string[4,2];
         private static int intPC = 0; //For holding PC/Memory location
-        private static int intCache = 1;
+        private static int intCache = 0;
+        private static int cacheHit = 0;
         private static int stepCount = 0; //For microstep
+
+        private static bool toggle = false; //for run
 
 
         //House keeping and initalizations
@@ -249,8 +252,12 @@ namespace MIPS_Emulator_SF
                  */
                 if (temp.getMisc() >= 1 && temp.getMisc() < 6)
                 {
-                    string binaryAdress = Convert.ToString(temp.getLocation(), 2);
-                    string binaryId = binaryAdress.Substring(binaryAdress.Length-3, binaryAdress.Length-1);
+                    intCache++;
+                    string binaryAddress = Convert.ToString(temp.getLocation(), 2);
+                    binaryAddress = binaryAddress.PadLeft(8, '0');
+                    console.AppendText("the current line is address:" + binaryAddress + "\r\n");
+                    string binaryId = binaryAddress.Substring(binaryAddress.Length-2, 2);
+                    console.AppendText("the current line is id:" + binaryId + "\r\n");
                     int id = -1;
                     switch (binaryId)
                     {
@@ -261,6 +268,7 @@ namespace MIPS_Emulator_SF
                                 {
                                     if (cacheList[0, i].Contains(temp.toString()))
                                     {
+                                        cacheHit++;
                                         break;
                                     }
                                 }
@@ -281,6 +289,7 @@ namespace MIPS_Emulator_SF
                                 {
                                     if (cacheList[1, i].Contains(temp.toString()))
                                     {
+                                        cacheHit++;
                                         break;
                                     }
                                 }
@@ -301,6 +310,7 @@ namespace MIPS_Emulator_SF
                                 {
                                     if (cacheList[2, i].Contains(temp.toString()))
                                     {
+                                        cacheHit++;
                                         break;
                                     }
                                 }
@@ -321,6 +331,7 @@ namespace MIPS_Emulator_SF
                                 {
                                     if (cacheList[3, i].Contains(temp.toString()))
                                     {
+                                        cacheHit++;
                                         break;
                                     }
                                 }
@@ -344,7 +355,7 @@ namespace MIPS_Emulator_SF
                             {
                                 if (cacheList[i,j]  != null)
                                 {
-                                    cacheTextBox.AppendText(Convert.ToString(i, 2) + "\t" + cacheList[i, j] + "\r\n");
+                                    cacheTextBox.AppendText(Convert.ToString(i, 2).PadLeft(2,'0') + "\t" + cacheList[i, j] + "\r\n");
                                 }
                             }
                         }
@@ -355,6 +366,7 @@ namespace MIPS_Emulator_SF
                     {
 
                     }
+                    console.AppendText("cache hit rate: " + (float)(cacheHit)/intCache);
                 }
 
             }
@@ -416,10 +428,18 @@ namespace MIPS_Emulator_SF
         /// <param name="e"></param>
         private void runButton_Click(object sender, EventArgs e)
         {
-            while (intPC < list.Count && (!list[intPC].getOpcode().Equals("syscall")))
+            toggle = !toggle;
+            running(sender, e);
+        }
+
+        private async void running(object sender, EventArgs e)
+        {
+            while (toggle && intPC < list.Count && (!list[intPC].getOpcode().Equals("syscall")))
             {
                 stepButtonClick(sender, e);
+                await Task.Delay(5);
             }
+            toggle = false;
         }
 
         /// <summary> UNIMPLEMENTED
@@ -1057,7 +1077,8 @@ namespace MIPS_Emulator_SF
                     cacheList[i, j] = null;
                 }
             }
-            //intCache = 0;
+            intCache = 0;
+            cacheHit = 0;
             foreach (Control control in registerPanel.Controls)
             {
                 if (control is TextBox text && text.Name.StartsWith("textBox"))
