@@ -404,10 +404,12 @@ namespace MIPS_Emulator_SF
                     console.AppendText("cache hit rate: " + (float)(cacheHit)/intCache);
                 }
 
+                console.AppendText("\r\n");
             }
             catch (Exception ex)
             {
                 console.AppendText("Encountered error: " + ex.Message + "\r\n");
+                console.AppendText("\r\n");
             }
         }
 
